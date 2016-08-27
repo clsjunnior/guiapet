@@ -41,4 +41,9 @@ class Registrar extends CI_Controller {
 	}
 
 
+	public function Adm(){
+	    echo 123;
+    }
+
+
 }
