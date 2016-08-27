@@ -32,7 +32,7 @@ class Registrar extends CI_Controller {
                 'name' => $this->input->post('nome'),
                 'sex' => $this->input->post('sexo'),
                 'login' => $this->input->post('login'),
-                'password' => $this->input->post('senha'),
+                'password' => $this->encrypt->encode($this->input->post('senha')),
                 'email' => $this->input->post('email')
             ];
 
