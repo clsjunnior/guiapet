@@ -37,6 +37,7 @@ class Registrar extends CI_Controller {
             ];
 
             $this->user->newUser($user);
+            
         }
 	}
 
