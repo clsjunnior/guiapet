@@ -76,6 +76,7 @@
                 </div>
             </div>
             <div class="form-group">
+                <?=form_error('emailc', '<label class="control-label text-red" for="emailc">', '</label><br>')?>
                 <label for="emailc">*Confirma o e-mail:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
