@@ -375,6 +375,7 @@ $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = 'ci_sessions';//its your table name name
 $config['sess_match_ip'] = TRUE;
 $config['sess_time_to_update'] = 300;
+$config['sess_regenerate_destroy'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -391,8 +392,8 @@ $config['sess_time_to_update'] = 300;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= 'ci_';
-$config['cookie_domain']	= 'http://localhost/GuiaPet/';
+$config['cookie_prefix']	= '';
+$config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;

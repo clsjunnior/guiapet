@@ -2,17 +2,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends CI_Model {
 
-	public function __construct(){
+    /**
+     * Users constructor.
+     */
+    public function __construct(){
 		parent::__construct();
 	}
 
 
-	public function getByLogin($login){
+    /**
+     * @param string $login
+     * @return CI_DB_result
+     */
+    public function getByLogin($login){
 	    return $this->db->get_where('users', array('login' => $login));
     }
 
     /**
-     * @param $user string
+     * @param string $user
      * @return bool
      */
     public function newUser($user){

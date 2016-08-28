@@ -27,8 +27,8 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
+        <?=$this->session->flashdata('login')?>
         <p class="login-box-msg">Faça o login para começar sua sessão</p>
-
         <form action="<?=site_url('login')?>" method="post">
             <div class="form-group has-feedback">
                 <?=form_error('login', '<label class="control-label text-red" for="login">', '</label>')?>
@@ -50,7 +50,7 @@
 
 
         <a href="#">Esqueceu a senha?</a><br>
-        <a href="#" class="text-center">Registrar</a>
+        <a href="<?=site_url('registrar')?>" class="text-center">Registrar</a>
 
     </div>
     <!-- /.login-box-body -->
