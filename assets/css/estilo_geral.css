@@ -19,7 +19,16 @@
     height: 100px;
     background-color: #1c3e5e;
 }
-
+.menu-recomendacoes{
+    padding: 40px;
+    text-align: center;
+}
+.menu-recomendacoes > .label{
+    padding: 15px 20px 15px 20px;
+    font-size: 1em;
+    margin: 5px;
+    background-color: #6286b8;
+}
 /**/
 
 .menu-lateral{

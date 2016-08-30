@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,13 +19,13 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?=base_url('assets/fonts/font-awesome.min.css')?>">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="<?=base_url('assets/fonts/ionicons.min.css')?>">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?=base_url('assets/css/AdminLTE.css')?>">
-    <link rel="stylesheet" href="<?=base_url('assets/css/_all-skins.css')?>">
-
+    <link rel="stylesheet" href="<?=base_url('assets/fonts//ionicons.min.css')?>">
+    <!-- Estilo -->
+    <link rel="stylesheet" href="<?=base_url('assets/css/estilo_geral.css')?>">
+    
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>

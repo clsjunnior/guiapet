@@ -23,6 +23,8 @@ class Inicial extends CI_Controller {
      */
 	public function index()
 	{
-		$this->load->view('geral/inicial');
+        $dados['title'] = "Bem Vindo ao Guia do Pet";
+
+        $this->load->view('geral/inicial', $dados);
 	}
 }
