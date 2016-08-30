@@ -43,6 +43,8 @@ class Login extends CI_Controller {
             $session['login'] = true;
             $this->session->set_userdata($session);
 
+            redirect(site_url('dashboard'));
+
 	    }else{
 
 	        /** Carrega a View login */
