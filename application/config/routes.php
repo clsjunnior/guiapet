@@ -56,3 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'geral/Login';
 $route['registrar'] = 'geral/Registrar';
 $route['sair'] = 'geral/Sair';
+
+/** Página de administração */
+$route['dashboard'] = 'admin/inicial';
+$route['dashboard/inicio'] = 'admin/inicial';
