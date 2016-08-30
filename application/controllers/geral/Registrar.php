@@ -43,7 +43,7 @@ class Registrar extends CI_Controller {
         if ($this->form_validation->run() != true) {
 
             /** Carrega a view de registrar */
-            $this->load->view('registrar');
+            $this->load->view('geral/registrar');
         }else{
 
             /** @var Users $user Dados do usuario*/
@@ -64,7 +64,6 @@ class Registrar extends CI_Controller {
                                                     <h4><i class="icon fa fa-check-circle"></i> Bem vindo!</h4> Cadastro realizado com sucesso. </div>
                                           ');
             redirect(site_url('login'));
-//            $this->session->keep_flashdata('login');
         }
 	}
 

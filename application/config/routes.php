@@ -53,6 +53,6 @@ $route['default_controller'] = 'inicial';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['login'] = 'Login';
-$route['registrar'] = 'Registrar';
-$route['sair'] = 'Sair';
+$route['login'] = 'geral/Login';
+$route['registrar'] = 'geral/Registrar';
+$route['sair'] = 'geral/Sair';

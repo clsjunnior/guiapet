@@ -27,3 +27,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /ci_sessions/
 /user_guide/
+/bancoV3.mwb.bak

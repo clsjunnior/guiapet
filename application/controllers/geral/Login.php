@@ -46,7 +46,7 @@ class Login extends CI_Controller {
 	    }else{
 
 	        /** Carrega a View login */
-            $this->load->view('login');
+            $this->load->view('geral/login');
         }
 	}
 
