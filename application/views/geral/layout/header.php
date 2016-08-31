@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="<?=base_url('assets/fonts/font-awesome.min.css')?>">
     <!-- Ionicons -->
     <link rel="stylesheet" href="<?=base_url('assets/fonts//ionicons.min.css')?>">
+    <!-- owl -->
+    <link rel="stylesheet" href="<?=base_url('assets/plugins/owlCarousel/owl.carousel.min.css')?>">
     <!-- Estilo -->
     <link rel="stylesheet" href="<?=base_url('assets/css/estilo_geral.css')?>">
     

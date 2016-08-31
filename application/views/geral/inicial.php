@@ -9,19 +9,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<img src="<?=base_url('assets/third_party/logo/logo-branco.png')?>">
 		</div>
 		<div class="sub-menu">
-			<div class="container"></div>
+			<div class="container">
+				<section>
+					<div class="hi-icon-wrap hi-icon-effect-8">
+						<a href="#" class="hi-icon icon-veterinario"></a>
+						<a href="#" class="hi-icon icon-adestrador"></a>
+						<a href="#" class="hi-icon icon-petshop"></a>
+						<a href="#" class="hi-icon icon-hotel"></a>
+						<a href="#" class="hi-icon icon-taxi"></a>
+						<a href="#" class="hi-icon icon-localizacao"></a>
+					</div>
+				</section>
+			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="container">
 			<!-- owl carousel -->
-			<div class="col-lg-12 menu-recomendacoes">
-				<span class="label label-primary">Recomendação 01</span>
-				<span class="label label-primary">Recomendação 02</span>
-				<span class="label label-primary">Recomendação 03</span>
-				<span class="label label-primary">Recomendação 04</span>
-				<span class="label label-primary">Recomendação 05</span>
-				<span class="label label-primary">Recomendação 06</span>
+			<div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
+				<a class="label label-primary item">Recomendação 01</a>
+				<a class="label label-primary item">Recomendação 02</a>
+				<a class="label label-primary item">Recomendação 03</a>
+				<a class="label label-primary item">Recomendação 04</a>
+				<a class="label label-primary item">Recomendação 05</a>
+				<a class="label label-primary item">Recomendação 06</a>
 			</div>
 		</div>
 	</div>
@@ -44,6 +55,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				zoom: 8
 			});
 		}
+
+		$('.owl-carousel').owlCarousel({
+			loop:false,
+			margin:10,
+			nav:false,
+			responsive:{
+				0:{
+					items:1
+				},
+				600:{
+					items:3
+				},
+				1000:{
+					items:6
+				}
+			}
+		})
 	</script>
 </body>
 </html>
