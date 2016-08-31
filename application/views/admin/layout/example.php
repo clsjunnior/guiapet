@@ -57,8 +57,6 @@
 <!--    Créditos-->
     <?php $this->load->view('admin/layout/credits') ?>
 
-<!--    Menu do topo-->
-    <?php $this->load->view('admin/layout/top_menu') ?>
 </div>
 
 <!--Js e bibliotecas-->

@@ -60,3 +60,4 @@ $route['sair'] = 'geral/Sair';
 /** Página de administração */
 $route['dashboard'] = 'admin/inicial';
 $route['dashboard/inicio'] = 'admin/inicial';
+$route['dashboard/perfil'] = 'admin/Perfil';
