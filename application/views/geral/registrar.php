@@ -52,7 +52,7 @@
                 <?=form_error('sexo', '<label class="control-label text-red" for="sexo">', '</label><br>')?>
                 <div class="row">
                     <div class="col-xs-2">
-                        <label for="nome">*Sexo:</label>
+                        <label for="sexo">*Sexo:</label>
                     </div>
                     <div class="col-xs-5">
                         <label>
