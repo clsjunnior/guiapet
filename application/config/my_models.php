@@ -12,6 +12,7 @@
  * <examples>
  *
  * @property Users $user
+ * @property Locations $location
  *
  *
  *

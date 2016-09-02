@@ -19,6 +19,7 @@ class Login extends CI_Controller {
 
         /** Carregamento de models */
         $this->load->model('Users', 'user');
+        $this->load->model('Locations', 'location');
     }
 
     /**
@@ -38,8 +39,13 @@ class Login extends CI_Controller {
             /** @var Users $user busca o usuário no banco por login*/
             $user = $this->user->getByLogin($login)->result_array()[0];
 
-            /** @var $session cria uma sessão com todos dados do usuario e uma login  */
+            /** @var $session cria uma sessão com todos dados do usuario */
             $session['user'] = $user;
+
+            /** Caso o usuario tenha localização, é selecionado e adicionado nas sessão */
+            if (isset($user['location_id'])){
+                $session['user']['location'] = $this->location->getById($user['location_id'])->result_array()[0];
+            }
             $session['login'] = true;
             $this->session->set_userdata($session);
 
