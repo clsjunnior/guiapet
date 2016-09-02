@@ -6,6 +6,10 @@ class Perfil extends CI_Controller {
     {
         parent::__construct();
 
+        if(!$this->session->has_userdata('login')){
+            redirect(site_url('login'));
+        }
+
         /** Carregamento de bibliotecas */
         $this->load->library('form_validation');
         $this->load->library('encrypt');

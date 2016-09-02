@@ -24,7 +24,7 @@
 
         <section class="content">
 
-            <div class="box box-success">
+            <div class="box box-success collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Dados pessoais</h3>
                     <div class="box-tools pull-right">
@@ -60,7 +60,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group">
-                                    <label for="sex" class="col-sm-4 control-label">*Sexo:</label>
+                                    <label for="sex" class="col-sm-4 control-label">Sexo:</label>
                                     <div class="col-sm-8">
                                         <label><input type="radio" value="M" name="sex" <?=set_radio('sexo', 'M', TRUE)?>> Maculino</label>
                                         <label><input type="radio" value="F" name="sex" <?=set_radio('sexo', 'F')?>> Feminino</label>
@@ -76,30 +76,118 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="senha">Senha:</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" placeholder="Senha" id="senha" name="senha" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="senhaConf">Confirmação:</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" placeholder="Confirmação" id="senhaConf" name="senhaConf" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="senhaAtual">Senha Atual:</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" placeholder="Senha atual" id="senhaAtual" name="senhaAtual" required class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="box-footer">
-                        Footer
+                    <div class="box-footer text-right">
+                        <button class="btn  btn-success btn-sm" type="submit" value="perfil">Alterar</button>
                     </div>
                 </form>
 
             </div>
 
-            <div class="box box-info collapsed-box">
+            <div class="box box-info ">
                 <div class="box-header with-border">
                     <h3 class="box-title">Endereço</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i></button>
                     </div>
                 </div>
+                <form action="<?=site_url('dashboard/perfil')?>" method="post" class="form-horizontal">
                 <div class="box-body">
-                    Start creating your amazing application!
-                </div>
 
-                <div class="box-footer">
-                    Footer
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="state">Estado:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Estado" id="state" name="state" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="city">Cidade:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Cidade" id="city" name="city" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="zip_code">Cep:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" placeholder="Cep" id="zip_code" name="zip_code" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="street">Endereço:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Endereço" id="street" name="street" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="neigborhood">Bairro:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Bairro" id="neigborhood" name="neigborhood" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="complement">Complemento:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Complemento" id="complement" name="complement" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                    </form>
+                <div class="box-footer text-right">
+                    <button class="btn  btn-info btn-sm" type="submit" value="perfil">Alterar</button>
                 </div>
 
             </div>
@@ -119,6 +207,7 @@
 <script>
     $(document).ready(function () {
         $("#tel").inputmask("(999) 99999-9999");
+        $("#zip_code").inputmask("99999-999");
     })
 </script>
 </body>
