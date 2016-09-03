@@ -50,7 +50,7 @@
                         <!-- User image -->
                         <li class="user-header">
                             <p>
-                                <?=$user['name']?>
+                                <?= getSesUser(['name']) ?>
                                 <small>Membro desde <?= date('d/m/Y', strtotime(getSesUser(['created_at']))) ?></small>
                             </p>
                         </li>
