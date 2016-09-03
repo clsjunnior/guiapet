@@ -35,39 +35,37 @@
                 <form action="<?=site_url('dashboard/perfil')?>" method="post" class="form-horizontal">
                     <div class="box-body">
 
+                        <?= $this->session->flashdata('perfil') ?>
+
                         <div class="row">
                             <div class="col-xs-12">
+                                <?= form_error('name', '<div class="row"><div class="col-sm-offset-2 col-sm-10"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="nome">Nome:</label>
+                                    <label class="col-sm-2 control-label" for="name">Nome:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="nome" id="nome" name="nome" value="<?=set_value('name',$user['name'])?>" required class="form-control">
+                                        <input type="text" placeholder="name" id="name" name="name"
+                                               value="<?= set_value('name', $user['name']) ?>" required
+                                               class="form-control">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-<!--                        <div class="row">-->
-<!--                            <div class="col-xs-12">-->
-<!--                                <div class="form-group">-->
-<!--                                    <label class="col-sm-2 control-label" for="email">E-mail:</label>-->
-<!--                                    <div class="col-sm-10">-->
-<!--                                        <input type="email" placeholder="E-mail" id="email" name="email" value="--><?//=set_value('email',$user['email'])?><!--" required class="form-control">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
+                                <?= form_error('sex', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <label for="sex" class="col-sm-4 control-label">Sexo:</label>
                                     <div class="col-sm-8">
-                                        <label><input type="radio" value="M" name="sex" <?=set_radio('sexo', 'M', TRUE)?>> Maculino</label>
-                                        <label><input type="radio" value="F" name="sex" <?=set_radio('sexo', 'F')?>> Feminino</label>
+                                        <label><input type="radio" value="M"
+                                                      name="sex" <?= set_radio('sex', 'M', TRUE) ?>> Maculino</label>
+                                        <label><input type="radio" value="F" name="sex" <?= set_radio('sex', 'F') ?>>
+                                            Feminino</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
+                                <?= form_error('tel', '<div class="row"><div class="col-sm-offset-2 col-sm-10"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="tel">Telefone:</label>
                                     <div class="col-sm-10">
@@ -79,14 +77,17 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
+                                <?= form_error('password', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="password">Senha:</label>
+                                    <label class="col-sm-4 control-label" for="password">Nova senha:</label>
                                     <div class="col-sm-8">
-                                        <input type="password" placeholder="Senha" id="password" name="password" class="form-control">
+                                        <input type="password" placeholder="Nova senha" id="password" name="password"
+                                               class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
+                                <?= form_error('passwordConf', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="passwordConf">Confirmação:</label>
                                     <div class="col-sm-8">
@@ -98,6 +99,7 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+                                <?= form_error('passwordAtual', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="passwordAtual">Senha Atual:</label>
                                     <div class="col-sm-8">
@@ -110,7 +112,8 @@
                     </div>
 
                     <div class="box-footer text-right">
-                        <button class="btn  btn-success btn-sm" type="submit" value="perfil">Alterar</button>
+                        <button class="btn  btn-success btn-sm" type="submit" value="perfil" name="submit">Alterar
+                        </button>
                     </div>
                 </form>
 
@@ -176,8 +179,21 @@
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="complement">Complemento:</label>
+                                    <label class="col-sm-4 control-label" for="number">Número:</label>
                                     <div class="col-sm-8">
+                                        <input type="number" placeholder="Nº" id="number" name="number"
+                                               value="<?= set_value('number', $location['number']) ?>"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="complement">Complemento:</label>
+                                    <div class="col-sm-10">
                                         <input type="text" placeholder="Complemento" id="complement" name="complement" value="<?=set_value('complement',$location['complement'])?>" class="form-control">
                                     </div>
                                 </div>
@@ -185,10 +201,13 @@
                         </div>
 
                     </div>
-                </form>
+
                 <div class="box-footer text-right">
-                    <button class="btn  btn-info btn-sm" type="submit" value="localizacao">Alterar</button>
+                    <button class="btn  btn-info btn-sm" type="submit" value="localizacao" id="localizacao"
+                            name="submit">Alterar
+                    </button>
                 </div>
+                </form>
 
             </div>
 

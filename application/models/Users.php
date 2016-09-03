@@ -36,4 +36,22 @@ class Users extends CI_Model {
         return $this->db->insert('users', $user);
     }
 
+
+    /**
+     * Atualiza o usuario
+     *
+     * @param $user
+     * @param $id
+     * @return bool
+     */
+    public function updateUser($user, $id)
+    {
+        /** Preenche o campo updated_at com a data e hora atual no formato do banco de dados*/
+        $user['updated_at'] = gmdate('Y-m-d H:i:s', time());
+
+        /** Atualiza o usuario onde o ID foi passado no parametro */
+        $this->db->where('id', $id);
+        return $this->db->update('users', $user);
+    }
+
 }
