@@ -14,12 +14,15 @@
     <link rel="mask-icon" href="<?=base_url('assets/third_party/favicon/safari-pinned-tab.svg')?>" color="#5bbad5">
     <meta name="theme-color" content="#27568d">
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro:300,400,700" rel="stylesheet">
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="<?=base_url('assets/css/bootstrap.css')?>">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?=base_url('assets/fonts/font-awesome.min.css')?>">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="<?=base_url('assets/fonts//ionicons.min.css')?>">
+    <link rel="stylesheet" href="<?=base_url('assets/fonts/ionicons.min.css')?>">
+    <!-- select2 -->
+    <link rel="stylesheet" href="<?=base_url('assets/plugins/select2/select2.css')?>">
     <!-- owl -->
     <link rel="stylesheet" href="<?=base_url('assets/plugins/owlCarousel/owl.carousel.min.css')?>">
     <!-- Estilo -->

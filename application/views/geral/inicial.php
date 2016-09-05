@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="row">
 		<div class="container">
 			<!-- owl carousel -->
+			<h3>Pessoas na sua região também pesquisaram...</h3>
 			<div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
 				<a class="label label-primary item">Recomendação 01</a>
 				<a class="label label-primary item">Recomendação 02</a>
@@ -38,23 +39,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
-
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3>Opções de Pesquisa</h3>
+				</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<label for="categoria">Estabelecimentos por categoria</label>
+							<select class="form-control" id="categoria">
+								<option>Selecione uma Categoria</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="estabelecimentos">Estabelecimentos</label>
+							<input type="text" id="estabelecimentos" class="form-control" placeholder="Informe o nome do estabelecimento">
+						</div>
+						<div class="form-group">
+							<label for="tag">Tag - Palavras-Chave</label>
+							<select class="form-control" id="tag" multiple="multiple">
+								<option value="tag1">tag1</option>
+								<option value="tag2">tag2</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="estabelecimentos">Avaliação</label>
+							<input type="hidden" class="rating" data-fractions="2"/>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
 			<div id="map"></div>
-
 		</div>
 	</div>
 	<?php $this->load->view('geral/layout/scripts') ?>
 	<script>
-		function initMap() {
+		window.initMap = function initMap() {
 			// Create a map object and specify the DOM element for display.
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: {lat: -21.673391, lng: -49.747130},
 				scrollwheel: false,
 				zoom: 8
 			});
-		}
+		};
 
 		$('.owl-carousel').owlCarousel({
 			loop:false,
@@ -72,6 +105,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			}
 		})
+
+		$("#tag, #categoria").select2({
+			placeholder: 'Selecione uma Opção'
+		});
 	</script>
 </body>
 </html>
