@@ -85,4 +85,10 @@ class Login extends CI_Controller {
         return false;
 
     }
+
+    public function sair(){
+        $this->session->unset_userdata('login');
+
+        redirect(site_url('login'));
+    }
 }
