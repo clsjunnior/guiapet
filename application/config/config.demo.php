@@ -25,6 +25,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['base_url'] = 'http://localhost/GuiaPet/';
 
+date_default_timezone_set('America/Sao_paulo');
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -114,7 +116,7 @@ $config['enable_hooks'] = FALSE;
 | https://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'My_';
+$config['subclass_prefix'] = 'MY_';
 
 /*
 |--------------------------------------------------------------------------
@@ -478,7 +480,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'America/Sao_paulo';
+$config['time_reference'] = 'local';
 
 /*
 |--------------------------------------------------------------------------
