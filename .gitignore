@@ -29,3 +29,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /user_guide/
 /bancoV3.mwb.bak
 /bancoV3.mwb.beforefix
+/application/config/config.php
+/application/config/database.php
