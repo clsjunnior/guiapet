@@ -10,14 +10,20 @@ class Categories extends CI_Model
 {
 
     /**
-     * Users constructor.
+     * Categories constructor.
      */
     public function __construct(){
         parent::__construct();
     }
 
 
+    /**
+     * Retorna todas as categorias
+     *
+     * @return CI_DB_result
+     */
     public function getAll(){
+        /** Retorna todas as categorias (no formato de classe) */
         return $this->db->get('categories');
     }
 

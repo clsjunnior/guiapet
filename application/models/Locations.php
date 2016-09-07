@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Locations extends CI_Model {
 
     /**
-     * Users constructor.
+     * Locations constructor.
      */
     public function __construct(){
 		parent::__construct();
@@ -11,6 +11,8 @@ class Locations extends CI_Model {
 
 
     /**
+     * Seleciona o estabelecimento por ID
+     *
      * @param int $id
      * @return CI_DB_result
      */

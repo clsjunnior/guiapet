@@ -30,8 +30,7 @@ class Inicial extends CI_Controller {
 	{
         $dados['title'] = "Bem Vindo ao Guia do Pet";
 
-
-
+        /** Retorna todas as categorias em formato array */
         $data['cat'] = $this->category->getAll()->result_array();
 
         // se eu colocar outra view ele passando o data ele buga e aparace duas index

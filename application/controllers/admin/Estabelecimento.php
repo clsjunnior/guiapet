@@ -46,6 +46,8 @@ class Estabelecimento extends CI_Controller
         }else{
             $dados['title'] = "Editar estabelecimento";
         }
+
+        /** Retorna todas as categorias no formato de objetos */
         $dados['categories'] = $this->category->getAll()->result();
         $dados['establishment'] = null;
 
