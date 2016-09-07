@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="<?=base_url('assets/plugins/owlCarousel/owl.carousel.min.css')?>">
     <!-- Estilo -->
     <link rel="stylesheet" href="<?=base_url('assets/css/estilo_geral.css')?>">
-    
+
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>

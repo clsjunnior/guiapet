@@ -58,6 +58,53 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 3px rgb(98, 134, 184) !important;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 3px rgb(98, 134, 184) !important;
 }
+
+.rating-symbol{
+    font-size: 2em;
+}
+
+/* Display star ratings */
+.br-theme-fontawesome-stars .br-widget {
+    height: 38px;
+    white-space: nowrap;
+}
+.br-theme-fontawesome-stars .br-widget a {
+    font: normal normal normal 30px/1 FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    margin-right: 2px;
+}
+.br-theme-fontawesome-stars .br-widget a:after {
+    content: '\f005';
+    color: #d2d2d2;
+}
+.br-theme-fontawesome-stars .br-widget a.br-active:after {
+    color: #EDB867;
+}
+.br-theme-fontawesome-stars .br-widget a.br-selected:after {
+    color: #EDB867;
+}
+.br-theme-fontawesome-stars .br-widget .br-current-rating {
+    display: none;
+}
+.br-theme-fontawesome-stars .br-readonly a {
+    cursor: default;
+}
+@media print {
+    .br-theme-fontawesome-stars .br-widget a:after {
+        content: '\f006';
+        color: black;
+    }
+    .br-theme-fontawesome-stars .br-widget a.br-active:after,
+    .br-theme-fontawesome-stars .br-widget a.br-selected:after {
+        content: '\f005';
+        color: black;
+    }
+}
+
+/**/
+
 #map{
     min-height: 100vh;
 }
