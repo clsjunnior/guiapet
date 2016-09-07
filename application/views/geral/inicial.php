@@ -49,10 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<label for="categoria">Estabelecimentos por categoria</label>
 							<select class="form-control" id="categoria">
 								<option>Selecione uma Categoria</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
+								<?php
+								if (count($cat)) {
+									foreach ($cat as $list) {
+										echo "<option value='". $list['id'] . "'>" . $list['name'] . "</option>";
+									}
+								}
+								?>
 							</select>
 						</div>
 						<div class="form-group">
@@ -67,27 +70,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="estabelecimentos">Avaliação</label>
-							<input type="hidden" class="rating" data-fractions="2"/>
+							<label>Avaliação</label><br>
+							<select id="example">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary btn-lg">Ativar minha localização</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
-			<div id="map"></div>
+			<div id="mapa"></div>
 		</div>
 	</div>
 	<?php $this->load->view('geral/layout/scripts') ?>
 	<script>
-		window.initMap = function initMap() {
-			// Create a map object and specify the DOM element for display.
-			var map = new google.maps.Map(document.getElementById('map'), {
-				center: {lat: -21.673391, lng: -49.747130},
-				scrollwheel: false,
-				zoom: 8
-			});
-		};
 
 		$('.owl-carousel').owlCarousel({
 			loop:false,
@@ -108,6 +112,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		$("#tag, #categoria").select2({
 			placeholder: 'Selecione uma Opção'
+		});
+
+		$('#example').barrating({
+			theme: 'fontawesome-stars'
 		});
 	</script>
 </body>

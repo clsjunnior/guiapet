@@ -16,7 +16,12 @@ class Inicial extends CI_Controller {
         /** Carregamento de bibliotecas */
 
         /** Carregamento de models */
+        $this->load->model('Categories');
+
+
     }
+
+
 
     /**
      *  Página index da administração
@@ -25,6 +30,14 @@ class Inicial extends CI_Controller {
 	{
         $dados['title'] = "Bem Vindo ao Guia do Pet";
 
+
+
+        $data['cat'] = $this->Categories->retorna_Categorias();
+
+        // se eu colocar outra view ele passando o data ele buga e aparace duas index
         $this->load->view('geral/inicial', $dados);
+
+
+
 	}
 }
