@@ -16,7 +16,7 @@ class Inicial extends CI_Controller {
         /** Carregamento de bibliotecas */
 
         /** Carregamento de models */
-        $this->load->model('Categories');
+        $this->load->model('Categories','category');
 
 
     }
@@ -32,7 +32,7 @@ class Inicial extends CI_Controller {
 
 
 
-        $data['cat'] = $this->Categories->retorna_Categorias();
+        $data['cat'] = $this->category->getAll()->result_array();
 
         // se eu colocar outra view ele passando o data ele buga e aparace duas index
         $this->load->view('geral/inicial', $dados);

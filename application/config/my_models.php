@@ -13,6 +13,8 @@
  *
  * @property Users $user
  * @property Locations $location
+ * @property Establishhments $establishment
+ * @property Categories $category
  *
  *
  *

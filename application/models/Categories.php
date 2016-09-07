@@ -17,16 +17,8 @@ class Categories extends CI_Model
     }
 
 
-    public function retorna_Categorias(){
-        $data = array();
-        $query = $this->db->get('categories');
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row){
-                $data[] = $row;
-            }
-        }
-        $query->free_result();
-        return $data;
+    public function getAll(){
+        return $this->db->get('categories');
     }
 
 

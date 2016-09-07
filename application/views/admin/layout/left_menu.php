@@ -16,6 +16,11 @@
                     <i class="fa fa-home"></i> <span>Inicio</span>
                 </a>
             </li>
+            <li <?=(current_url() == site_url('dashboard/estabelecimentos') || site_url('dashboard/estabelecimentos/editar')  ? 'class="active"' : '')?>>
+                <a href="<?=site_url('dashboard/estabelecimentos')?>">
+                    <i class="fa fa-building"></i> <span>Estabelecimentos</span>
+                </a>
+            </li>
 <!--            <li class="treeview">-->
 <!--                <a href="#">-->
 <!--                    <i class="fa fa-pie-chart"></i>-->

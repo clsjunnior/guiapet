@@ -58,7 +58,7 @@
                         <li class="user-body">
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <a href="#">Estabelecimentos</a>
+                                    <a href="<?=site_url('dashboard/estabelecimentos')?>">Estabelecimentos</a>
                                 </div>
                             </div>
                             <!-- /.row -->

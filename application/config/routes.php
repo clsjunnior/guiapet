@@ -61,3 +61,6 @@ $route['sair'] = 'geral/Login/sair';
 $route['dashboard'] = 'admin/inicial';
 $route['dashboard/inicio'] = 'admin/inicial';
 $route['dashboard/perfil'] = 'admin/Perfil';
+$route['dashboard/estabelecimentos'] = 'admin/Estabelecimento';
+$route['dashboard/estabelecimentos/editar'] = 'admin/Estabelecimento/editar';
+$route['dashboard/estabelecimentos/editar/(:num)'] = 'admin/Estabelecimento/editar/$1';
