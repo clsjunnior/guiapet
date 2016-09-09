@@ -12,7 +12,6 @@ user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
 
 # IDE Files
 #-------------------------
@@ -29,5 +28,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /user_guide/
 /bancoV3.mwb.bak
 /bancoV3.mwb.beforefix
-/application/config/config.php
-/application/config/database.php
+

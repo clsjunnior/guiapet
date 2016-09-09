@@ -12,7 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.2.4",
-		"omarkdev/bash-igniter": "^1.0"
+		"omarkdev/bash-igniter": "^1.0",
+		"tan5en5/codeigniter-debugbar": "dev-master"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
