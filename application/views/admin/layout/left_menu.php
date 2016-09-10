@@ -11,12 +11,12 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">NAVEGAÇÃO</li>
-            <li <?=(current_url() == site_url('dashboard') ? 'class="active"' : '')?>>
+            <li <?=(uri_string() == 'dashboard' ? 'class="active"' : '')?>>
                 <a href="<?=site_url('dashboard')?>">
                     <i class="fa fa-home"></i> <span>Inicio</span>
                 </a>
             </li>
-            <li <?=(current_url() == site_url('dashboard/estabelecimentos') || site_url('dashboard/estabelecimentos/editar')  ? 'class="active"' : '')?>>
+            <li <?=(strpos(uri_string(), "dashboard/estabelecimentos") !== FALSE  ? 'class="active"' : '')?>>
                 <a href="<?=site_url('dashboard/estabelecimentos')?>">
                     <i class="fa fa-building"></i> <span>Estabelecimentos</span>
                 </a>

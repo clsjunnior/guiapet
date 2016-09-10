@@ -4,33 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9db79a41b7376937a1adf92ca6ba3d85",
-    "content-hash": "5b194a78051528b79a3e18ad1220ab65",
+    "hash": "ec64811788d5c3192f11465191ec0791",
+    "content-hash": "af217c66efedbbe129aa9ccedf86adcb",
     "packages": [
         {
-            "name": "compwright/codeigniter-installers",
-            "version": "1.1.4",
+            "name": "composer/installers",
+            "version": "v1.0.25",
             "source": {
                 "type": "git",
-                "url": "https://github.com/compwright/codeigniter-installers.git",
-                "reference": "adbbd5ae2cbf5a24a39931235b1ac7dab56abb4f"
+                "url": "https://github.com/composer/installers.git",
+                "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/compwright/codeigniter-installers/zipball/adbbd5ae2cbf5a24a39931235b1ac7dab56abb4f",
-                "reference": "adbbd5ae2cbf5a24a39931235b1ac7dab56abb4f",
+                "url": "https://api.github.com/repos/composer/installers/zipball/36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
+                "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
                 "shasum": ""
             },
-            "require-dev": {
-                "composer/composer": "1.0.*@dev"
+            "require": {
+                "composer-plugin-api": "^1.0"
             },
-            "type": "composer-installer",
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-plugin",
             "extra": {
-                "class": "Composer\\Installer\\CodeigniterInstaller"
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
             },
             "autoload": {
-                "psr-0": {
-                    "Composer\\Installer": "src/"
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -39,27 +50,112 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathon Hill",
-                    "email": "jhill9693@gmail.com",
-                    "homepage": "http://jonathonhill.net",
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "ImageCMS",
+                "MODX Evo",
+                "Mautic",
+                "OXID",
+                "SMF",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "grav",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2016-04-13 19:46:30"
+        },
+        {
+            "name": "maltyxx/debugbar",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maltyxx/debugbar.git",
+                "reference": "885b5f3acecde64a2ba4dbe137ba2f4f31aee669"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maltyxx/debugbar/zipball/885b5f3acecde64a2ba4dbe137ba2f4f31aee669",
+                "reference": "885b5f3acecde64a2ba4dbe137ba2f4f31aee669",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "1.0.*",
+                "maximebf/debugbar": "^1.0.0",
+                "php": ">=5.3.0"
+            },
+            "type": "codeigniter-third-party",
+            "extra": {
+                "installer-name": "debugbar"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Tansens",
+                    "email": "atansens@gac-technology.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Yoann Vanitou",
+                    "email": "yvanitou@gmail.com",
                     "role": "Developer"
                 }
             ],
-            "description": "Composer installers for CodeIgniter",
-            "homepage": "https://github.com/compwright/codeigniter-installers",
+            "description": "PHP Debug Bar for Codeigniter 3",
+            "homepage": "https://github.com/maltyxx/phpdebugbar",
             "keywords": [
-                "MX",
+                "bar",
                 "codeigniter",
-                "composer",
-                "core",
-                "hmvc",
-                "installer",
-                "library",
-                "module",
-                "spark",
-                "sparks"
+                "debug",
+                "debugbar",
+                "profiler"
             ],
-            "time": "2012-11-12 16:11:38"
+            "time": "2016-07-29 14:32:31"
         },
         {
             "name": "maximebf/debugbar",
@@ -378,45 +474,6 @@
                 "dump"
             ],
             "time": "2016-08-31 09:05:42"
-        },
-        {
-            "name": "tan5en5/codeigniter-debugbar",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Tan5en5/codeigniter-debugbar.git",
-                "reference": "c0a7ca7a54d7cdfa5648f1af84f81500ca33b46a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Tan5en5/codeigniter-debugbar/zipball/c0a7ca7a54d7cdfa5648f1af84f81500ca33b46a",
-                "reference": "c0a7ca7a54d7cdfa5648f1af84f81500ca33b46a",
-                "shasum": ""
-            },
-            "require": {
-                "compwright/codeigniter-installers": "*",
-                "maximebf/debugbar": ">=1.0.0"
-            },
-            "type": "codeigniter-third-party",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Anthony Tansens",
-                    "email": "atansens@gac-technology.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "CodeIgniter Debug Bar using PHP Debug Bar.",
-            "homepage": "https://github.com/tan5en5/codeigniter-debugbar",
-            "keywords": [
-                "codeigniter",
-                "debug",
-                "profiler"
-            ],
-            "time": "2016-05-11 21:40:33"
         }
     ],
     "packages-dev": [
@@ -453,9 +510,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "tan5en5/codeigniter-debugbar": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

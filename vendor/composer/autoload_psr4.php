@@ -10,5 +10,6 @@ return array(
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'DebugBar\\' => array($vendorDir . '/maximebf/debugbar/src/DebugBar'),
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'BashIgniter\\' => array($vendorDir . '/omarkdev/bash-igniter/src'),
 );
