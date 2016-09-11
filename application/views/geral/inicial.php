@@ -54,10 +54,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									foreach ($cat as $list) {
 										echo "<option value='". $list['id'] . "'>" . $list['name'] . "</option>";
 									}
+								}else{
+									echo "<option value='0'>Nenhuma categoria cadastrada</option>";
 								}
 								?>
 							</select>
 						</div>
+
 						<div class="form-group">
 							<label for="estabelecimentos">Estabelecimentos</label>
 							<input type="text" id="estabelecimentos" class="form-control" placeholder="Informe o nome do estabelecimento">
@@ -80,7 +83,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</select>
 						</div>
 						<div class="form-group">
-							<button class="btn btn-primary btn-lg">Ativar minha localização</button>
+							<label>Pesquisa por proximidade</label><br>
+							<button class="btn btn-primary btn-lg my-btn">Ativar minha localização</button>
 						</div>
 					</form>
 				</div>
@@ -90,9 +94,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div id="mapa"></div>
 		</div>
 	</div>
+	
 	<?php $this->load->view('geral/layout/scripts') ?>
-	<script>
 
+
+	<script>
+		
 		$('.owl-carousel').owlCarousel({
 			loop:false,
 			margin:10,
