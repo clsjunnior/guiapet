@@ -8,7 +8,7 @@ window.initMap = function initMap() {
     // Create a map object and specify the DOM element for display.
     var map = new google.maps.Map(document.getElementById('mapa'), {
         center: {lat: -21.673391, lng: -49.747130},
-        scrollwheel: true,
+        scrollwheel: false,
         zoom: 16,
         styles: [{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#e3e3e2"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#bfccde"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#c8de8f"}]},{"featureType":"poi.place_of_worship","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#514e4e"},{"lightness":54}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":43},{"lightness":-11},{"color":"#6286b8"}]}]
 
@@ -24,7 +24,7 @@ var pontos = [
         lat: -21.672274,
         lng: -49.752713,
         nome: "Clinica 01",
-        descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin vel nulla sed tempus. Vestibulum sodales eros ac odio sagittis, ac suscipit magna mattis. Etiam ultricies, sapien sed rutrum                         dignissim, diam turpis mollis leo, vitae finibus nunc sem ut dolor. Fusce vehicula venenatis mi quis venenatis."
+        descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin vel nulla sed tempus. Vestibulum sodales eros ac odio sagittis, ac suscipit magna mattis. Etiam ultricies, sapien sed rutrum                         dignissim, diam turpis mollis leo, vitae finibus nunc sem ut dolor. Fusce vehicula venenatis mi quis venenatis. Fusce vehicula venenatis mi quis venenatis"
     },
     {
         lat: -21.662274,
@@ -129,16 +129,16 @@ function ModificaInfowindow(infowindow) {
         iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
         // Desloca a infowindow 115px para a direita
-        iwOuter.parent().parent().css({left: '115px'});
+        iwOuter.parent().parent().css({left: '30px'});
 
         // Desloca a sombra da seta a 76px da margem esquerda
-        iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+        iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 160px !important;'});
 
         // Desloca a seta a 76px da margem esquerda
-        iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+        iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 160px !important;'});
 
         // Altera a cor desejada para a sombra da cauda
-        iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+        iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '#6286b8) 0px 1px 6px', 'z-index' : '1'});
 
         // Referência ao DIV que agrupa os elementos do botão fechar
         var iwCloseBtn = iwOuter.next();
