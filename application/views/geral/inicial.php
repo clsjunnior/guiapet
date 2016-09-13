@@ -117,6 +117,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		})
 
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		});
+
 		$("#tag, #categoria").select2({
 			placeholder: 'Selecione uma Opção'
 		});

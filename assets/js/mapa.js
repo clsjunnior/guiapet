@@ -2,7 +2,6 @@
  * Created by Windows 10 on 07/09/2016.
  */
 
-
 window.initMap = function initMap() {
 
     // Create a map object and specify the DOM element for display.
@@ -24,7 +23,7 @@ var pontos = [
         lat: -21.672274,
         lng: -49.752713,
         nome: "Clinica 01",
-        descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin vel nulla sed tempus. Vestibulum sodales eros ac odio sagittis, ac suscipit magna mattis. Etiam ultricies, sapien sed rutrum                         dignissim, diam turpis mollis leo, vitae finibus nunc sem ut dolor. Fusce vehicula venenatis mi quis venenatis. Fusce vehicula venenatis mi quis venenatis"
+        descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin vel nulla sed tempus. Vestibulum sodales eros ac odio sagittis, ac suscipit magna mattis. Etiam ultricies, sapien sed rutrum..."
     },
     {
         lat: -21.662274,
@@ -95,9 +94,17 @@ function createMarker(latlng, nome, descricao, map, infoWindow){
         var conteudo = '<div id="iw-container">' +
         '<div class="iw-title">'+ nome +'</div>' +
         '<div class="iw-content">' +
-        '<div class="iw-subTitle">Estabelecimento</div>' +
-        '<img src="images/vistalegre.jpg" alt="Fabrica de Porcelana da Vista Alegre" height="115" width="83">' +
-        '<p> '+ descricao +' </p>' +
+        '<div class="iw-subTitle">Clinica Veterinária</div>' +
+        '<img src="assets/third_party/img/img01.jpg">' +
+        '<p>'+ descricao +'<a href="#">Saiba Mais</a></p><hr/>' +
+            '<div class="iw-subTitle">Contatos</div>' +
+            '<p style="margin-top:5px; "><strong><span class="glyphicon glyphicon-phone" style="margin-right: 5px;" aria-hidden="true"></span></strong> (014) 99882-1015 <br/>'+
+            '<strong><span class="glyphicon glyphicon-phone-alt" style="margin-right: 5px;" aria-hidden="true"></span></strong> (014) 3533-2323 </p>'+
+            '<button type="button" class="btn btn-default fa-margin" data-toggle="tooltip" data-placement="bottom" title="Site"> <span class="fa fa-external-link"></span> </button>'+
+            '<button type="button" class="btn btn-default fa-margin" data-toggle="tooltip" data-placement="bottom" title="Facebook"> <span class="fa fa-facebook"></span> </button>'+
+            '<button type="button" class="btn btn-default fa-margin" data-toggle="tooltip" data-placement="bottom" title="Instagram"> <span class="fa fa-instagram"></span> </button>'+
+            '<hr/>'+
+        '<a href="#" class="btn btn-primary my-btn btn-block">Conheça!!</a>'+
         '<div class="iw-bottom-gradient"></div>' +
         '</div>';
 

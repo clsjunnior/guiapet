@@ -8,6 +8,11 @@ h1, h2, h3, h4, h5, h6{
     font-weight: 600;
     color: #1C3E5E;
 }
+hr{margin-top: 10px; margin-bottom: 10px;}
+
+.fa-margin{
+    margin: 3px;
+}
 
 .my-btn{
     background-color: #1c3e5e;
@@ -120,6 +125,7 @@ h1, h2, h3, h4, h5, h6{
 #mapa{
     min-height: 80vh;
 }
+/*mudança do botao de close maps*/
 img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
     content:url("close.png");
     width:30px !important;
@@ -139,20 +145,19 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
 #iw-container {
     margin-bottom: 10px;
     width: 100%;
-
 }
 #iw-container .iw-title {
     font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 22px;
-    font-weight: 400;
+    font-size: 2em;
+    font-weight: bold;
     padding: 10px;
     background-color: #6286b8;
     color: white;
     margin: 0;
     border-radius: 2px 2px 0 0;
 }
+
 #iw-container .iw-content {
-    font-size: 13px;
     line-height: 18px;
     font-weight: 400;
     margin-right: 1px;
@@ -161,12 +166,22 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 .iw-content img {
-    width: 95%;
-    margin-left: 2.5%;
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
+.iw-content p{
+    text-align: justify;
+    font-size: 1.1em;
+}
+.iw-content a .btn{
+    font-size: 1.3em;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 .iw-subTitle {
-    font-size: 16px;
+    font-size: 1.3em;
     font-weight: 700;
     padding: 5px 0;
 }
