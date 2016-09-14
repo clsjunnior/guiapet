@@ -18,3 +18,10 @@ $hook['post_controller_constructor'] = array(
     'filename' => 'debug.php',
     'filepath' => 'hooks'
 );
+
+$hook['post_controller'] = array(
+    'class' => '',
+    'function' => 'baseUrl',
+    'filename' => 'js.php',
+    'filepath' => 'hooks'
+);

@@ -76,7 +76,7 @@ function displayMarkers(map){
 // Função que cria os marcadores e define o conteúdo de cada Info Window.
 function createMarker(latlng, nome, descricao, map, infoWindow){
     var icone = {
-        url: 'assets/third_party/iconMaps/IconVet.png',
+        url: base_url + "assets/third_party/iconMaps/IconVet.png",
     };
     var marker = new google.maps.Marker({
         position: latlng,
@@ -95,7 +95,7 @@ function createMarker(latlng, nome, descricao, map, infoWindow){
         '<div class="iw-title">'+ nome +'</div>' +
         '<div class="iw-content">' +
         '<div class="iw-subTitle">Clinica Veterinária</div>' +
-        '<img src="assets/third_party/img/img01.jpg">' +
+        '<img src="'+base_url+'assets/third_party/img/img01.jpg">' +
         '<p>'+ descricao +'<a href="#">Saiba Mais</a></p><hr/>' +
             '<div class="iw-subTitle">Contatos</div>' +
             '<p style="margin-top:5px; "><strong><span class="glyphicon glyphicon-phone" style="margin-right: 5px;" aria-hidden="true"></span></strong> (014) 99882-1015 <br/>'+
@@ -165,9 +165,4 @@ function ModificaInfowindow(infowindow) {
     });
 
 }
-
-
-
-
-
 
