@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro:300,400,700" rel="stylesheet">
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="<?=base_url('assets/css/bootstrap.css')?>">
+    <link rel="stylesheet" href="<?=base_url('assets/css/jasny-bootstrap.min.css')?>">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?=base_url('assets/fonts/font-awesome.min.css')?>">
     <!-- Ionicons -->

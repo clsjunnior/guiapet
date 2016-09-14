@@ -11,4 +11,5 @@
 <!-- rating js -->
 <script src="<?=base_url('assets/js/jquery.barrating.min.js')?>"></script>
 <!-- Bootstrap 3.3.6 -->
+<script src="<?=base_url('assets/js/jasny-bootstrap.min.js')?>"></script>
 <script src="<?=base_url('assets/js/bootstrap.js')?>"></script>
