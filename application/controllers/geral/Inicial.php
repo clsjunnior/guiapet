@@ -17,8 +17,6 @@ class Inicial extends CI_Controller {
 
         /** Carregamento de models */
         $this->load->model('Categories','category');
-
-
     }
 
 

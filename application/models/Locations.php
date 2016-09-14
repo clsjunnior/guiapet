@@ -26,7 +26,7 @@ class Locations extends CI_Model {
      * Adiciona nova localização
      *
      * @param string $location
-     * @return bool
+     * @return int
      */
     public function newLocation($location)
     {
@@ -34,7 +34,9 @@ class Locations extends CI_Model {
         $location['created_at'] = gmdate('Y-m-d H:i:s', time());
 
         /** Insere na tabela locations a localização passado com seus respectivos campos */
-        return $this->db->insert('locations', $location);
+        $this->db->insert('locations', $location);
+
+        return $this->db->insert_id();
     }
 
 
