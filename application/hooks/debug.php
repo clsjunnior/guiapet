@@ -9,7 +9,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 function debugbar(){
 
-    if (ENVIRONMENT !== 'production') {
+    if (ENVIRONMENT != 'production') {
         $ci = &get_instance();
 
         $ci->output->enable_profiler();
