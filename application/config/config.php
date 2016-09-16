@@ -368,9 +368,9 @@ $config['encryption_key'] = 'guiapet';
 |
 */
 $config['sess_driver'] = 'database';
-$config['sess_cookie_name'] = 'ci_sessions';
+$config['sess_cookie_name'] = 'session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = 'ci_sessions';//its your table name name
+$config['sess_save_path'] = 'TB_Sessions';//its your table name name
 $config['sess_match_ip'] = TRUE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -479,6 +479,8 @@ $config['compress_output'] = FALSE;
 |
 */
 $config['time_reference'] = 'America/Sao_paulo';
+date_default_timezone_set("America/Sao_Paulo");
+setlocale(LC_ALL, 'pt_BR');
 
 /*
 |--------------------------------------------------------------------------

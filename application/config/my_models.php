@@ -11,10 +11,10 @@
  * ---------------------- Models to Load ----------------------
  * <examples>
  *
- * @property Users $user
- * @property Locations $location
- * @property Establishments $establishment
- * @property Categories $category
+ * @property Categoria $categoria
+ * @property Estabelecimento $estabelecimento
+ * @property Localizacao $localizacao
+ * @property Usuario $usuario
  *
  *
  *

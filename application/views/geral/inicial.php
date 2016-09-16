@@ -54,15 +54,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<label for="categoria">Estabelecimentos por categoria</label>
 							<select class="form-control" id="categoria">
 								<option>Selecione uma Categoria</option>
-								<?php
-								if (count($cat)) {
-									foreach ($cat as $list) {
-										echo "<option value='". $list['id'] . "'>" . $list['name'] . "</option>";
-									}
-								}else{
-									echo "<option value='0'>Nenhuma categoria cadastrada</option>";
-								}
-								?>
+								<?php if(count($cat)):?>
+									<?php foreach ($cat as $list):?>
+										<option value="<?=$list['CodCategoria']?>"><?=$list['Nome']?></option>
+									<?php endforeach;?>
+								<?php else:?>
+									<option value="0">Nenhuma categoria cadastrada</option>
+								<?php endif;?>
 							</select>
 						</div>
 

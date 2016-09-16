@@ -4,7 +4,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="info">
-                <p><?= getSesUser(['name']) ?></p>
+                <p><?= getSesUser(['Nome']) ?></p>
             </div>
         </div>
 

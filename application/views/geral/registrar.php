@@ -44,7 +44,7 @@
                 <label for="nome">*Nome completo:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input type="text" id="nome" class="form-control" name="nome" value="<?=set_value('nome')?>">
+                    <input type="text" id="nome" class="form-control" name="nome" value="<?=set_value('nome')?>" required>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
                 <label for="email">*E-mail:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input type="email" id="email" class="form-control" name="email" value="<?=set_value('email')?>">
+                    <input type="email" id="email" class="form-control" name="email" value="<?=set_value('email')?>" required>
                 </div>
             </div>
             <div class="form-group">
@@ -80,7 +80,7 @@
                 <label for="emailc">*Confirma o e-mail:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input type="email" id="emailc" class="form-control" name="emailc">
+                    <input type="email" id="emailc" class="form-control" name="emailc" required>
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
                 <label for="login">*Login:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
-                    <input type="text" id="login" class="form-control" name="login" value="<?=set_value('login')?>">
+                    <input type="text" id="login" class="form-control" name="login" value="<?=set_value('login')?>" required>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
                 <label for="sena">*Senha:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                    <input type="password" id="senha" class="form-control" name="senha" >
+                    <input type="password" id="senha" class="form-control" name="senha" required>
                 </div>
             </div>
 

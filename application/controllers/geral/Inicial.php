@@ -6,6 +6,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Inicial extends CI_Controller {
 
+
+
     /**
      * Inicial constructor.
      */
@@ -16,7 +18,7 @@ class Inicial extends CI_Controller {
         /** Carregamento de bibliotecas */
 
         /** Carregamento de models */
-        $this->load->model('Categories','category');
+        $this->load->model('Categoria','categoria');
     }
 
 
@@ -24,16 +26,16 @@ class Inicial extends CI_Controller {
     /**
      *  Página index da administração
      */
-	public function index()
-	{
+    public function index()
+    {
         $dados['title'] = "Bem Vindo ao Guia do Pet";
 
         /** Retorna todas as categorias em formato array */
-        $dados['cat'] = $this->category->getAll()->result_array();
+        $dados['cat'] = $this->categoria->getAll()->result_array();
 
         $this->load->view('geral/inicial', $dados);
 
 
 
-	}
+    }
 }

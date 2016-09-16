@@ -19,8 +19,9 @@ class Login extends CI_Controller {
         $this->load->helper('user');
 
         /** Carregamento de models */
-        $this->load->model('Users', 'user');
-        $this->load->model('Locations', 'location');
+        $this->load->model('Usuario', 'usuario');
+        $this->load->model('Localizacao', 'localizacao');
+
     }
 
     /**
@@ -33,29 +34,26 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('senha', 'Senha', 'required|trim');
 
         /** Se foi executado o formulario e esteve OK*/
-	    if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run() == true) {
 
-	        /** @var string $login Valor do campo login do formulario*/
+            /** @var string $login Valor do campo login do formulario*/
             $login = $this->input->post('login');
-            /** @var Users $user busca o usuário no banco por login*/
-            $user = $this->user->getByLogin($login)->result_array()[0];
-
-            /** @var $session cria uma sessão com todos dados do usuario */
-            $session['user'] = $user;
+            $user = $this->usuario->getByLogin($login)->result_array()[0];
+            $session['usuario'] = $user;
 
             /** Cria uma session com todos os dados do usuario e sua localização caso tiver */
-            setSesUser($user);
+            setSesUsuario($user);
             $session['login'] = true;
             $this->session->set_userdata($session);
 
             redirect(site_url('dashboard'));
 
-	    }else{
+        }else{
 
-	        /** Carrega a View login */
+            /** Carrega a View login */
             $this->load->view('geral/login');
         }
-	}
+    }
 
     /**
      * Regra de formulário setado no campo login
@@ -65,17 +63,17 @@ class Login extends CI_Controller {
      */
     public function check($login)
     {
-        /** @var string $senha Senha do campo do formulario*/
-            $senha = $this->input->post('senha');
 
-        /** @var Users $user busca o usuário no banco por login*/
-        $user = $this->user->getByLogin($login);
+        $senha = $this->input->post('senha');
+
+
+        $user = $this->usuario->getByLogin($login)->result_array()[0];
 
         /** Verifica se encontrou no banco */
-        if (isset($user->result()[0])) {
+        if (isset($user)) {
 
             /** Verifica se a senha informada é igual a cadastrada */
-            if ($this->encrypt->decode($user->result()[0]->password) == $senha) {
+            if ($this->encrypt->decode($user['Senha']) == $senha) {
                 return true;
             }
         }

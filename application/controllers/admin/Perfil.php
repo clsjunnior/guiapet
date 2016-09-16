@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Perfil extends CI_Controller
 {
-
     /**
      * Perfil constructor.
      */
@@ -20,12 +19,9 @@ class Perfil extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('encrypt');
 
-        /** Carregamentos de helpers */
-        $this->load->helper('user');
-
         /** Carregamento de models */
-        $this->load->model('Users', 'user');
-        $this->load->model('Locations', 'location');
+        $this->load->model('Usuario', 'usuario');
+        $this->load->model('Localizacao', 'localizacao');
     }
 
 
@@ -37,7 +33,7 @@ class Perfil extends CI_Controller
         /** Dados para view */
         $dados['title'] = "Editar perfil";
         $dados['user'] = getSesUser();
-        $dados['location'] = getSesLocation();
+        $dados['location'] = getSesLocalizacao();
 
         /** Seta as regras para o formulario caso seja edição de perfil */
         if ($this->input->post('submit') == 'perfil') {
@@ -56,16 +52,16 @@ class Perfil extends CI_Controller
             if ($this->input->post('submit') == 'perfil') {
 
                 /** Preenche dados para o banco */
-                $user['name'] = $this->input->post('name');
-                $user['sex'] = $this->input->post('sex');
-                $user['tel'] = $this->input->post('tel');
+                $user['Nome'] = $this->input->post('name');
+                $user['Sexo'] = $this->input->post('sex');
+//                $user['tel'] = $this->input->post('tel');
                 if ($this->input->post('password')) {
-                    $user['password'] = $this->encrypt->encode($this->input->post('password'));
+                    $user['Senha'] = $this->encrypt->encode($this->input->post('password'));
                 }
 
                 /** Salva no banco, atualiza a session e cria a mensagem se sucesso */
-                if ($this->user->updateUser($user, getSesUser(['id']))) {
-                    setSesUser($this->user->getByLogin(getSesUser(['login']))->result_array()[0]);
+                if ($this->usuario->atualizaUsuario($user, getSesUser(['CodUsuario']))) {
+                    setSesUsuario($this->usuario->getByLogin(getSesUser(['Login']))->result_array()[0]);
                     $this->session->set_flashdata('perfil', $this->mensagem('alert-success', 'fa-check', 'Sucesso!', 'Dados atualizados com sucesso!'));
                 } else {
                     $this->session->set_flashdata('perfil', $this->mensagem('alert-warning', 'fa-warning', 'Ops!', 'Erro ao atualizar dados, tente mais tarde, caso o problema persistir entre em contato!'));
@@ -74,21 +70,21 @@ class Perfil extends CI_Controller
 
             /** Caso executou o formulario de localizacao */
             if ($this->input->post('submit') == 'localizacao') {
-                $location['state'] = $this->input->post('state');
-                $location['city'] = $this->input->post('city');
-                $location['zip_code'] = $this->input->post('zip_code');
-                $location['street'] = $this->input->post('street');
-                $location['number'] = $this->input->post('number');
-                $location['neighborhood'] = $this->input->post('neighborhood');
-                $location['complement'] = $this->input->post('complement');
+                $location['Estado'] = $this->input->post('state');
+                $location['Cidade'] = $this->input->post('city');
+                $location['Cep'] = str_replace('-','',$this->input->post('zip_code'));
+                $location['Rua'] = $this->input->post('street');
+                $location['Numero'] = $this->input->post('number');
+                $location['Bairro'] = $this->input->post('neighborhood');
+                $location['Complemento'] = $this->input->post('complement');
 
                 /** Caso o usuario ja tenha uma localização */
-                if (getSesUser(['location_id']) != null) {
+                if (getSesUser(['LocalizacaoCod']) != null) {
 
                     /** Atualiza a localização e a session */
-                    if ($this->location->updateLocation($location, getSesUser(['location_id']))) {
+                    if ($this->localizacao->atualizaLocalizacao($location, getSesUser(['LocalizacaoCod']))) {
 
-                        setSesLocation($this->location->getById(getSesUser(['location_id']))->result_array()[0]);
+                        setSesLocation($this->localizacao->getById(getSesUser(['LocalizacaoCod']))->result_array()[0]);
 
                         $this->session->set_flashdata('perfil', $this->mensagem('alert-success', 'fa-check', 'Sucesso!', 'Dados atualizados com sucesso!'));
                     } else {
@@ -98,15 +94,16 @@ class Perfil extends CI_Controller
                 } else {
 
                     /** Cria nova localização */
-                    if ($this->location->newLocation($location)) {
+                    if ($this->localizacao->novaLocalizacao($location)) {
                         $user = null;
-                        $user['location_id'] = $this->location->getIdLastInsert();
+                        $user['LocalizacaoCod'] = $this->localizacao->getIdLastInsert();
 
                         /** Atualiza o usuario e as session */
-                        if ($this->user->updateUser($user, getSesUser(['id']))) {
-                            setSesUser($this->user->getByLogin(getSesUser(['login']))->result_array()[0]);
-                            setSesLocation($this->location->getById(getSesUser(['location_id']))->result_array()[0]);
+                        if ($this->usuario->atualizaUsuario($user, getSesUser(['CodUsuario']))) {
+                            setSesUsuario($this->usuario->getByLogin(getSesUser(['Login']))->result_array()[0]);
+                            setSesLocation($this->localizacao->getById(getSesUser(['LocalizacaoCod']))->result_array()[0]);
                             $this->session->set_flashdata('perfil', $this->mensagem('alert-success', 'fa-check', 'Sucesso!', 'Dados atualizados com sucesso!'));
+
                         } else {
                             $this->session->set_flashdata('perfil', $this->mensagem('alert-warning', 'fa-warning', 'Ops!', 'Erro ao atualizar dados, tente mais tarde, caso o problema persistir entre em contato!'));
                         }
@@ -130,7 +127,7 @@ class Perfil extends CI_Controller
     public function check($senha)
     {
         /** Verifica se a senha informada é igual a atual */
-        if ($this->encrypt->decode(getSesUser(['password'])) == $senha) {
+        if ($this->encrypt->decode(getSesUser(['Senha'])) == $senha) {
             return true;
         }
 

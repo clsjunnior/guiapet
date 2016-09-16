@@ -6,8 +6,6 @@ class Inicial extends CI_Controller {
     {
         parent::__construct();
 
-        $this->load->helper('user');
-
         if(!$this->session->has_userdata('login')){
             redirect(site_url('login'));
         }
@@ -15,9 +13,9 @@ class Inicial extends CI_Controller {
 
 
     public function index(){
-	    $dados['title'] = "Inicial";
+        $dados['title'] = "Inicial";
 
-	    $this->load->view('admin/inicio',$dados);
-	}
+        $this->load->view('admin/inicio',$dados);
+    }
 
 }

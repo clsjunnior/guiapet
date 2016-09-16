@@ -44,14 +44,14 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="hidden-xs"><?= getSesUser(['login']) ?></span>
+                        <span class="hidden-xs"><?= getSesUser(['Login']) ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
                             <p>
-                                <?= getSesUser(['name']) ?>
-                                <small>Membro desde <?= date('d/m/Y', strtotime(getSesUser(['created_at']))) ?></small>
+                                <?= getSesUser(['Nome']) ?>
+                                <small>Membro desde <?= date('d/m/Y', strtotime(getSesUser(['CriadoEm']))) ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->

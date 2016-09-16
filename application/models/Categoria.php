@@ -6,11 +6,14 @@
  * Date: 07/09/2016
  * Time: 01:24
  */
-class Categories extends CI_Model
+class Categoria extends CI_Model
 {
 
+    private $table = 'TB_Categoria';
+
+
     /**
-     * Categories constructor.
+     * Categoria constructor.
      */
     public function __construct(){
         parent::__construct();
@@ -24,8 +27,7 @@ class Categories extends CI_Model
      */
     public function getAll(){
         /** Retorna todas as categorias (no formato de classe) */
-        return $this->db->get('categories');
+        return $this->db->get($this->table);
     }
-
 
 }

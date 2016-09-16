@@ -22,8 +22,9 @@ class Estabelecimento extends CI_Controller
         /** Carregamentos de helpers */
         $this->load->helper('user');
 
-        /** Carregamento de models */
+        /** Carregamentos de models */
         $this->load->model('Establishments', 'establishment');
+        $this->load->model('Locations', 'location');
         $this->load->model('Categories', 'category');
     }
 
@@ -34,7 +35,8 @@ class Estabelecimento extends CI_Controller
     public function index()
     {
         /** Dados para view */
-        $dados['title'] = "Estabelecimentos";
+        $dados['title'] = 'Estabelecimentos';
+        $dados['estabelecimentos'] = $this->establishment->getAllByIUser(getSesUser(['id']))->result_array();
 
         $this->load->view('admin/estabelecimentos', $dados);
     }
@@ -42,8 +44,6 @@ class Estabelecimento extends CI_Controller
 
     public function editar($id = null){
 //        $this->form_validation->set_rules('cnpj', 'CNPJ', 'required|trim|max_length[11]');
-//        $this->form_validation->set_rules('photograp', 'Fotografia', 'required');
-
         $this->form_validation->set_rules('name',         'Nome',        'required|trim|max_length[120]');
         $this->form_validation->set_rules('website',      'Site',        'valid_url|trim|max_length[255]');
         $this->form_validation->set_rules('tel',          'Telefone',    'trim|max_length[255]');
@@ -68,10 +68,10 @@ class Estabelecimento extends CI_Controller
         $localizacao = null;
 
         if ($id == null) {
-            $dados['title'] = "Novo estabelecimento";
+            $dados['title'] = 'Novo estabelecimento';
 
         }else{
-            $dados['title'] = "Editar estabelecimento";
+            $dados['title'] = 'Editar estabelecimento';
             $dados['establishment'] = $this->establishment->getById($id)->result_array()[0];
             $dados['location'] = $this->location->getById($dados['establishment']['location_id'])->result_array()[0];
         }
@@ -99,14 +99,14 @@ class Estabelecimento extends CI_Controller
                     if ($idLoc != 0) {
                         $estabelecimento['location_id'] = $idLoc;
                     }else{
-                        $dados['erros'][] = "Erro ao salvar localização";
+                        $dados['erros'][] = 'Erro ao salvar localização';
                     }
                 }
                 $estabelecimento['name'] = $this->input->post('name');
                 $estabelecimento['website'] = $this->input->post('website');
                 $estabelecimento['description'] = $this->input->post('description');
                 $estabelecimento['photograph'] = $this->upload->data()['file_name'];
-                $estabelecimento['cnpj'] = str_replace(['.','-','/'],['','',''],$this->input->post('cnpj'));
+                $estabelecimento['cnpj'] = str_replace(['.','-','/'],'',$this->input->post('cnpj'));
                 $estabelecimento['tel'] = $this->input->post('tel');
                 $estabelecimento['latitude'] = $this->input->post('latitude');
                 $estabelecimento['longitude'] = $this->input->post('longitude');
@@ -120,13 +120,15 @@ class Estabelecimento extends CI_Controller
             }else{
                 $dados['erros'] = $this->upload->display_errors();
             }
-
+            $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
+                                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> 
+                                                    <h4><i class="icon fa fa-check-circle"></i> Estabelecimento cadastrado com sucesso!</h4>
+                                                    O estabelecimento <b>'.$estabelecimento['name'].'</b> foi cadastrado com sucesso
+                                                    </div> ');
+            redirect(site_url('dashboard/estabelecimentos'));
+        }else{
+            $dados['erros'][] = validation_errors();
         }
-
-        /** @noinspection ForgottenDebugOutputInspection */
-        var_dump($dados);
-        var_dump($estabelecimento);
-        var_dump($localizacao);
 
         /** Retorna todas as categorias no formato de objetos */
         $dados['categories'] = $this->category->getAll()->result();

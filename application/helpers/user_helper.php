@@ -11,7 +11,7 @@ function getSesUser($campos = null)
 
     $ci->load->library('session');
 
-    $user = $ci->session->userdata('user');
+    $user = $ci->session->userdata('usuario');
 
     if (count($campos) == 0) {
         return $user;
@@ -29,23 +29,23 @@ function getSesUser($campos = null)
     }
 }
 
-function setSesUser($user)
+function setSesUsuario($usuario)
 {
     $ci = &get_instance();
+    $ci->load->model('Localizacao', 'localizacao');
+    $ci->load->model('Usuario', 'usuario');
 
-    $ci->load->model('Locations', 'location');
+    $session['usuario'] = $usuario;
 
-    $session['user'] = $user;
-
-    if (isset($user['location_id'])) {
-        $session['location'] = $ci->location->getById($user['location_id'])->result_array()[0];
+    if (isset($usuario['LocalizacaoCod'])) {
+        $session['localizacao'] = $ci->localizacao->getById($usuario['LocalizacaoCod'])->result_array()[0];
     }
-    $ci->session->unset_userdata('user');
-    $ci->session->unset_userdata('location');
+    $ci->session->unset_userdata('usuario');
+    $ci->session->unset_userdata('localizacao');
     $ci->session->set_userdata($session);
 }
 
-function getSesLocation($campos = null)
+function getSesLocalizacao($campos = null)
 {
 
     $valores = null;
@@ -53,7 +53,7 @@ function getSesLocation($campos = null)
 
     $ci->load->library('session');
 
-    $location = $ci->session->userdata('location');
+    $location = $ci->session->userdata('localizacao');
 
     if (!is_array($campos)) {
         return $location;
@@ -72,9 +72,9 @@ function getSesLocation($campos = null)
 function setSesLocation($location)
 {
     $ci = &get_instance();
-    $session['location'] = $location;
+    $session['localizacao'] = $location;
 
-    $ci->session->unset_userdata('location');
+    $ci->session->unset_userdata('localizacao');
 
     $ci->session->set_userdata($session);
 }

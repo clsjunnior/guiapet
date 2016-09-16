@@ -44,7 +44,7 @@
                                     <label class="col-sm-2 control-label" for="name">Nome:</label>
                                     <div class="col-sm-10">
                                         <input type="text" placeholder="name" id="name" name="name"
-                                               value="<?= set_value('name', $user['name']) ?>" required
+                                               value="<?= set_value('name', $user['Nome']) ?>" required
                                                class="form-control">
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6">
+                            <!--                      <div class="col-xs-12 col-sm-6">
                                 <?= form_error('tel', '<div class="row"><div class="col-sm-offset-2 col-sm-10"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="tel">Telefone:</label>
@@ -73,6 +73,7 @@
                                     </div>
                                 </div>
                             </div>
+                            -->
                         </div>
 
                         <div class="row">
@@ -135,7 +136,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="state">Estado:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" placeholder="Estado" id="state" name="state" value="<?=set_value('state',$location['state'])?>" class="form-control">
+                                        <input type="text" placeholder="Estado" id="state" name="state" value="<?=set_value('state',$location['Estado'])?>" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +144,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="city">Cidade:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" placeholder="Cidade" id="city" name="city" value="<?=set_value('city',$location['city'])?>" class="form-control">
+                                        <input type="text" placeholder="Cidade" id="city" name="city" value="<?=set_value('city',$location['Cidade'])?>" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +155,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-6 control-label" for="zip_code">Cep:</label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Cep" id="zip_code" name="zip_code" value="<?=set_value('zip_code',$location['zip_code'])?>" class="form-control">
+                                        <input type="text" placeholder="Cep" id="zip_code" name="zip_code" value="<?=set_value('zip_code',$location['Cep'])?>" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +163,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-6 control-label" for="street">Endereço:</label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Endereço" id="street" name="street" value="<?=set_value('street',$location['street'])?>" class="form-control">
+                                        <input type="text" placeholder="Endereço" id="street" name="street" value="<?=set_value('street',$location['Rua'])?>" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +174,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="neighborhood">Bairro:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" placeholder="Bairro" id="neighborhood" name="neighborhood" value="<?=set_value('neighborhood',$location['neighborhood'])?>" class="form-control">
+                                        <input type="text" placeholder="Bairro" id="neighborhood" name="neighborhood" value="<?=set_value('neighborhood',$location['Bairro'])?>" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +183,7 @@
                                     <label class="col-sm-4 control-label" for="number">Número:</label>
                                     <div class="col-sm-8">
                                         <input type="number" placeholder="Nº" id="number" name="number"
-                                               value="<?= set_value('number', $location['number']) ?>"
+                                               value="<?= set_value('number', $location['Numero']) ?>"
                                                class="form-control">
                                     </div>
                                 </div>
@@ -194,7 +195,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="complement">Complemento:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" placeholder="Complemento" id="complement" name="complement" value="<?=set_value('complement',$location['complement'])?>" class="form-control">
+                                        <input type="text" placeholder="Complemento" id="complement" name="complement" value="<?=set_value('complement',$location['Complemento'])?>" class="form-control">
                                     </div>
                                 </div>
                             </div>

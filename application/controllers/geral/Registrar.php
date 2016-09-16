@@ -18,7 +18,7 @@ class Registrar extends CI_Controller {
         $this->load->library('encrypt');
 
         /** Carregamento de models */
-        $this->load->model('Users', 'user');
+        $this->load->model('Usuario', 'usuario');
     }
 
     /**
@@ -27,14 +27,14 @@ class Registrar extends CI_Controller {
     public function index(){
 
         /** Regras de validação do formulario */
-        $this->form_validation->set_rules('nome', 'Nome', 'required|trim|max_length[120]');
-        $this->form_validation->set_rules('sexo', 'Sexo', 'required|trim|in_list[M,F]');
-        $this->form_validation->set_rules('email', 'E-mail', 'required|trim|is_unique[users.email]|max_length[255]',
+        $this->form_validation->set_rules('nome',  'Nome',   'required|trim|max_length[120]');
+        $this->form_validation->set_rules('sexo',  'Sexo',   'required|trim|in_list[M,F]');
+        $this->form_validation->set_rules('email', 'E-mail', 'required|trim|is_unique[TB_Usuario.Email]|max_length[255]',
             [
                 'is_unique' => 'O e-mail informado já está sendo utilizado.'
             ]);
         $this->form_validation->set_rules('emailc', 'Confirma e-mail', 'required|matches[email]');
-        $this->form_validation->set_rules('login', 'Login', 'required|trim|is_unique[users.login]|max_length[30]',
+        $this->form_validation->set_rules('login',  'Login',           'required|trim|is_unique[TB_Usuario.Login]|max_length[30]',
             [
                 'is_unique' => 'Login informado já está sendo utilizado.'
             ]);
@@ -49,15 +49,15 @@ class Registrar extends CI_Controller {
 
             /** @var Users $user Dados do usuario*/
             $user = [
-                'name' => $this->input->post('nome'),
-                'sex' => $this->input->post('sexo'),
-                'login' => $this->input->post('login'),
-                'password' => $this->encrypt->encode($this->input->post('senha')),
-                'email' => $this->input->post('email')
+                'Nome' => $this->input->post('nome'),
+                'Sexo' => $this->input->post('sexo'),
+                'Login' => $this->input->post('login'),
+                'Senha' => $this->encrypt->encode($this->input->post('senha')),
+                'Email' => $this->input->post('email')
             ];
 
             /** Grava o usuário no banco */
-            $this->user->newUser($user);
+            $this->usuario->novoUsuario($user);
 
             /** Cria uma mensagem temporaria e redireciona para a tela de login */
             $this->session->set_flashdata('login', '<div class="alert alert-success alert-dismissible">
@@ -66,7 +66,7 @@ class Registrar extends CI_Controller {
                                           ');
             redirect(site_url('login'));
         }
-	}
+    }
 
 
 
