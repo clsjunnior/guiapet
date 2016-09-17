@@ -18,7 +18,7 @@ class Inicial extends CI_Controller {
         /** Carregamento de bibliotecas */
 
         /** Carregamento de models */
-        $this->load->model('Categoria','categoria');
+        $this->load->model('CategoriaM','categoria');
     }
 
 

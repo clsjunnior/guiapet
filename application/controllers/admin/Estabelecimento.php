@@ -19,13 +19,10 @@ class Estabelecimento extends CI_Controller
         /** Carregamento de bibliotecas */
         $this->load->library('form_validation');
 
-        /** Carregamentos de helpers */
-        $this->load->helper('user');
-
         /** Carregamentos de models */
-        $this->load->model('Establishments', 'establishment');
-        $this->load->model('Locations', 'location');
-        $this->load->model('Categories', 'category');
+        $this->load->model('EstabelecimentoM', 'estabelecimento');
+//        $this->load->model('Locations', 'location');
+//        $this->load->model('Categories', 'category');
     }
 
 
@@ -36,7 +33,7 @@ class Estabelecimento extends CI_Controller
     {
         /** Dados para view */
         $dados['title'] = 'Estabelecimentos';
-        $dados['estabelecimentos'] = $this->establishment->getAllByIUser(getSesUser(['id']))->result_array();
+        $dados['estabelecimentos'] = $this->estabelecimento->getAllBy(['UsCodUsuario' => getSesUser(['CodUsuario'])])->result_array();
 
         $this->load->view('admin/estabelecimentos', $dados);
     }

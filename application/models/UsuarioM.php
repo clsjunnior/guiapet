@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Usuario extends CI_Model {
+class UsuarioM extends CI_Model {
 
     private $table = 'TB_Usuario';
 

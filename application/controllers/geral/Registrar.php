@@ -18,7 +18,7 @@ class Registrar extends CI_Controller {
         $this->load->library('encrypt');
 
         /** Carregamento de models */
-        $this->load->model('Usuario', 'usuario');
+        $this->load->model('UsuarioM', 'usuario');
     }
 
     /**

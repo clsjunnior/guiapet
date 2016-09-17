@@ -1,8 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Estabelecimento extends CI_Model {
+class EstabelecimentoM extends CI_Model {
 
     private $table = 'TB_Estabelecimento';
+    private $viewEstabelecimentos = 'VW_Estabelecimentos';
 
     /**
      * Estabelecimento constructor.
@@ -36,6 +37,17 @@ class Estabelecimento extends CI_Model {
         $this->db->insert($this->table, $estabelecimento);
 
         return $this->db->insert_id();
+    }
+
+
+    /**
+     * Seleciona estabelecimento pela View do banco
+     *
+     * @param array $where
+     * @return CI_DB_result
+     */
+    public function getAllBy($where = array()){
+        return $this->db->get_where($this->viewEstabelecimentos,$where);
     }
 
 }

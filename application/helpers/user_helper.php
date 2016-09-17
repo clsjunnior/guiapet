@@ -32,8 +32,8 @@ function getSesUser($campos = null)
 function setSesUsuario($usuario)
 {
     $ci = &get_instance();
-    $ci->load->model('Localizacao', 'localizacao');
-    $ci->load->model('Usuario', 'usuario');
+    $ci->load->model('LocalizacaoM', 'localizacao');
+    $ci->load->model('UsuarioM', 'usuario');
 
     $session['usuario'] = $usuario;
 

@@ -6,7 +6,7 @@
  * Date: 07/09/2016
  * Time: 01:24
  */
-class Categoria extends CI_Model
+class CategoriaM extends CI_Model
 {
 
     private $table = 'TB_Categoria';

@@ -19,8 +19,8 @@ class Login extends CI_Controller {
         $this->load->helper('user');
 
         /** Carregamento de models */
-        $this->load->model('Usuario', 'usuario');
-        $this->load->model('Localizacao', 'localizacao');
+        $this->load->model('UsuarioM', 'usuario');
+        $this->load->model('LocalizacaoM', 'localizacao');
 
     }
 
