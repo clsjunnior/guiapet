@@ -77,6 +77,8 @@ class Perfil extends CI_Controller
                 $location['Numero'] = $this->input->post('number');
                 $location['Bairro'] = $this->input->post('neighborhood');
                 $location['Complemento'] = $this->input->post('complement');
+                $location['Latitude'] = $this->input->post('latitude');
+                $location['Longitude'] = $this->input->post('longitude');
 
                 /** Caso o usuario ja tenha uma localização */
                 if (getSesUser(['LocalizacaoCod']) != null) {
@@ -161,6 +163,7 @@ class Perfil extends CI_Controller
         $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
         $this->form_validation->set_rules('neighborhood', 'Bairro', 'trim|max_length[255]');
         $this->form_validation->set_rules('complement', 'Complemento', 'trim|max_length[255]');
+
     }
 
     /**

@@ -26,7 +26,7 @@
 
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Dados pessoais</h3>
+                    <h3 class="box-title">Dados pessoais<small>(Usuário)</small></h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i></button>
@@ -53,6 +53,14 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="login" class="col-sm-4 control-label">Login:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" value="<?=getSesUser(['Login'])?>" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
                                 <?= form_error('sex', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <label for="sex" class="col-sm-4 control-label">Sexo:</label>
@@ -64,16 +72,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                      <div class="col-xs-12 col-sm-6">
-                                <?= form_error('tel', '<div class="row"><div class="col-sm-offset-2 col-sm-10"><p class="text-red">', '</p></div></div>') ?>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="tel">Telefone:</label>
-                                    <div class="col-sm-10">
-                                        <input type="tel" placeholder="Telefone" id="tel" name="tel" value="<?=set_value('tel',$user['tel'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            -->
                         </div>
 
                         <div class="row">
@@ -93,6 +91,25 @@
                                     <label class="col-sm-4 control-label" for="passwordConf">Confirmação:</label>
                                     <div class="col-sm-8">
                                         <input type="password" placeholder="Confirmação" id="passwordConf" name="passwordConf" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="CadastradoEm">Cadastrado em:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime(getSesUser(['CriadoEm'])))?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="ModificadoEm">Ultima modificação:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime(getSesUser(['AtualizadoEm'])))?>">
                                     </div>
                                 </div>
                             </div>
@@ -120,97 +137,9 @@
 
             </div>
 
-            <div class="box box-info collapsed-box ">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Endereço</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <form action="<?=site_url('dashboard/perfil')?>" method="post" class="form-horizontal">
-                    <div class="box-body">
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="state">Estado:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" placeholder="Estado" id="state" name="state" value="<?=set_value('state',$location['Estado'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="city">Cidade:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" placeholder="Cidade" id="city" name="city" value="<?=set_value('city',$location['Cidade'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="form-group">
-                                    <label class="col-sm-6 control-label" for="zip_code">Cep:</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" placeholder="Cep" id="zip_code" name="zip_code" value="<?=set_value('zip_code',$location['Cep'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-8">
-                                <div class="form-group">
-                                    <label class="col-sm-6 control-label" for="street">Endereço:</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" placeholder="Endereço" id="street" name="street" value="<?=set_value('street',$location['Rua'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="neighborhood">Bairro:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" placeholder="Bairro" id="neighborhood" name="neighborhood" value="<?=set_value('neighborhood',$location['Bairro'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="number">Número:</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" placeholder="Nº" id="number" name="number"
-                                               value="<?= set_value('number', $location['Numero']) ?>"
-                                               class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="complement">Complemento:</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" placeholder="Complemento" id="complement" name="complement" value="<?=set_value('complement',$location['Complemento'])?>" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                <div class="box-footer text-right">
-                    <button class="btn  btn-info btn-sm" type="submit" value="localizacao" id="localizacao"
-                            name="submit">Alterar
-                    </button>
-                </div>
-                </form>
-
-            </div>
+            <form action="<?=site_url('dashboard/perfil')?>" method="post" class="form-horizontal">
+                <?php $this->load->view('admin/layout/fragmentos/box_localizacao')?>
+            </form>
 
         </section>
 

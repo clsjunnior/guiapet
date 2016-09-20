@@ -67,10 +67,12 @@ class Login extends CI_Controller {
         $senha = $this->input->post('senha');
 
 
-        $user = $this->usuario->getByLogin($login)->result_array()[0];
+        $user = $this->usuario->getByLogin($login)->result_array();
+
 
         /** Verifica se encontrou no banco */
-        if (isset($user)) {
+        if (count($user) == 1) {
+            $user = $user[0];
 
             /** Verifica se a senha informada é igual a cadastrada */
             if ($this->encrypt->decode($user['Senha']) == $senha) {

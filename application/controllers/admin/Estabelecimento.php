@@ -22,7 +22,7 @@ class Estabelecimento extends CI_Controller
         /** Carregamentos de models */
         $this->load->model('EstabelecimentoM', 'estabelecimento');
 //        $this->load->model('Locations', 'location');
-//        $this->load->model('Categories', 'category');
+        $this->load->model('CategoriaM', 'categoria');
     }
 
 
@@ -40,21 +40,23 @@ class Estabelecimento extends CI_Controller
 
 
     public function editar($id = null){
+//        $this->form_validation->set_rules('website',      'Site',        'valid_url|trim|max_length[255]');
+//        $this->form_validation->set_rules('tel',          'Telefone',    'trim|max_length[255]');
+        $this->form_validation->set_rules('nome',         'Nome',        'required|trim|max_length[120]');
+        $this->form_validation->set_rules('categoria',     'Categoria',   'required|trim');
+        $this->form_validation->set_rules('descricao',  'Descrição',   'required|trim');
 //        $this->form_validation->set_rules('cnpj', 'CNPJ', 'required|trim|max_length[11]');
-        $this->form_validation->set_rules('name',         'Nome',        'required|trim|max_length[120]');
-        $this->form_validation->set_rules('website',      'Site',        'valid_url|trim|max_length[255]');
-        $this->form_validation->set_rules('tel',          'Telefone',    'trim|max_length[255]');
-        $this->form_validation->set_rules('category',     'Categoria',   'required|trim');
-        $this->form_validation->set_rules('description',  'Descrição',   'required|trim');
+
+//      Localização
+        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[50]');
+        $this->form_validation->set_rules('city', 'Cidade', 'trim|max_length[120]');
+        $this->form_validation->set_rules('zip_code', 'Cep', 'trim|max_length[9]');
+        $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
+        $this->form_validation->set_rules('number',       'Número',      'integer|max_length[11]');
+        $this->form_validation->set_rules('neighborhood', 'Bairro', 'trim|max_length[255]');
+        $this->form_validation->set_rules('complement', 'Complemento', 'trim|max_length[255]');
         $this->form_validation->set_rules('latitude',     'Latitude',    'required');
         $this->form_validation->set_rules('longitude',    'Longitude',   'required');
-        $this->form_validation->set_rules('city',         'Cidade',      'required|max_length[120]');
-        $this->form_validation->set_rules('state',        'Estado',      'required|max_length[50]');
-        $this->form_validation->set_rules('street',       'Endereço',    'required|max_length[255]');
-        $this->form_validation->set_rules('neighborhood', 'Bairro',      'required|max_length[255]');
-        $this->form_validation->set_rules('zip_code',     'CEP',         'required|max_length[9]');
-        $this->form_validation->set_rules('number',       'Número',      'integer|max_length[11]');
-        $this->form_validation->set_rules('complement',   'Complemento', 'max_length[255]');
 
         $config['upload_path'] = DIR_IMG;
         $config['allowed_types'] = 'gif|jpg|png';
@@ -128,7 +130,7 @@ class Estabelecimento extends CI_Controller
         }
 
         /** Retorna todas as categorias no formato de objetos */
-        $dados['categories'] = $this->category->getAll()->result();
+        $dados['categories'] = $this->categoria->getAll()->result();
 
         $this->load->view('admin/novo_estabelecimento', $dados);
     }

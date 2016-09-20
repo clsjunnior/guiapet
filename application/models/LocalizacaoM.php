@@ -34,6 +34,7 @@ class LocalizacaoM extends CI_Model {
     {
         /** Preenche o campo CriadoEm com a data e hora atual no formato do banco de dados*/
         $localizacao['CriadoEm'] = gmdate('Y-m-d H:i:s', time());
+        $localizacao['AtualizadoEm'] = gmdate('Y-m-d H:i:s', time());
 
         /** Insere na tabela TB_Localizacao a localização passado com seus respectivos campos */
         return $this->db->insert($this->table, $localizacao);
@@ -51,7 +52,7 @@ class LocalizacaoM extends CI_Model {
     public function atualizaLocalizacao($localizacao, $id)
     {
         /** Preenche o campo EditadoEm com a data e hora atual no formato do banco de dados*/
-        $localizacao['EditadoEm'] = gmdate('Y-m-d H:i:s', time());
+        $localizacao['AtualizadoEm'] = gmdate('Y-m-d H:i:s', time());
 
         /** Atualiza a localização onde o ID foi passado no parametro */
         $this->db->where('CodLocalizacao', $id);

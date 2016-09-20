@@ -59,24 +59,21 @@
                         </thead>
                         <tbody>
                         <?php if (isset($estabelecimentos) && count($estabelecimentos) > 0):?>
-
-                        <?php else:?>
-                            <?php for($i=0;$i<100;$i++):?>
+                            <?php foreach ($estabelecimentos as $estabelecimento):?>
                                 <tr>
-                                    <td><?="Nome $i"?></td>
-                                    <td><?="Categoria $i"?></td>
-                                    <td><?="Cidade $i"?></td>
-                                    <td><?="$i"?></td>
+                                    <td><?=$estabelecimento['EsNome']?></td>
+                                    <td><?=$estabelecimento['CaNome']?></td>
+                                    <td><?=$estabelecimento['LoCidade']?></td>
+                                    <td><?=$estabelecimento['EsCNPJ']?></td>
                                     <td class="text-center">
-
                                         <a role="button" class="btn btn-link" type="button">Informações</a>
-
                                     </td>
                                 </tr>
-                                <?php endfor;?>
-<!--                            <tr>-->
-<!--                                <td colspan="5">Você não contem nenhum estabelecimento :(</td>-->
-<!--                            </tr>-->
+                                <?php endforeach;?>
+                        <?php else:?>
+                            <tr>
+                                <td colspan="5" class="text-center">Você não contem nenhum estabelecimento :(</td>
+                            </tr>
                         <?php endif;?>
                         </tbody>
                     </table>
@@ -102,6 +99,7 @@
 <script src="<?=base_url('assets/plugins/datatables/dataTables.bootstrap.min.js')?>"></script>
 
 <script>
+    $.fn.dataTable.ext.errMode = 'none';
     $(document).ready(function () {
         $("#tbEstabelecimentos").DataTable({
             "language": {

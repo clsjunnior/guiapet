@@ -55,8 +55,10 @@ function getSesLocalizacao($campos = null)
 
     $location = $ci->session->userdata('localizacao');
 
-    if (!is_array($campos)) {
+    if (count($campos) == 0) {
         return $location;
+    } elseif (count($campos) == 1) {
+        return $location[$campos[0]];
     } else {
         foreach ($campos as $c) {
             if (array_key_exists($c, $location)) {
