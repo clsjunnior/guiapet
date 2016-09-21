@@ -40,23 +40,10 @@ class Estabelecimento extends CI_Controller
 
 
     public function editar($id = null){
-//        $this->form_validation->set_rules('website',      'Site',        'valid_url|trim|max_length[255]');
-//        $this->form_validation->set_rules('tel',          'Telefone',    'trim|max_length[255]');
-        $this->form_validation->set_rules('nome',         'Nome',        'required|trim|max_length[120]');
-        $this->form_validation->set_rules('categoria',     'Categoria',   'required|trim');
-        $this->form_validation->set_rules('descricao',  'Descrição',   'required|trim');
-//        $this->form_validation->set_rules('cnpj', 'CNPJ', 'required|trim|max_length[11]');
 
-//      Localização
-        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[50]');
-        $this->form_validation->set_rules('city', 'Cidade', 'trim|max_length[120]');
-        $this->form_validation->set_rules('zip_code', 'Cep', 'trim|max_length[9]');
-        $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
-        $this->form_validation->set_rules('number',       'Número',      'integer|max_length[11]');
-        $this->form_validation->set_rules('neighborhood', 'Bairro', 'trim|max_length[255]');
-        $this->form_validation->set_rules('complement', 'Complemento', 'trim|max_length[255]');
-        $this->form_validation->set_rules('latitude',     'Latitude',    'required');
-        $this->form_validation->set_rules('longitude',    'Longitude',   'required');
+//      Rule
+        $this->rulesEstabelecimento();
+        $this->rulesLocation();
 
         $config['upload_path'] = DIR_IMG;
         $config['allowed_types'] = 'gif|jpg|png';
@@ -78,6 +65,7 @@ class Estabelecimento extends CI_Controller
         if ($this->form_validation->run() == true) {
 
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('photograp')){
                 if ($id != null){
                     $estabelecimento['id'] = $dados['establishment']['id'];
@@ -105,7 +93,7 @@ class Estabelecimento extends CI_Controller
                 $estabelecimento['website'] = $this->input->post('website');
                 $estabelecimento['description'] = $this->input->post('description');
                 $estabelecimento['photograph'] = $this->upload->data()['file_name'];
-                $estabelecimento['cnpj'] = str_replace(['.','-','/'],'',$this->input->post('cnpj'));
+                $estabelecimento['cnpj'] = preg_replace('/[^0-9]/', '',$this->input->post('cnpj'));
                 $estabelecimento['tel'] = $this->input->post('tel');
                 $estabelecimento['latitude'] = $this->input->post('latitude');
                 $estabelecimento['longitude'] = $this->input->post('longitude');
@@ -133,6 +121,58 @@ class Estabelecimento extends CI_Controller
         $dados['categories'] = $this->categoria->getAll()->result();
 
         $this->load->view('admin/novo_estabelecimento', $dados);
+    }
+
+
+
+    public function validaCNPJ($cnpj)
+    {
+        $cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);
+
+        // Valida tamanho
+        if (strlen($cnpj) != 14) {
+            $this->form_validation->set_message('validaCNPJ', ' CNPJ inválido.');
+            return false;
+        }
+
+        // Valida primeiro dígito verificador
+        for ($i = 0, $j = 5, $soma = 0; $i < 12; $i++)
+        {
+            $soma += $cnpj{$i} * $j;
+            $j = ($j == 2) ? 9 : $j - 1;
+        }
+        $resto = $soma % 11;
+        if ($cnpj{12} != ($resto < 2 ? 0 : 11 - $resto)) {
+            $this->form_validation->set_message('validaCNPJ', ' CNPJ inválido.');
+            return false;
+        }
+
+        // Valida segundo dígito verificador
+        for ($i = 0, $j = 6; $i < 13; $i++)
+        {
+            $j = ($j == 2) ? 9 : $j - 1;
+        }
+        return true;
+
+    }
+
+    private function rulesLocation(){
+        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[50]');
+        $this->form_validation->set_rules('city', 'Cidade', 'trim|max_length[120]');
+        $this->form_validation->set_rules('zip_code', 'Cep', 'trim|max_length[9]');
+        $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
+        $this->form_validation->set_rules('number',       'Número',      'integer|max_length[11]');
+        $this->form_validation->set_rules('neighborhood', 'Bairro', 'trim|max_length[255]');
+        $this->form_validation->set_rules('complement', 'Complemento', 'trim|max_length[255]');
+        $this->form_validation->set_rules('latitude',     'Latitude',    'required');
+        $this->form_validation->set_rules('longitude',    'Longitude',   'required');
+    }
+
+    private function rulesEstabelecimento(){
+        $this->form_validation->set_rules('nome',      'Nome',      'required|trim|max_length[120]');
+        $this->form_validation->set_rules('cnpj',      'CNPJ',      'required|trim|max_length[18]|callback_validaCNPJ');
+        $this->form_validation->set_rules('categoria', 'Categoria', 'required|trim');
+        $this->form_validation->set_rules('descricao', 'Descrição', 'required|trim');
     }
 
 }

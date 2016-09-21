@@ -80,7 +80,7 @@
                                     <div class="col-sm-7">
                                         <select name="category" id="category" required class="form-control">
                                             <?php foreach ($categories as $category): ?>
-                                                <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                                                <option value="<?= $category->CodCategoria ?>"><?= $category->Nome ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -105,7 +105,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-12 col-sm-offset-2 col-sm-10">
                                 <?= form_error('description', '<div class="row"><div class="col-sm-offset-2 col-sm-10"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="row">
                                     <div class="col-xs-12 text-center">
