@@ -28,7 +28,6 @@
         <section class="content">
 
             <form action="<?= site_url('dashboard/estabelecimentos/editar') ?>" enctype="multipart/form-data" method="post" class="form-horizontal">
-                <input type="text" hidden value="<?=$establishment['id']?>" name="id">
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Estabelecimento</h3>

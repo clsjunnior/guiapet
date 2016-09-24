@@ -119,7 +119,8 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="CadastradoEm">Cadastrado em:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime($location['CriadoEm']))?>">
+                                <input type="text" class="form-control" disabled
+                                       value="<?= (isset($location["CriadoEm"]) ? date('d/m/Y', strtotime($location['AtualizadoEm'])) : '') ?>">
                             </div>
                         </div>
                     </div>
@@ -127,7 +128,8 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="ModificadoEm">Ultima modificação:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime($location['AtualizadoEm']))?>">
+                                <input type="text" class="form-control" disabled
+                                       value="<?= (isset($location["AtualizadoEm"]) ? date('d/m/Y', strtotime($location['AtualizadoEm'])) : '') ?>">
                             </div>
                         </div>
                     </div>
