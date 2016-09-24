@@ -48,7 +48,7 @@ class EstabelecimentoM extends CI_Model {
      * @return CI_DB_result
      */
     public function getAllBy($where = array()){
-        return $this->db->get_where($this->viewEstabelecimentos,$where);
+        return $this->db->get_where($this->viewEstabelecimentos, $where);
     }
 
 }

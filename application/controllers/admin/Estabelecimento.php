@@ -174,6 +174,15 @@ class Estabelecimento extends CI_Controller
         $this->estabelecimentoP['CNPJ'] = $cnpj;
     }
 
+    public function visualizar($id)
+    {
+        $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result_array()[0];
+        $dados['title'] = 'Visualizar: ' . $dados['estabelecimento']['EsNome'];
+        $this->console->info("Select estabelecimentos:");
+        $this->console->info($dados['estabelecimento']);
+        $this->load->view('admin/visualizar_estabelecimento', $dados);
+    }
+
     public function validaCNPJ($cnpj)
     {
         $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
