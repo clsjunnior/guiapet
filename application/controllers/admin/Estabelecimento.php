@@ -104,7 +104,6 @@ class Estabelecimento extends CI_Controller
 //
 //                if (isset($estabelecimento['location_id'])){
                 $this->preencheEstabelecimento();
-                var_dump($this->estabelecimentoP);
                 $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
 //                }
 //
