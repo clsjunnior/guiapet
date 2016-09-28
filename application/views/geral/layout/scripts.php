@@ -8,6 +8,8 @@
 <script src="<?=base_url('assets/plugins/owlCarousel/owl.carousel.js')?>"></script>
 <!-- select2 -->
 <script src="<?=base_url('assets/plugins/select2/select2.js')?>"></script>
+<!-- easy autocomplete -->
+<script src="<?=base_url('assets/plugins/easyAutoComplete/jquery.easy-autocomplete.min.js')?>"></script>
 <!-- rating js -->
 <script src="<?=base_url('assets/js/jquery.barrating.min.js')?>"></script>
 <!-- Bootstrap 3.3.6 -->

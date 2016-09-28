@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="<?=base_url('assets/fonts/ionicons.min.css')?>">
     <!-- select2 -->
     <link rel="stylesheet" href="<?=base_url('assets/plugins/select2/select2.css')?>">
+    <!-- easy autocomplete -->
+    <link rel="stylesheet" href="<?=base_url('assets/plugins/easyAutoComplete/easy-autocomplete.min.css')?>">
     <!-- owl -->
     <link rel="stylesheet" href="<?=base_url('assets/plugins/owlCarousel/owl.carousel.min.css')?>">
     <!-- Estilo -->

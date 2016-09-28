@@ -64,3 +64,7 @@ $route['dashboard/perfil'] = 'admin/Perfil';
 $route['dashboard/estabelecimentos'] = 'admin/Estabelecimento';
 $route['dashboard/estabelecimentos/editar'] = 'admin/Estabelecimento/editar';
 //$route['dashboard/estabelecimentos/editar/(:num)'] = 'admin/Estabelecimento/editar/$1';
+
+//API
+$route['api/estabelecimentos/busca'] = 'api/Estabelecimento/busca';
+//$route['api/estabelecimentos/busca/(:any)'] = 'api/Estabelecimento/busca';

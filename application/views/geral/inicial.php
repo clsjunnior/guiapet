@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<div class="form-group">
 							<label for="estabelecimentos">Estabelecimentos</label>
-							<input type="text" id="estabelecimentos" class="form-control" placeholder="Informe o nome do estabelecimento">
+							<input type="text" id="estabelecimento-ajax" class="form-control" placeholder="Informe o nome do estabelecimento">
 						</div>
 						<div class="form-group">
 							<label for="tag">Tag - Palavras-Chave</label>
@@ -122,6 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
 			<div id="mapa"></div>
 		</div>
+		<div id="result"></div>
 	</div>
 	<!-- FOOTER -->
 
@@ -165,6 +166,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$("#tag, #categoria").select2({
 			placeholder: 'Selecione uma Opção'
 		});
+
+		/*Easy autocomplete para busca de estabelecimentos*/
+		var pesquisaEasy = {
+
+			url: function(phrase) {
+//				return "api/countrySearch.php";
+				return "<?php echo site_url(); ?>" + "/api/estabelecimento/busca";
+			},
+
+			getValue: function(element) {
+				return element.nome;
+			},
+
+			ajaxSettings: {
+				dataType: "json",
+				method: "POST",
+				data: {
+					dataType: "json"
+				}
+			},
+
+			preparePostData: function(data) {
+				data.phrase = $("#estabelecimento-ajax").val();
+				return data;
+			},
+
+			requestDelay: 400
+		};
+
+		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEasy);
+		/*$( window ).load(function() {
+			$.ajax({
+				// url para o arquivo json.php
+				url: "<?php echo site_url(); ?>" + "/api/estabelecimento/busca",
+				// dataType json
+				type:'POST',
+				dataType: "json",
+				success: function ( data) {
+					alert(data);
+				},
+				error: function ( data ) {
+					console.log(data);
+				}
+
+			});//termina o ajax
+		});*/
 
 		$('#example').barrating({
 			theme: 'fontawesome-stars'
