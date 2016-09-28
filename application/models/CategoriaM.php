@@ -13,7 +13,7 @@ class CategoriaM extends CI_Model
 
 
     /**
-     * Categoria constructor.
+     * Categoria constructor
      */
     public function __construct(){
         parent::__construct();
