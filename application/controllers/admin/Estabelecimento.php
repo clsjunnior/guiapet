@@ -88,7 +88,6 @@ class Estabelecimento extends CI_Controller
 
                     }else{
                         $dados['erros'][] = 'Erro ao salvar localização';
-                    unlink(DIR_IMG . "/" . $infoIMG['file_name']);
                     }
 //                }
 //                $estabelecimento['name'] = $this->input->post('name');
@@ -119,6 +118,14 @@ class Estabelecimento extends CI_Controller
             } else {
                 $dados['erros'][] = "Erro ao salvar imagem, tente novamente mais tarde";
             }
+            $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
+                                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> 
+                                                    <h4><i class="icon fa fa-check-circle"></i> Estabelecimento cadastrado com sucesso!</h4>
+                                                    O estabelecimento <b>'.$estabelecimento['name'].'</b> foi cadastrado com sucesso
+                                                    </div> ');
+            redirect(site_url('dashboard/estabelecimentos'));
+        }else{
+            $dados['erros'][] = validation_errors();
         }
 
         /** Retorna todas as categorias no formato de objetos */
