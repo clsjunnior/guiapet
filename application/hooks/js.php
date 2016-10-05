@@ -8,6 +8,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  */
 
 function baseUrl(){
-
-    echo "<script>var base_url = '". base_url()."'</script>";
+    if (substr(uri_string(),0,3) != "api") {
+        echo "<script>
+            var base_url = '" . base_url() . "'
+            var site_url = '" . site_url() . "' 
+          </script>";
+    }
 }

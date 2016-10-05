@@ -12,12 +12,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="container">
 				<section>
 					<div class="hi-icon-wrap hi-icon-effect-8">
-						<a href="#" class="hi-icon icon-veterinario"></a>
-						<a href="#" class="hi-icon icon-adestrador"></a>
-						<a href="#" class="hi-icon icon-petshop"></a>
-						<a href="#" class="hi-icon icon-hotel"></a>
-						<a href="#" class="hi-icon icon-taxi"></a>
-						<a href="#" class="hi-icon icon-localizacao"></a>
+						<a href="#" data-id="iconVeterinario" class="hi-icon icon-veterinario iconBusca"></a>
+						<a href="#" data-id="iconPet" class="hi-icon icon-petshop iconBusca"></a>
+						<a href="#" data-id="iconHotel" class="hi-icon icon-hotel iconBusca"></a>
+						<a href="#" data-id="iconAdestrador" class="hi-icon icon-adestrador iconBusca"></a>
+						<a href="#" data-id="iconTaxi" class="hi-icon icon-taxi iconBusca"></a>
+						<a href="#" data-id="todos" class="hi-icon icon-localizacao iconBusca"></a>
 					</div>
 				</section>
 			</div>
@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<div class="form-group">
 							<label for="estabelecimentos">Estabelecimentos</label>
-							<input type="text" id="estabelecimentos" class="form-control" placeholder="Informe o nome do estabelecimento">
+							<input type="text" id="estabelecimento-ajax" class="form-control" placeholder="Informe o nome do estabelecimento">
 						</div>
 						<div class="form-group">
 							<label for="tag">Tag - Palavras-Chave</label>
@@ -122,6 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
 			<div id="mapa"></div>
 		</div>
+		<div id="result"></div>
 	</div>
 	<!-- FOOTER -->
 
@@ -166,9 +167,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			placeholder: 'Selecione uma Opção'
 		});
 
+		/*Easy autocomplete para busca de estabelecimentos*/
+		var pesquisaEasy = {
+
+			url: function(phrase) {
+//				return "api/countrySearch.php";
+				return "<?php echo site_url(); ?>" + "/api/estabelecimento/busca";
+			},
+
+			getValue: function(element) {
+				return element.nome;
+			},
+
+			ajaxSettings: {
+				dataType: "json",
+				method: "POST",
+				data: {
+					dataType: "json"
+				}
+			},
+
+			preparePostData: function(data) {
+				data.phrase = $("#estabelecimento-ajax").val();
+				return data;
+			},
+
+			requestDelay: 400
+		};
+
+		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEasy);
+
+
 		$('#example').barrating({
 			theme: 'fontawesome-stars'
 		});
+
+
 	</script>
 </body>
 </html>

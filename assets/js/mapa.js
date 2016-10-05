@@ -2,39 +2,157 @@
  * Created by Windows 10 on 07/09/2016.
  */
 
-window.initMap = function initMap() {
+var url_busca = "index.php/api/estabelecimento/busca/";
+$('.iconBusca').on('click', function () {
+    var valor = $(this).attr("data-id");
 
+    if (valor == "iconVeterinario") {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/1";
+        initMap(url_busca);
+    } else if (valor == "iconPet") {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/2";
+        initMap(url_busca);
+    } else if (valor == "iconHotel") {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/3";
+        initMap(url_busca);
+    } else if (valor == "iconAdestrador") {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/4";
+        initMap(url_busca);
+    } else if (valor == "iconTaxi") {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/5";
+        initMap(url_busca);
+    } else {
+        url_busca = "index.php/api/estabelecimento/busca/";
+        initMap(url_busca);
+    }
+
+});
+
+/*window.initMap = function initMap(url_busca) {
     // Create a map object and specify the DOM element for display.
     var map = new google.maps.Map(document.getElementById('mapa'), {
-        center: {lat: -21.673391, lng: -49.747130},
-        scrollwheel: false,
+ center: {lat: -21.673253, lng: -49.747381},
+ scrollwheel: true,
         zoom: 16,
         styles: [{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#e3e3e2"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#bfccde"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#c8de8f"}]},{"featureType":"poi.place_of_worship","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#514e4e"},{"lightness":54}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":43},{"lightness":-11},{"color":"#6286b8"}]}]
 
     });
 
-    displayMarkers(map);
+ displayMarkers(map,url_busca);
+ };*/
 
-};
+function initMap(url_busca) {
+    var map = new google.maps.Map(document.getElementById('mapa'), {
+        center: {lat: -21.673253, lng: -49.747381},
+        scrollwheel: true,
+        zoom: 18,
+        styles: [{
+            "featureType": "landscape.man_made",
+            "elementType": "geometry.fill",
+            "stylers": [{"color": "#e3e3e2"}]
+        }, {
+            "featureType": "landscape.natural",
+            "elementType": "geometry.fill",
+            "stylers": [{"visibility": "on"}, {"color": "#bfccde"}]
+        }, {
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [{"visibility": "off"}]
+        }, {
+            "featureType": "poi.attraction",
+            "elementType": "all",
+            "stylers": [{"visibility": "simplified"}]
+        }, {
+            "featureType": "poi.business",
+            "elementType": "all",
+            "stylers": [{"visibility": "off"}]
+        }, {
+            "featureType": "poi.government",
+            "elementType": "all",
+            "stylers": [{"visibility": "on"}]
+        }, {
+            "featureType": "poi.medical",
+            "elementType": "all",
+            "stylers": [{"visibility": "on"}]
+        }, {
+            "featureType": "poi.park",
+            "elementType": "all",
+            "stylers": [{"visibility": "on"}]
+        }, {
+            "featureType": "poi.park",
+            "elementType": "geometry.fill",
+            "stylers": [{"color": "#c8de8f"}]
+        }, {
+            "featureType": "poi.place_of_worship",
+            "elementType": "all",
+            "stylers": [{"visibility": "off"}]
+        }, {
+            "featureType": "poi.school",
+            "elementType": "all",
+            "stylers": [{"visibility": "on"}]
+        }, {
+            "featureType": "poi.sports_complex",
+            "elementType": "all",
+            "stylers": [{"visibility": "on"}]
+        }, {
+            "featureType": "road",
+            "elementType": "geometry.fill",
+            "stylers": [{"hue": "#ff0000"}, {"saturation": -100}, {"lightness": 99}]
+        }, {
+            "featureType": "road",
+            "elementType": "geometry.stroke",
+            "stylers": [{"color": "#514e4e"}, {"lightness": 54}]
+        }, {
+            "featureType": "road",
+            "elementType": "labels.text.fill",
+            "stylers": [{"color": "#767676"}]
+        }, {
+            "featureType": "road",
+            "elementType": "labels.text.stroke",
+            "stylers": [{"color": "#ffffff"}]
+        }, {
+            "featureType": "water",
+            "elementType": "all",
+            "stylers": [{"saturation": 43}, {"lightness": -11}, {"color": "#6286b8"}]
+        }]
+
+    });
+
+    displayMarkers(map, url_busca);
+}
+
+initMap(url_busca);
+
+/*function carregarPontos() {
+
+ $.getJSON("index.php/api/estabelecimento/buscaEstabelecimentoCategoria/2", function( data ) {
+ dados = '';
+ var data = data.EsCategoria;
+ $.each(data, function(index, value){
+ dados += "{lat:"+data.lat+","+
+ " long:"+data.long+"," +
+ " nome:"+data.nome+"," +
+ " descricao:"+data.descricao+"," +
+ "},";
+ });
+ //console.log(dados);
+ })
+ .always(function() {
+ // $('.load, .spinner').fadeIn('fast');
+ //$('html').addClass('bloquear');
+ })
+ .done(function() {
+ // $('.load, .spinner').fadeOut('fast'); //wow!
+ //  $('html').removeClass('bloquear');
+ console.log(dados);
+ })
+ .fail(function() {
+ alert("Ops, ocorreu um erro. Tente novamente!");
+ });
+ }*/
 
 
-var pontos = [
-    {
-        lat: -21.672274,
-        lng: -49.752713,
-        nome: "Clinica 01",
-        descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin vel nulla sed tempus. Vestibulum sodales eros ac odio sagittis, ac suscipit magna mattis. Etiam ultricies, sapien sed rutrum..."
-    },
-    {
-        lat: -21.662274,
-        lng: -49.742713,
-        nome: "Clinica 02",
-        descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin vel nulla sed tempus. Vestibulum sodales eros ac odio sagittis, ac suscipit magna mattis. Etiam ultricies, sapien sed rutrum dignissim, diam turpis mollis leo, vitae finibus nunc sem ut dolor. Fusce vehicula venenatis mi quis venenatis."
-    }
-];
-
-
-function displayMarkers(map){
+function displayMarkers(map, url_busca) {
 
     // esta variável vai definir a área de mapa a abranger e o nível do zoom
     // de acordo com as posições dos marcadores
@@ -46,38 +164,64 @@ function displayMarkers(map){
     });
 
 
-
     // evento que fecha a infoWindow com click no mapa
     google.maps.event.addListener(map, 'click', function() {
         infoWindow.close();
     });
 
     ModificaInfowindow(infoWindow);
-    // Loop que vai estruturar a informação contida em pontos
-    // para que a função createMarker possa criar os marcadores
-    for (var i = 0; i < pontos.length; i++){
 
-        var latlng = new google.maps.LatLng(pontos[i].lat, pontos[i].lng);
-        var nome = pontos[i].nome;
-        var descricao = pontos[i].descricao;
+    $.getJSON(url_busca, function (pontos) {
 
-        createMarker(latlng, nome, descricao, map, infoWindow);
+        $.each(pontos, function (index, ponto) {
+            var categoria = ponto.categoria;
+            var foto = ponto.foto;
+            var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
+            var nome = ponto.nome;
+            var descricao = ponto.descricao;
 
-        // Os valores de latitude e longitude do marcador são adicionados à
-        // variável bounds
-        bounds.extend(latlng);
-    }
+            createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow);
+
+            bounds.extend(latlng);
+        });
+
+    });
 
     // Depois de criados todos os marcadores
     // a API através da sua função fitBounds vai redefinir o nível do zoom
+    // Add a marker clusterer to manage the markers.
     map.fitBounds(bounds);
+    map.setCenter({lat: -21.673253, lng: -49.747381}); // centraliza depois q pesquisa
+    map.setZoom(15);
 }
 
 // Função que cria os marcadores e define o conteúdo de cada Info Window.
-function createMarker(latlng, nome, descricao, map, infoWindow){
-    var icone = {
-        url: base_url + "assets/third_party/iconMaps/IconVet.png",
-    };
+function createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow) {
+    if (categoria == "Clinica Veterinária") {
+        var icone = {
+            url: base_url + "assets/third_party/iconMaps/IconVet.png",
+        };
+    }
+    else if (categoria == "Pet Shop") {
+        var icone = {
+            url: base_url + "assets/third_party/iconMaps/IconPet.png",
+        };
+    }
+    else if (categoria == "Hoteis para Pet") {
+        var icone = {
+            url: base_url + "assets/third_party/iconMaps/IconHotel.png",
+        };
+    }
+    else if (categoria == "Adestradores") {
+        var icone = {
+            url: base_url + "assets/third_party/iconMaps/IconAdestrador.png",
+        };
+    } else {
+        var icone = {
+            url: base_url + "assets/third_party/iconMaps/IconTaxi.png",
+        };
+    }
+    
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
@@ -85,6 +229,7 @@ function createMarker(latlng, nome, descricao, map, infoWindow){
         title: nome,
         animation: google.maps.Animation.DROP
     });
+
 
     // Evento que dá instrução à API para estar alerta ao click no marcador.
     // Define o conteúdo e abre a Info Window.
@@ -94,8 +239,8 @@ function createMarker(latlng, nome, descricao, map, infoWindow){
         var conteudo = '<div id="iw-container">' +
         '<div class="iw-title">'+ nome +'</div>' +
         '<div class="iw-content">' +
-        '<div class="iw-subTitle">Clinica Veterinária</div>' +
-        '<img src="'+base_url+'assets/third_party/img/img01.jpg">' +
+            '<div class="iw-subTitle">' + categoria + '</div>' +
+            '<img src="' + base_url + 'assets/third_party/app/img/' + foto + '">' +
         '<p>'+ descricao +'<a href="#">Saiba Mais</a></p><hr/>' +
             '<div class="iw-subTitle">Contatos</div>' +
             '<p style="margin-top:5px; "><strong><span class="glyphicon glyphicon-phone" style="margin-right: 5px;" aria-hidden="true"></span></strong> (014) 99882-1015 <br/>'+

@@ -79,7 +79,8 @@
                                     <div class="col-sm-7">
                                         <select name="category" id="category" required class="form-control">
                                             <?php foreach ($categories as $category): ?>
-                                                <option value="<?= $category->CodCategoria ?>"><?= $category->Nome ?></option>
+                                                <option
+                                                    value="<?= $category->CodCategoria ?>"><?= $category->Nome ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

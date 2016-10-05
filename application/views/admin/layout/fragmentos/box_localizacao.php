@@ -1,4 +1,4 @@
-<div class="box box-info ">
+<div class="box box-info collapsed-box ">
     <div class="box-header with-border">
         <h3 class="box-title">Endereço<small>(Localização)</small></h3>
         <div class="box-tools pull-right">
@@ -24,7 +24,8 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label" for="latitude">Latitude:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" readonly id="latitude" name="latitude" value="<?=set_value('latitude',$location['Latitude'])?>">
+                                <input type="text" class="form-control" readonly id="latitude" name="latitude"
+                                       value="<?= set_value('latitude', $location['Latitude']) ?>">
                             </div>
                         </div>
                     </div>
@@ -32,7 +33,8 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label" for="longitude">Longitude:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" readonly id="longitude" name="longitude" value="<?=set_value('longitude',$location['Longitude'])?>">
+                                <input type="text" class="form-control" readonly id="longitude" name="longitude"
+                                       value="<?= set_value('longitude', $location['Longitude']) ?>">
                             </div>
                         </div>
                     </div>
@@ -120,7 +122,7 @@
                             <label class="col-sm-4 control-label" for="CadastradoEm">Cadastrado em:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" disabled
-                                       value="<?= (isset($location["CriadoEm"]) ? date('d/m/Y', strtotime($location['AtualizadoEm'])) : '') ?>">
+                                       value="<?= (isset($location["CriadoEm"]) ? date('d/m/Y', strtotime($location['CriadoEm'])) : '') ?>">
                             </div>
                         </div>
                     </div>
@@ -158,8 +160,9 @@
     var map;
     function initMap() {
         map = new google.maps.Map(document.getElementById('mapa'), {
-            center: {lat: 0, lng: 0},
-            zoom: 17
+            center: {lat: -21.673391, lng: -49.747130},
+            zoom: 17,
+            styles: [{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#e3e3e2"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#bfccde"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#c8de8f"}]},{"featureType":"poi.place_of_worship","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#514e4e"},{"lightness":54}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":43},{"lightness":-11},{"color":"#6286b8"}]}]
         });
         var marker = new google.maps.Marker({map: map});
 
