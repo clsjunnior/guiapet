@@ -1,4 +1,4 @@
-<div class="box box-info">
+<div class="box box-info collapsed-box ">
     <div class="box-header with-border">
         <h3 class="box-title">Endereço<small>(Localização)</small></h3>
         <div class="box-tools pull-right">
@@ -13,7 +13,9 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div id="mapa" style="height: 250px"></div>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <div id="mapa" class="embed-responsive-item"></div>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -22,7 +24,8 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label" for="latitude">Latitude:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" readonly id="latitude" name="latitude">
+                                <input type="text" class="form-control" readonly id="latitude" name="latitude"
+                                       value="<?= set_value('latitude', $location['Latitude']) ?>">
                             </div>
                         </div>
                     </div>
@@ -30,7 +33,8 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label" for="longitude">Longitude:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" readonly id="longitude" name="longitude">
+                                <input type="text" class="form-control" readonly id="longitude" name="longitude"
+                                       value="<?= set_value('longitude', $location['Longitude']) ?>">
                             </div>
                         </div>
                     </div>
@@ -117,7 +121,8 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="CadastradoEm">Cadastrado em:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime(getSesLocalizacao(['CriadoEm'])))?>">
+                                <input type="text" class="form-control" disabled
+                                       value="<?= (isset($location["CriadoEm"]) ? date('d/m/Y', strtotime($location['CriadoEm'])) : '') ?>">
                             </div>
                         </div>
                     </div>
@@ -125,7 +130,8 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="ModificadoEm">Ultima modificação:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime(getSesLocalizacao(['AtualizadoEm'])))?>">
+                                <input type="text" class="form-control" disabled
+                                       value="<?= (isset($location["AtualizadoEm"]) ? date('d/m/Y', strtotime($location['AtualizadoEm'])) : '') ?>">
                             </div>
                         </div>
                     </div>

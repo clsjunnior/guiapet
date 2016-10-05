@@ -27,15 +27,51 @@ class Estabelecimento extends CI_Controller
         $valores = $this->estabelecimento->getAllBy($where)->result_array();
 
         foreach ($valores as $valor){
+
             $saida[] = [
-                "nome" => $valor['EsNome']
+                "categoria" => $valor['CaNome'],
+                "nome" => $valor['EsNome'],
+                "descricao" => $valor['EsDescricao'],
+                "foto" => $valor['EsFoto'],
+                "lat" => $valor['LoLatitude'],
+                "long" => $valor['LoLongitude'],
+                "tipoContato" => $valor['CoNome'],
+                "contato" => $valor['CoValor']
             ];
         }
+
         if (!isset($saida)){
             $saida[] = ["nome" => "Nenhum resultado"];
         }
 
         echo json_encode($saida);
+    }
+
+    public function buscaEstabelecimentoCategoria()
+    {
+        $this->output->set_content_type('application/json');
+        $where = [
+            "CaCodCategoria" => $this->uri->segment(4),
+        ];
+
+        $valores = $this->estabelecimento->getAllBy($where)->result_array();
+
+        foreach ($valores as $valor) {
+
+            $saida[] = [
+                "categoria" => $valor['CaNome'],
+                "nome" => $valor['EsNome'],
+                "descricao" => $valor['EsDescricao'],
+                "foto" => $valor['EsFoto'],
+                "lat" => $valor['LoLatitude'],
+                "long" => $valor['LoLongitude'],
+                "tipoContato" => $valor['CoNome'],
+                "contato" => $valor['CoValor']
+            ];
+        }
+
+        echo json_encode($saida);
+
     }
 
 

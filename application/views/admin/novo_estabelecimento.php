@@ -28,7 +28,6 @@
         <section class="content">
 
             <form action="<?= site_url('dashboard/estabelecimentos/editar') ?>" enctype="multipart/form-data" method="post" class="form-horizontal">
-                <input type="text" hidden value="<?=$establishment['id']?>" name="id">
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Estabelecimento</h3>
@@ -80,7 +79,8 @@
                                     <div class="col-sm-7">
                                         <select name="category" id="category" required class="form-control">
                                             <?php foreach ($categories as $category): ?>
-                                                <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                                                <option
+                                                    value="<?= $category->CodCategoria ?>"><?= $category->Nome ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -105,7 +105,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-12 col-sm-offset-2 col-sm-10">
                                 <?= form_error('description', '<div class="row"><div class="col-sm-offset-2 col-sm-10"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="row">
                                     <div class="col-xs-12 text-center">

@@ -12,12 +12,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="container">
 				<section>
 					<div class="hi-icon-wrap hi-icon-effect-8">
-						<a href="#" class="hi-icon icon-veterinario"></a>
-						<a href="#" class="hi-icon icon-adestrador"></a>
-						<a href="#" class="hi-icon icon-petshop"></a>
-						<a href="#" class="hi-icon icon-hotel"></a>
-						<a href="#" class="hi-icon icon-taxi"></a>
-						<a href="#" class="hi-icon icon-localizacao"></a>
+						<a href="#" data-id="iconVeterinario" class="hi-icon icon-veterinario iconBusca"></a>
+						<a href="#" data-id="iconPet" class="hi-icon icon-petshop iconBusca"></a>
+						<a href="#" data-id="iconHotel" class="hi-icon icon-hotel iconBusca"></a>
+						<a href="#" data-id="iconAdestrador" class="hi-icon icon-adestrador iconBusca"></a>
+						<a href="#" data-id="iconTaxi" class="hi-icon icon-taxi iconBusca"></a>
+						<a href="#" data-id="todos" class="hi-icon icon-localizacao iconBusca"></a>
 					</div>
 				</section>
 			</div>
@@ -196,26 +196,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		};
 
 		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEasy);
-		/*$( window ).load(function() {
-			$.ajax({
-				// url para o arquivo json.php
-				url: "<?php echo site_url(); ?>" + "/api/estabelecimento/busca",
-				// dataType json
-				type:'POST',
-				dataType: "json",
-				success: function ( data) {
-					alert(data);
-				},
-				error: function ( data ) {
-					console.log(data);
-				}
 
-			});//termina o ajax
-		});*/
 
 		$('#example').barrating({
 			theme: 'fontawesome-stars'
 		});
+
+
 	</script>
 </body>
 </html>

@@ -26,8 +26,11 @@ class CategoriaM extends CI_Model
      * @return CI_DB_result
      */
     public function getAll(){
+        $categoria = $this->db->get($this->table);
+        $this->console->info($categoria->num_rows() . " registro(2) 'CategoriaM@getAll': ");
+        $this->console->info($categoria->result());
         /** Retorna todas as categorias (no formato de classe) */
-        return $this->db->get($this->table);
+        return $categoria;
     }
 
 }
