@@ -33,4 +33,15 @@ class CategoriaM extends CI_Model
         return $categoria;
     }
 
+    public function getCatCount()
+    {
+        $this->db->select("TB_Categoria.Nome, count(TB_Estabelecimento.CodEstabelecimento)  as qtd")
+            ->from("TB_Categoria")
+            ->join("TB_Estabelecimento", "TB_Categoria.CodCategoria = TB_Estabelecimento.CategoriaCod", "inner")
+            ->group_by("TB_Categoria.Nome");
+
+        return $this->db->result_id();
+
+    }
+
 }

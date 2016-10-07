@@ -1,9 +1,9 @@
-<div class="box box-info collapsed-box ">
+<div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">Endereço<small>(Localização)</small></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                <i class="fa fa-plus"></i></button>
+                <i class="fa fa-minus"></i></button>
         </div>
     </div>
 

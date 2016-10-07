@@ -71,16 +71,7 @@ class Estabelecimento extends CI_Controller
             $this->load->library('upload', $config);
 
             if ($this->upload->do_upload('photograp')) {
-                $infoIMG = $this->upload->data();
-//                if ($id != null){
-//                    $estabelecimento['id'] = $dados['establishment']['id'];
-//                    $localizacao['id'] = $dados['establishment']['location_id'];
-//                }
-//
 
-//                if (isset($localizacao['id'])){
-//                    $this->localizacao->atualizaLocalizacao($localizacao,$id);
-//                }else {
                 $this->preencheLocalizacao();
 
                 if ($this->localizacao->novaLocalizacao($this->localizacaoP)) {
@@ -89,39 +80,17 @@ class Estabelecimento extends CI_Controller
                     }else{
                         $dados['erros'][] = 'Erro ao salvar localização';
                     }
-//                }
-//                $estabelecimento['name'] = $this->input->post('name');
-//                $estabelecimento['website'] = $this->input->post('website');
-//                $estabelecimento['description'] = $this->input->post('description');
-//                $estabelecimento['photograph'] = $this->upload->data()['file_name'];
-//                $estabelecimento['cnpj'] = preg_replace('/[^0-9]/', '',$this->input->post('cnpj'));
-//                $estabelecimento['tel'] = $this->input->post('tel');
-//                $estabelecimento['latitude'] = $this->input->post('latitude');
-//                $estabelecimento['longitude'] = $this->input->post('longitude');
-//                $estabelecimento['user_id'] = getSesUser(['id']);
-//                $estabelecimento['categorie_id'] = $this->input->post('category');
-//
-//                if (isset($estabelecimento['location_id'])){
+
                 $this->preencheEstabelecimento();
                 $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
-//                }
-//
-//            }else{
-//                $dados['erros'] = $this->upload->display_errors();
-//            }
-//            $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
-//                                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-//                                                    <h4><i class="icon fa fa-check-circle"></i> Estabelecimento cadastrado com sucesso!</h4>
-//                                                    O estabelecimento <b>'.$estabelecimento['name'].'</b> foi cadastrado com sucesso
-//                                                    </div> ');
-//            redirect(site_url('dashboard/estabelecimentos'));
+
             } else {
                 $dados['erros'][] = "Erro ao salvar imagem, tente novamente mais tarde";
             }
             $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
                                                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> 
                                                     <h4><i class="icon fa fa-check-circle"></i> Estabelecimento cadastrado com sucesso!</h4>
-                                                    O estabelecimento <b>'.$estabelecimento['name'].'</b> foi cadastrado com sucesso
+                                                    O estabelecimento <b>' . $this->estabelecimentoP['Nome'] . '</b> foi cadastrado com sucesso
                                                     </div> ');
             redirect(site_url('dashboard/estabelecimentos'));
         }else{
@@ -179,15 +148,6 @@ class Estabelecimento extends CI_Controller
         $this->estabelecimentoP['Descricao'] = $this->input->post('description');
         $this->estabelecimentoP['Foto'] = $this->upload->data()['file_name'];
         $this->estabelecimentoP['CNPJ'] = $cnpj;
-    }
-
-    public function visualizar($id)
-    {
-        $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result_array()[0];
-        $dados['title'] = 'Visualizar: ' . $dados['estabelecimento']['EsNome'];
-        $this->console->info("Select estabelecimentos:");
-        $this->console->info($dados['estabelecimento']);
-        $this->load->view('admin/visualizar_estabelecimento', $dados);
     }
 
     public function validaCNPJ($cnpj)
