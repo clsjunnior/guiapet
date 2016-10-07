@@ -44,7 +44,7 @@ $('.iconBusca').on('click', function () {
 function initMap(url_busca) {
     var map = new google.maps.Map(document.getElementById('mapa'), {
         center: {lat: -21.673253, lng: -49.747381},
-        scrollwheel: true,
+        scrollwheel: false,
         zoom: 18,
         styles: [{
             "featureType": "landscape.man_made",
@@ -174,15 +174,31 @@ function displayMarkers(map, url_busca) {
     $.getJSON(url_busca, function (pontos) {
 
         $.each(pontos, function (index, ponto) {
-            var categoria = ponto.categoria;
-            var foto = ponto.foto;
-            var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
-            var nome = ponto.nome;
-            var descricao = ponto.descricao;
+            var nenhumResultado = ponto.vazio;
+            if (typeof(nenhumResultado) != "undefined") {
+                swal({
+                    title: 'Ops :(',
+                    text: "Nenhum estabelecimento encontrado!",
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#1c3e5e',
+                    confirmButtonText: 'Tente outra vez!'
+                }).then(function () {
+                    url_busca = "index.php/api/estabelecimento/busca/";
+                    initMap(url_busca);
+                });
+            } else {
+                var categoria = ponto.categoria;
+                var foto = ponto.foto;
+                var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
+                var nome = ponto.nome;
+                var descricao = ponto.descricao;
+                var tipoContato = ponto.tipoContato;
+                var contato = ponto.contato;
+                createMarker(categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow);
 
-            createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow);
-
-            bounds.extend(latlng);
+                bounds.extend(latlng);
+            }
         });
 
     });
@@ -191,12 +207,13 @@ function displayMarkers(map, url_busca) {
     // a API através da sua função fitBounds vai redefinir o nível do zoom
     // Add a marker clusterer to manage the markers.
     map.fitBounds(bounds);
-    map.setCenter({lat: -21.673253, lng: -49.747381}); // centraliza depois q pesquisa
-    map.setZoom(15);
+    // map.setCenter({lat: -21.673253, lng: -49.747381}); // centraliza depois q pesquisa
+    // map.setZoom(14);
 }
 
 // Função que cria os marcadores e define o conteúdo de cada Info Window.
-function createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow) {
+function createMarker(categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow) {
+
     if (categoria == "Clinica Veterinária") {
         var icone = {
             url: base_url + "assets/third_party/iconMaps/IconVet.png",
@@ -221,7 +238,8 @@ function createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow)
             url: base_url + "assets/third_party/iconMaps/IconTaxi.png",
         };
     }
-    
+
+
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
@@ -230,6 +248,8 @@ function createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow)
         animation: google.maps.Animation.DROP
     });
 
+    map.setCenter(marker.getPosition()); // centraliza depois q pesquisa
+    map.setZoom(16);
 
     // Evento que dá instrução à API para estar alerta ao click no marcador.
     // Define o conteúdo e abre a Info Window.
@@ -241,13 +261,8 @@ function createMarker(categoria, foto, latlng, nome, descricao, map, infoWindow)
         '<div class="iw-content">' +
             '<div class="iw-subTitle">' + categoria + '</div>' +
             '<img src="' + base_url + 'assets/third_party/app/img/' + foto + '">' +
-        '<p>'+ descricao +'<a href="#">Saiba Mais</a></p><hr/>' +
-            '<div class="iw-subTitle">Contatos</div>' +
-            '<p style="margin-top:5px; "><strong><span class="glyphicon glyphicon-phone" style="margin-right: 5px;" aria-hidden="true"></span></strong> (014) 99882-1015 <br/>'+
-            '<strong><span class="glyphicon glyphicon-phone-alt" style="margin-right: 5px;" aria-hidden="true"></span></strong> (014) 3533-2323 </p>'+
-            '<button type="button" class="btn btn-default fa-margin" data-toggle="tooltip" data-placement="bottom" title="Site"> <span class="fa fa-external-link"></span> </button>'+
-            '<button type="button" class="btn btn-default fa-margin" data-toggle="tooltip" data-placement="bottom" title="Facebook"> <span class="fa fa-facebook"></span> </button>'+
-            '<button type="button" class="btn btn-default fa-margin" data-toggle="tooltip" data-placement="bottom" title="Instagram"> <span class="fa fa-instagram"></span> </button>'+
+            '<hr/><p>' + descricao + '<br/><a href="#">Saiba Mais</a></p>' +
+            '<div class="iw-subTitle">Palavras-Chave</div>' +
             '<hr/>'+
         '<a href="#" class="btn btn-primary my-btn btn-block">Conheça!!</a>'+
         '<div class="iw-bottom-gradient"></div>' +

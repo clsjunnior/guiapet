@@ -41,7 +41,7 @@ class Estabelecimento extends CI_Controller
         }
 
         if (!isset($saida)){
-            $saida[] = ["nome" => "Nenhum resultado"];
+            $saida[] = ["vazio" => "Nenhum resultado encontrado!"];
         }
 
         echo json_encode($saida);
@@ -68,6 +68,10 @@ class Estabelecimento extends CI_Controller
                 "tipoContato" => $valor['CoNome'],
                 "contato" => $valor['CoValor']
             ];
+        }
+
+        if (!isset($saida)) {
+            $saida[] = ["vazio" => "Nenhum resultado encontrado!"];
         }
 
         echo json_encode($saida);

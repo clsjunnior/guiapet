@@ -69,4 +69,7 @@ $route['dashboard/estabelecimentos/visualizar/(:num)'] = 'admin/Estabelecimento/
 //API
 $route['api/estabelecimentos/busca'] = 'api/Estabelecimento/busca';
 $route['api/estabelecimentos/buscaEstabelecimentoCategoria'] = 'api/Estabelecimento/buscaEstabelecimentoCategoria';
+
+$route['api/tags/buscaTag'] = 'api/Tag/buscaTag';
+$route['api/tagsEstabelecimento/buscaTag'] = 'api/TagEstabelecimento/buscaTag';
 //$route['api/estabelecimentos/busca/(:any)'] = 'api/Estabelecimento/busca';

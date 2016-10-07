@@ -8,6 +8,8 @@
 <script src="<?=base_url('assets/js/mapa.js')?>"></script>
 <!-- owl -->
 <script src="<?=base_url('assets/plugins/owlCarousel/owl.carousel.js')?>"></script>
+<!-- sweetalert -->
+<script src="<?= base_url('assets/plugins/sweetalert/sweetalert2.min.js') ?>"></script>
 <!-- select2 -->
 <script src="<?=base_url('assets/plugins/select2/select2.js')?>"></script>
 <!-- easy autocomplete -->

@@ -71,8 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="form-group">
 							<label for="tag">Tag - Palavras-Chave</label>
 							<select class="form-control" id="tag" multiple="multiple">
-								<option value="tag1">tag1</option>
-								<option value="tag2">tag2</option>
+
 							</select>
 						</div>
 						<div class="form-group">
@@ -92,32 +91,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</form>
 				</div>
 			</div>
-			<!--<div class="navmenu navmenu-default">
-				<a class="navmenu-brand visible-md visible-lg" href="#">Project name</a>
-				<ul class="nav navmenu-nav">
-					<li class="active"><a href="./">Slide in</a></li>
-					<li><a href="../navmenu-push/">Push</a></li>
-					<li><a href="../navmenu-reveal/">Reveal</a></li>
-					<li><a href="../navbar-offcanvas/">Off canvas navbar</a></li>
-				</ul>
-				<ul class="nav navmenu-nav">
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-						<ul class="dropdown-menu navmenu-nav">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>-->
 		</div>
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
 			<div id="mapa"></div>
@@ -163,12 +136,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 
-		$("#tag, #categoria").select2({
-			placeholder: 'Selecione uma Opção'
+		$("#categoria, #tag").select2({
+			placeholder: 'Selecione uma Opção',
+			maximumInputLength: 30
+		});
+
+
+		$.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
+			var tags = " ";
+			$.each(resultados, function (index, resp) {
+				//tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
+				// cria os options com os dados do json
+				tags += '<option value="' + resp.codTag + '">' + resp.tag + '</option>';
+			});
+			// atribui no campo de tag
+			$("#tag").html(tags);
+			console.log(tags);
 		});
 
 		/*Easy autocomplete para busca de estabelecimentos*/
-		var pesquisaEasy = {
+		var pesquisaEstabelecimento = {
 
 			url: function(phrase) {
 //				return "api/countrySearch.php";
@@ -195,7 +182,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			requestDelay: 400
 		};
 
-		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEasy);
+		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEstabelecimento);
 
 
 		$('#example').barrating({
