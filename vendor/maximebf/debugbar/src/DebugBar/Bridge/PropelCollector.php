@@ -17,8 +17,8 @@ use DebugBar\DataCollector\Renderable;
 use Propel;
 use PropelConfiguration;
 use PropelPDO;
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * A Propel logger which acts as a data collector
@@ -43,6 +43,21 @@ class PropelCollector extends DataCollector implements BasicLogger, Renderable, 
     protected $accumulatedTime = 0;
 
     protected $peakMemory = 0;
+
+    /**
+     * @param LoggerInterface $logger A logger to forward non-query log lines to
+     * @param PropelPDO $conn Bound this collector to a connection only
+     */
+    public function __construct(LoggerInterface $logger = null, PropelPDO $conn = null)
+    {
+        if ($conn) {
+            $conn->setLogger($this);
+        } else {
+            Propel::setLogger($this);
+        }
+        $this->logger = $logger;
+        $this->logQueriesToLogger = false;
+    }
 
     /**
      * Sets the needed configuration option in propel to enable query logging
@@ -70,21 +85,6 @@ class PropelCollector extends DataCollector implements BasicLogger, Renderable, 
         $config->setParameter('debugpdo.logging.methods', $allMethods, false);
     }
 
-    /**
-     * @param LoggerInterface $logger A logger to forward non-query log lines to
-     * @param PropelPDO $conn Bound this collector to a connection only
-     */
-    public function __construct(LoggerInterface $logger = null, PropelPDO $conn = null)
-    {
-        if ($conn) {
-            $conn->setLogger($this);
-        } else {
-            Propel::setLogger($this);
-        }
-        $this->logger = $logger;
-        $this->logQueriesToLogger = false;
-    }
-
     public function setLogQueriesToLogger($enable = true)
     {
         $this->logQueriesToLogger = $enable;
@@ -101,41 +101,6 @@ class PropelCollector extends DataCollector implements BasicLogger, Renderable, 
         $this->log($m, Propel::LOG_EMERG);
     }
 
-    public function alert($m)
-    {
-        $this->log($m, Propel::LOG_ALERT);
-    }
-
-    public function crit($m)
-    {
-        $this->log($m, Propel::LOG_CRIT);
-    }
-
-    public function err($m)
-    {
-        $this->log($m, Propel::LOG_ERR);
-    }
-
-    public function warning($m)
-    {
-        $this->log($m, Propel::LOG_WARNING);
-    }
-
-    public function notice($m)
-    {
-        $this->log($m, Propel::LOG_NOTICE);
-    }
-
-    public function info($m)
-    {
-        $this->log($m, Propel::LOG_INFO);
-    }
-
-    public function debug($m)
-    {
-        $this->log($m, Propel::LOG_DEBUG);
-    }
-
     public function log($message, $severity = null)
     {
         if (strpos($message, 'DebugPDOStatement::execute') !== false) {
@@ -149,26 +114,6 @@ class PropelCollector extends DataCollector implements BasicLogger, Renderable, 
         if ($this->logger !== null) {
             $this->logger->log($this->convertLogLevel($severity), $message);
         }
-    }
-
-    /**
-     * Converts Propel log levels to PSR log levels
-     *
-     * @param int $level
-     * @return string
-     */
-    protected function convertLogLevel($level)
-    {
-        $map = array(
-            Propel::LOG_EMERG => LogLevel::EMERGENCY,
-            Propel::LOG_ALERT => LogLevel::ALERT,
-            Propel::LOG_CRIT => LogLevel::CRITICAL,
-            Propel::LOG_ERR => LogLevel::ERROR,
-            Propel::LOG_WARNING => LogLevel::WARNING,
-            Propel::LOG_NOTICE => LogLevel::NOTICE,
-            Propel::LOG_DEBUG => LogLevel::DEBUG
-        );
-        return $map[$level];
     }
 
     /**
@@ -207,6 +152,61 @@ class PropelCollector extends DataCollector implements BasicLogger, Renderable, 
         $this->accumulatedTime += $duration;
         $this->peakMemory = max($this->peakMemory, $memory);
         return array($sql, $this->formatDuration($duration));
+    }
+
+    /**
+     * Converts Propel log levels to PSR log levels
+     *
+     * @param int $level
+     * @return string
+     */
+    protected function convertLogLevel($level)
+    {
+        $map = array(
+            Propel::LOG_EMERG => LogLevel::EMERGENCY,
+            Propel::LOG_ALERT => LogLevel::ALERT,
+            Propel::LOG_CRIT => LogLevel::CRITICAL,
+            Propel::LOG_ERR => LogLevel::ERROR,
+            Propel::LOG_WARNING => LogLevel::WARNING,
+            Propel::LOG_NOTICE => LogLevel::NOTICE,
+            Propel::LOG_DEBUG => LogLevel::DEBUG
+        );
+        return $map[$level];
+    }
+
+    public function alert($m)
+    {
+        $this->log($m, Propel::LOG_ALERT);
+    }
+
+    public function crit($m)
+    {
+        $this->log($m, Propel::LOG_CRIT);
+    }
+
+    public function err($m)
+    {
+        $this->log($m, Propel::LOG_ERR);
+    }
+
+    public function warning($m)
+    {
+        $this->log($m, Propel::LOG_WARNING);
+    }
+
+    public function notice($m)
+    {
+        $this->log($m, Propel::LOG_NOTICE);
+    }
+
+    public function info($m)
+    {
+        $this->log($m, Propel::LOG_INFO);
+    }
+
+    public function debug($m)
+    {
+        $this->log($m, Propel::LOG_DEBUG);
     }
 
     public function collect()

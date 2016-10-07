@@ -67,6 +67,20 @@ class CI_Cache_apc extends CI_Driver {
 	// ------------------------------------------------------------------------
 
 	/**
+     * is_supported()
+     *
+     * Check to see if APC is available on this system, bail if it isn't.
+     *
+     * @return    bool
+     */
+    public function is_supported()
+    {
+        return (extension_loaded('apc') && ini_get('apc.enabled'));
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
 	 * Get
 	 *
 	 * Look for a value in the cache. If it exists, return the data
@@ -203,19 +217,5 @@ class CI_Cache_apc extends CI_Driver {
 			'mtime'		=> $time,
 			'data'		=> unserialize($data)
 		);
-	}
-
-	// ------------------------------------------------------------------------
-
-	/**
-	 * is_supported()
-	 *
-	 * Check to see if APC is available on this system, bail if it isn't.
-	 *
-	 * @return	bool
-	 */
-	public function is_supported()
-	{
-		return (extension_loaded('apc') && ini_get('apc.enabled'));
 	}
 }

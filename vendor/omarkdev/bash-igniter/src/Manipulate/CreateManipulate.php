@@ -1,9 +1,8 @@
 <?php
 namespace BashIgniter\Manipulate;
 
-use BashIgniter\Structure\PathStructure;
-use BashIgniter\Manipulate\FileManipulate;
 use BashIgniter\Structure\FileStructure;
+use BashIgniter\Structure\PathStructure;
 
 class CreateManipulate extends PathStructure{
 	public $errorExist = "<error>File just exist</error>";

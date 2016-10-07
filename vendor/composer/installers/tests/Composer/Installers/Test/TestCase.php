@@ -12,15 +12,23 @@
 
 namespace Composer\Installers\Test;
 
-use Composer\Package\Version\VersionParser;
-use Composer\Package\Package;
 use Composer\Package\AliasPackage;
 use Composer\Package\LinkConstraint\VersionConstraint;
+use Composer\Package\Package;
+use Composer\Package\Version\VersionParser;
 use Composer\Util\Filesystem;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     private static $parser;
+
+    protected function getVersionConstraint($operator, $version)
+    {
+        return new VersionConstraint(
+            $operator,
+            self::getVersionParser()->normalize($version)
+        );
+    }
 
     protected static function getVersionParser()
     {
@@ -29,14 +37,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         }
 
         return self::$parser;
-    }
-
-    protected function getVersionConstraint($operator, $version)
-    {
-        return new VersionConstraint(
-            $operator,
-            self::getVersionParser()->normalize($version)
-        );
     }
 
     protected function getPackage($name, $version)

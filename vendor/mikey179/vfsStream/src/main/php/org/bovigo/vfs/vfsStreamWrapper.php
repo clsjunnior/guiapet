@@ -116,24 +116,24 @@ class vfsStreamWrapper
     }
 
     /**
-     * sets the root content
-     *
-     * @param   vfsStreamContainer  $root
-     * @return  vfsStreamContainer
-     */
-    public static function setRoot(vfsStreamContainer $root)
-    {
-        self::$root = $root;
-        return self::$root;
-    }
-
-    /**
      * returns the root content
      *
      * @return  vfsStreamContainer
      */
     public static function getRoot()
     {
+        return self::$root;
+    }
+
+    /**
+     * sets the root content
+     *
+     * @param   vfsStreamContainer $root
+     * @return  vfsStreamContainer
+     */
+    public static function setRoot(vfsStreamContainer $root)
+    {
+        self::$root = $root;
         return self::$root;
     }
 
@@ -146,86 +146,6 @@ class vfsStreamWrapper
     public static function setQuota(Quota $quota)
     {
         self::$quota = $quota;
-    }
-
-    /**
-     * returns content for given path
-     *
-     * @param   string  $path
-     * @return  vfsStreamContent
-     */
-    protected function getContent($path)
-    {
-        if (null === self::$root) {
-            return null;
-        }
-
-        if (self::$root->getName() === $path) {
-            return self::$root;
-        }
-
-        if (self::$root->hasChild($path) === true) {
-            return self::$root->getChild($path);
-        }
-
-        return null;
-    }
-
-    /**
-     * returns content for given path but only when it is of given type
-     *
-     * @param   string  $path
-     * @param   int     $type
-     * @return  vfsStreamContent
-     */
-    protected function getContentOfType($path, $type)
-    {
-        $content = $this->getContent($path);
-        if (null !== $content && $content->getType() === $type) {
-            return $content;
-        }
-
-        return null;
-    }
-
-    /**
-     * splits path into its dirname and the basename
-     *
-     * @param   string  $path
-     * @return  string[]
-     */
-    protected function splitPath($path)
-    {
-        $lastSlashPos = strrpos($path, '/');
-        if (false === $lastSlashPos) {
-            return array('dirname' => '', 'basename' => $path);
-        }
-
-        return array('dirname'  => substr($path, 0, $lastSlashPos),
-                     'basename' => substr($path, $lastSlashPos + 1)
-               );
-    }
-
-    /**
-     * helper method to resolve a path from /foo/bar/. to /foo/bar
-     *
-     * @param   string  $path
-     * @return  string
-     */
-    protected function resolvePath($path)
-    {
-        $newPath  = array();
-        foreach (explode('/', $path) as $pathPart) {
-            if ('.' !== $pathPart) {
-                if ('..' !== $pathPart) {
-                    $newPath[] = $pathPart;
-                } else {
-                    array_pop($newPath);
-                }
-            }
-        }
-
-        return implode('/', $newPath);
     }
 
     /**
@@ -295,6 +215,88 @@ class vfsStreamWrapper
     }
 
     /**
+     * calculates the file mode
+     *
+     * @param   string $mode opening mode: r, w, a or x
+     * @param   bool $extended true if + was set with opening mode
+     * @return  int
+     */
+    protected function calculateMode($mode, $extended)
+    {
+        if (true === $extended) {
+            return self::ALL;
+        }
+
+        if (self::READ === $mode) {
+            return self::READONLY;
+        }
+
+        return self::WRITEONLY;
+    }
+
+    /**
+     * helper method to resolve a path from /foo/bar/. to /foo/bar
+     *
+     * @param   string $path
+     * @return  string
+     */
+    protected function resolvePath($path)
+    {
+        $newPath = array();
+        foreach (explode('/', $path) as $pathPart) {
+            if ('.' !== $pathPart) {
+                if ('..' !== $pathPart) {
+                    $newPath[] = $pathPart;
+                } else {
+                    array_pop($newPath);
+                }
+            }
+        }
+
+        return implode('/', $newPath);
+    }
+
+    /**
+     * returns content for given path but only when it is of given type
+     *
+     * @param   string $path
+     * @param   int $type
+     * @return  vfsStreamContent
+     */
+    protected function getContentOfType($path, $type)
+    {
+        $content = $this->getContent($path);
+        if (null !== $content && $content->getType() === $type) {
+            return $content;
+        }
+
+        return null;
+    }
+
+    /**
+     * returns content for given path
+     *
+     * @param   string $path
+     * @return  vfsStreamContent
+     */
+    protected function getContent($path)
+    {
+        if (null === self::$root) {
+            return null;
+        }
+
+        if (self::$root->getName() === $path) {
+            return self::$root;
+        }
+
+        if (self::$root->hasChild($path) === true) {
+            return self::$root->getChild($path);
+        }
+
+        return null;
+    }
+
+    /**
      * creates a file at given path
      *
      * @param   string  $path     the path to open
@@ -348,23 +350,21 @@ class vfsStreamWrapper
     }
 
     /**
-     * calculates the file mode
+     * splits path into its dirname and the basename
      *
-     * @param   string  $mode      opening mode: r, w, a or x
-     * @param   bool    $extended  true if + was set with opening mode
-     * @return  int
+     * @param   string $path
+     * @return  string[]
      */
-    protected function calculateMode($mode, $extended)
+    protected function splitPath($path)
     {
-        if (true === $extended) {
-            return self::ALL;
+        $lastSlashPos = strrpos($path, '/');
+        if (false === $lastSlashPos) {
+            return array('dirname' => '', 'basename' => $path);
         }
 
-        if (self::READ === $mode) {
-            return self::READONLY;
-        }
-
-        return self::WRITEONLY;
+        return array('dirname' => substr($path, 0, $lastSlashPos),
+            'basename' => substr($path, $lastSlashPos + 1)
+        );
     }
 
     /**

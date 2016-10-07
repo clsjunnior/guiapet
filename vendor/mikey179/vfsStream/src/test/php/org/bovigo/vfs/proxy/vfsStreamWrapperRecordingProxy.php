@@ -29,21 +29,6 @@ class vfsStreamWrapperRecordingProxy extends vfsStreamWrapper
     protected $path;
 
     /**
-     * records method call for given path
-     *
-     * @param  string  $method
-     * @param  string  $path
-     */
-    protected static function recordMethodCall($method, $path)
-    {
-        if (isset(self::$calledMethods[$path]) === false) {
-            self::$calledMethods[$path] = array();
-        }
-
-        self::$calledMethods[$path][] = $method;
-    }
-
-    /**
      * returns recorded method calls for given path
      *
      * @param   string         $path
@@ -95,6 +80,21 @@ class vfsStreamWrapperRecordingProxy extends vfsStreamWrapper
         $this->path = $path;
         self::recordMethodCall('stream_open', $this->path);
         return parent::stream_open($path, $mode, $options, $opened_path);
+    }
+
+    /**
+     * records method call for given path
+     *
+     * @param  string $method
+     * @param  string $path
+     */
+    protected static function recordMethodCall($method, $path)
+    {
+        if (isset(self::$calledMethods[$path]) === false) {
+            self::$calledMethods[$path] = array();
+        }
+
+        self::$calledMethods[$path][] = $method;
     }
 
     /**

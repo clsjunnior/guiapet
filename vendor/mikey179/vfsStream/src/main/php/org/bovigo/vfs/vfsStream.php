@@ -9,6 +9,7 @@
  */
 namespace org\bovigo\vfs;
 use org\bovigo\vfs\visitor\vfsStreamVisitor;
+
 /**
  * Some utility methods for vfsStream.
  *
@@ -226,6 +227,47 @@ class vfsStream
     }
 
     /**
+     * returns a new directory with given name
+     *
+     * If the name contains slashes, a new directory structure will be created.
+     * The returned directory will always be the parent directory of this
+     * directory structure.
+     *
+     * @param   string $name name of directory to create
+     * @param   int $permissions permissions of directory to create
+     * @return  vfsStreamDirectory
+     */
+    public static function newDirectory($name, $permissions = null)
+    {
+        if ('/' === $name{0}) {
+            $name = substr($name, 1);
+        }
+
+        $firstSlash = strpos($name, '/');
+        if (false === $firstSlash) {
+            return new vfsStreamDirectory($name, $permissions);
+        }
+
+        $ownName = substr($name, 0, $firstSlash);
+        $subDirs = substr($name, $firstSlash + 1);
+        $directory = new vfsStreamDirectory($ownName, $permissions);
+        self::newDirectory($subDirs, $permissions)->at($directory);
+        return $directory;
+    }
+
+    /**
+     * returns a new file with given name
+     *
+     * @param   string $name name of file to create
+     * @param   int $permissions permissions of file to create
+     * @return  vfsStreamFile
+     */
+    public static function newFile($name, $permissions = null)
+    {
+        return new vfsStreamFile($name, $permissions);
+    }
+
+    /**
      * copies the file system structure from given path into the base dir
      *
      * If no baseDir is given it will try to add the structure to the existing
@@ -279,47 +321,6 @@ class vfsStream
         }
 
         return $baseDir;
-    }
-
-    /**
-     * returns a new file with given name
-     *
-     * @param   string  $name         name of file to create
-     * @param   int     $permissions  permissions of file to create
-     * @return  vfsStreamFile
-     */
-    public static function newFile($name, $permissions = null)
-    {
-        return new vfsStreamFile($name, $permissions);
-    }
-
-    /**
-     * returns a new directory with given name
-     *
-     * If the name contains slashes, a new directory structure will be created.
-     * The returned directory will always be the parent directory of this
-     * directory structure.
-     *
-     * @param   string  $name         name of directory to create
-     * @param   int     $permissions  permissions of directory to create
-     * @return  vfsStreamDirectory
-     */
-    public static function newDirectory($name, $permissions = null)
-    {
-        if ('/' === $name{0}) {
-            $name = substr($name, 1);
-        }
-
-        $firstSlash = strpos($name, '/');
-        if (false === $firstSlash) {
-            return new vfsStreamDirectory($name, $permissions);
-        }
-
-        $ownName   = substr($name, 0, $firstSlash);
-        $subDirs   = substr($name, $firstSlash + 1);
-        $directory = new vfsStreamDirectory($ownName, $permissions);
-        self::newDirectory($subDirs, $permissions)->at($directory);
-        return $directory;
     }
 
     /**

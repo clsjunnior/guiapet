@@ -9,8 +9,7 @@
  */
 namespace org\bovigo\vfs\visitor;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\vfsStreamFile;
+
 /**
  * Test for org\bovigo\vfs\visitor\vfsStreamPrintVisitor.
  *

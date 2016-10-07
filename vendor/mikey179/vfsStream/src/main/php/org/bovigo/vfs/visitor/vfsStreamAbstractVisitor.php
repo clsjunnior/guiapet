@@ -9,6 +9,7 @@
  */
 namespace org\bovigo\vfs\visitor;
 use org\bovigo\vfs\vfsStreamContent;
+
 /**
  * Abstract base class providing an implementation for the visit() method.
  *

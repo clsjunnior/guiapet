@@ -62,6 +62,14 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     }
 
     /**
+     * @return string
+     */
+    public function getMergeProperty()
+    {
+        return $this->mergeProperty;
+    }
+
+    /**
      * Merge data from one of the key/value pair of the collected data
      *
      * @param string $property
@@ -72,11 +80,11 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     }
 
     /**
-     * @return string
+     * @return bool|string
      */
-    public function getMergeProperty()
+    public function getSort()
     {
-        return $this->mergeProperty;
+        return $this->sort;
     }
 
     /**
@@ -90,14 +98,6 @@ class AggregatedCollector implements DataCollectorInterface, ArrayAccess
     public function setSort($sort)
     {
         $this->sort = $sort;
-    }
-
-    /**
-     * @return bool|string
-     */
-    public function getSort()
-    {
-        return $this->sort;
     }
 
     /**

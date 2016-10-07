@@ -55,14 +55,6 @@ class ConfigCollector extends DataCollector implements Renderable
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @return array
      */
     public function getWidgets()
@@ -76,5 +68,13 @@ class ConfigCollector extends DataCollector implements Renderable
                 "default" => "{}"
             )
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

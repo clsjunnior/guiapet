@@ -82,14 +82,6 @@ class SymfonyQuestionHelperTest extends \PHPUnit_Framework_TestCase
         return $stream;
     }
 
-    protected function createOutputInterface()
-    {
-        $output = new StreamOutput(fopen('php://memory', 'r+', false));
-        $output->setDecorated(false);
-
-        return $output;
-    }
-
     protected function createInputInterfaceMock($interactive = true)
     {
         $mock = $this->getMock('Symfony\Component\Console\Input\InputInterface');
@@ -98,6 +90,14 @@ class SymfonyQuestionHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($interactive));
 
         return $mock;
+    }
+
+    protected function createOutputInterface()
+    {
+        $output = new StreamOutput(fopen('php://memory', 'r+', false));
+        $output->setDecorated(false);
+
+        return $output;
     }
 
     private function assertOutputContains($expected, StreamOutput $output)

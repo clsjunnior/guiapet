@@ -30,6 +30,11 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
         $this->template = $template;
     }
 
+    public static function clearCache()
+    {
+        Twig_Template::clearCache();
+    }
+
     public function __call($name, $arguments)
     {
         return call_user_func_array(array($this->template, $name), $arguments);
@@ -90,23 +95,6 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
         return $this->template->getBlocks();
     }
 
-    public function display(array $context, array $blocks = array())
-    {
-        $start = microtime(true);
-        $this->template->display($context, $blocks);
-        $end = microtime(true);
-
-        if ($timeDataCollector = $this->env->getTimeDataCollector()) {
-            $name = sprintf("twig.render(%s)", $this->template->getTemplateName());
-            $timeDataCollector->addMeasure($name, $start, $end);
-        }
-
-        $this->env->addRenderedTemplate(array(
-            'name' => $this->template->getTemplateName(),
-            'render_time' => $end - $start
-        ));
-    }
-
     public function render(array $context)
     {
         $level = ob_get_level();
@@ -124,8 +112,20 @@ class TraceableTwigTemplate implements Twig_TemplateInterface
         return ob_get_clean();
     }
 
-    public static function clearCache()
+    public function display(array $context, array $blocks = array())
     {
-        Twig_Template::clearCache();
+        $start = microtime(true);
+        $this->template->display($context, $blocks);
+        $end = microtime(true);
+
+        if ($timeDataCollector = $this->env->getTimeDataCollector()) {
+            $name = sprintf("twig.render(%s)", $this->template->getTemplateName());
+            $timeDataCollector->addMeasure($name, $start, $end);
+        }
+
+        $this->env->addRenderedTemplate(array(
+            'name' => $this->template->getTemplateName(),
+            'render_time' => $end - $start
+        ));
     }
 }

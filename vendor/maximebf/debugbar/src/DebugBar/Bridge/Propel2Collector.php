@@ -18,8 +18,8 @@ use Monolog\Logger;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Connection\ProfilerConnectionWrapper;
 use Propel\Runtime\Propel;
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * A Propel logger which acts as a data collector
@@ -94,43 +94,57 @@ class Propel2Collector extends DataCollector implements Renderable, AssetProvide
     }
 
     /**
+     * @return array
+     */
+    public function collect()
+    {
+        if (count($this->errors)) {
+            return array(
+                'statements' => array_map(function ($message) {
+                    return array('sql' => '', 'is_success' => false, 'error_code' => 500, 'error_message' => $message);
+                }, $this->errors),
+                'nb_statements' => 0,
+                'nb_failed_statements' => count($this->errors),
+            );
+        }
+
+        if ($this->getHandler() === null) {
+            return array();
+        }
+
+        $statements = $this->getStatements($this->getHandler()->getRecords(), $this->getConfig());
+
+        $failedStatement = count(array_filter($statements, function ($statement) {
+            return false === $statement['is_success'];
+        }));
+        $accumulatedDuration = array_reduce($statements, function ($accumulatedDuration, $statement) {
+
+            $time = isset($statement['duration']) ? $statement['duration'] : 0;
+            return $accumulatedDuration += $time;
+        });
+        $memoryUsage = array_reduce($statements, function ($memoryUsage, $statement) {
+
+            $time = isset($statement['memory']) ? $statement['memory'] : 0;
+            return $memoryUsage += $time;
+        });
+
+        return array(
+            'nb_statements' => $this->getQueryCount(),
+            'nb_failed_statements' => $failedStatement,
+            'accumulated_duration' => $accumulatedDuration,
+            'accumulated_duration_str' => $this->getDataFormatter()->formatDuration($accumulatedDuration),
+            'memory_usage' => $memoryUsage,
+            'memory_usage_str' => $this->getDataFormatter()->formatBytes($memoryUsage),
+            'statements' => $statements
+        );
+    }
+
+    /**
      * @return TestHandler|null
      */
     public function getHandler()
     {
         return $this->handler;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @return Logger|null
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
-
-    /**
-     * @return LoggerInterface
-     */
-    protected function getDefaultLogger()
-    {
-        return Propel::getServiceContainer()->getLogger();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getQueryCount()
-    {
-        return $this->queryCount;
     }
 
     /**
@@ -219,60 +233,17 @@ class Propel2Collector extends DataCollector implements Renderable, AssetProvide
     /**
      * @return array
      */
-    public function collect()
+    public function getConfig()
     {
-        if (count($this->errors)) {
-            return array(
-                'statements' => array_map(function ($message) {
-                    return array('sql' => '', 'is_success' => false, 'error_code' => 500, 'error_message' => $message);
-                }, $this->errors),
-                'nb_statements' => 0,
-                'nb_failed_statements' => count($this->errors),
-            );
-        }
-
-        if ($this->getHandler() === null) {
-            return array();
-        }
-
-        $statements = $this->getStatements($this->getHandler()->getRecords(), $this->getConfig());
-
-        $failedStatement = count(array_filter($statements, function ($statement) {
-            return false === $statement['is_success'];
-        }));
-        $accumulatedDuration = array_reduce($statements, function ($accumulatedDuration, $statement) {
-        
-            $time = isset($statement['duration']) ? $statement['duration'] : 0;
-            return $accumulatedDuration += $time;
-        });
-        $memoryUsage = array_reduce($statements, function ($memoryUsage, $statement) {
-        
-            $time = isset($statement['memory']) ? $statement['memory'] : 0;
-            return $memoryUsage += $time;
-        });
-
-        return array(
-            'nb_statements' => $this->getQueryCount(),
-            'nb_failed_statements' => $failedStatement,
-            'accumulated_duration' => $accumulatedDuration,
-            'accumulated_duration_str' => $this->getDataFormatter()->formatDuration($accumulatedDuration),
-            'memory_usage' => $memoryUsage,
-            'memory_usage_str' => $this->getDataFormatter()->formatBytes($memoryUsage),
-            'statements' => $statements
-        );
+        return $this->config;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getName()
+    protected function getQueryCount()
     {
-        $additionalName  = '';
-        if ($this->getLogger() !== $this->getDefaultLogger()) {
-            $additionalName = ' ('.$this->getLogger()->getName().')';
-        }
-
-        return 'propel2'.$additionalName;
+        return $this->queryCount;
     }
 
     /**
@@ -292,6 +263,35 @@ class Propel2Collector extends DataCollector implements Renderable, AssetProvide
                 'default' => 0
             ),
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        $additionalName = '';
+        if ($this->getLogger() !== $this->getDefaultLogger()) {
+            $additionalName = ' (' . $this->getLogger()->getName() . ')';
+        }
+
+        return 'propel2' . $additionalName;
+    }
+
+    /**
+     * @return Logger|null
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    protected function getDefaultLogger()
+    {
+        return Propel::getServiceContainer()->getLogger();
     }
 
     /**

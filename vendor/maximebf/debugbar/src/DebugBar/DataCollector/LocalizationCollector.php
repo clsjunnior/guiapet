@@ -16,6 +16,17 @@ namespace DebugBar\DataCollector;
 class LocalizationCollector extends DataCollector implements Renderable
 {
     /**
+     * @return array
+     */
+    public function collect()
+    {
+        return array(
+            'locale' => $this->getLocale(),
+            'domain' => $this->getDomain(),
+        );
+    }
+
+    /**
      * Get the current locale
      *
      * @return string
@@ -33,17 +44,6 @@ class LocalizationCollector extends DataCollector implements Renderable
     public function getDomain()
     {
         return textdomain();
-    }
-
-    /**
-     * @return array
-     */
-    public function collect()
-    {
-        return array(
-          'locale' => $this->getLocale(),
-          'domain' => $this->getDomain(),
-        );
     }
 
     /**

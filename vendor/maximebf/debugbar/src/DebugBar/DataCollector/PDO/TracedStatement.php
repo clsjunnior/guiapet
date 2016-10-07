@@ -40,6 +40,22 @@ class TracedStatement
     }
 
     /**
+     * Check parameters for illegal (non UTF-8) strings, like Binary data.
+     *
+     * @param $params
+     * @return mixed
+     */
+    public function checkParameters($params)
+    {
+        foreach ($params as &$param) {
+            if (!mb_check_encoding($param, 'UTF-8')) {
+                $param = '[BINARY DATA]';
+            }
+        }
+        return $params;
+    }
+
+    /**
      * @param null $startTime
      * @param null $startMemory
      */
@@ -63,22 +79,6 @@ class TracedStatement
         $this->memoryDelta = $this->endMemory - $this->startMemory;
         $this->exception = $exception;
         $this->rowCount = $rowCount;
-    }
-
-    /**
-     * Check parameters for illegal (non UTF-8) strings, like Binary data.
-     *
-     * @param $params
-     * @return mixed
-     */
-    public function checkParameters($params)
-    {
-        foreach ($params as &$param) {
-            if (!mb_check_encoding($param, 'UTF-8')) {
-                $param = '[BINARY DATA]';
-            }
-        }
-        return $params;
     }
 
     /**

@@ -9,6 +9,7 @@
  */
 namespace org\bovigo\vfs\example;
 use org\bovigo\vfs\vfsStream;
+
 require_once 'FailureExample.php';
 /**
  * Test case for class FailureExample.

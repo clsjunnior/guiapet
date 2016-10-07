@@ -212,6 +212,45 @@ class CI_DB_odbc_driver extends CI_DB_driver {
 	// --------------------------------------------------------------------
 
 	/**
+     * Affected Rows
+     *
+     * @return    int
+     */
+    public function affected_rows()
+    {
+        return odbc_num_rows($this->result_id);
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Insert ID
+     *
+     * @return    bool
+     */
+    public function insert_id()
+    {
+        return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Error
+     *
+     * Returns an array containing code and message of the last
+     * database error that has occured.
+     *
+     * @return    array
+     */
+    public function error()
+    {
+        return array('code' => odbc_error($this->conn_id), 'message' => odbc_errormsg($this->conn_id));
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
 	 * Execute the query
 	 *
 	 * @param	string	$sql	an SQL query
@@ -243,6 +282,23 @@ class CI_DB_odbc_driver extends CI_DB_driver {
 	// --------------------------------------------------------------------
 
 	/**
+     * Determines if a query is a "write" type.
+     *
+     * @param    string    An SQL query string
+     * @return    bool
+     */
+    public function is_write_type($sql)
+    {
+        if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#i', $sql)) {
+            return FALSE;
+        }
+
+        return parent::is_write_type($sql);
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
 	 * Begin Transaction
 	 *
 	 * @return	bool
@@ -291,24 +347,6 @@ class CI_DB_odbc_driver extends CI_DB_driver {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Determines if a query is a "write" type.
-	 *
-	 * @param	string	An SQL query string
-	 * @return	bool
-	 */
-	public function is_write_type($sql)
-	{
-		if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#i', $sql))
-		{
-			return FALSE;
-		}
-
-		return parent::is_write_type($sql);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
 	 * Platform-dependant string escape
 	 *
 	 * @param	string
@@ -317,30 +355,6 @@ class CI_DB_odbc_driver extends CI_DB_driver {
 	protected function _escape_str($str)
 	{
 		$this->db->display_error('db_unsupported_feature');
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Affected Rows
-	 *
-	 * @return	int
-	 */
-	public function affected_rows()
-	{
-		return odbc_num_rows($this->result_id);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Insert ID
-	 *
-	 * @return	bool
-	 */
-	public function insert_id()
-	{
-		return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
 	}
 
 	// --------------------------------------------------------------------
@@ -394,21 +408,6 @@ class CI_DB_odbc_driver extends CI_DB_driver {
 	protected function _field_data($table)
 	{
 		return 'SELECT TOP 1 FROM '.$table;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Error
-	 *
-	 * Returns an array containing code and message of the last
-	 * database error that has occured.
-	 *
-	 * @return	array
-	 */
-	public function error()
-	{
-		return array('code' => odbc_error($this->conn_id), 'message' => odbc_errormsg($this->conn_id));
 	}
 
 	// --------------------------------------------------------------------

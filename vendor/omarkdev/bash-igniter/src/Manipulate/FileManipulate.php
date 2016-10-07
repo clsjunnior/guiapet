@@ -3,14 +3,13 @@ namespace BashIgniter\Manipulate;
 
 class FileManipulate{
 
+    const REPLACE_DEFAULT = "REPLACE_NAME_HERE";
 	private $fileName;
 	private $filePath;
 	private $fileContent;
 	private $fileReplace;
 	private $fileArrayReplace;
 	private $prefixPath;
-
-	const REPLACE_DEFAULT = "REPLACE_NAME_HERE";
 
 	public function createFile($fileName, $fileContent, $prefixPath, $replace = true, $arrayReplace = false){
 		$this->fileName = $fileName;

@@ -1,12 +1,12 @@
 <?php
 namespace Composer\Installers\Test;
 
-use Composer\Installers\Installer;
-use Composer\Util\Filesystem;
-use Composer\Package\Package;
-use Composer\Package\RootPackage;
 use Composer\Composer;
 use Composer\Config;
+use Composer\Installers\Installer;
+use Composer\Package\Package;
+use Composer\Package\RootPackage;
+use Composer\Util\Filesystem;
 
 class InstallerTest extends TestCase
 {

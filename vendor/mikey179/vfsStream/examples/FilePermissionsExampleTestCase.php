@@ -9,6 +9,7 @@
  */
 namespace org\bovigo\vfs\example;
 use org\bovigo\vfs\vfsStream;
+
 require_once 'FilePermissionsExample.php';
 /**
  * Test for FilePermissionsExample.

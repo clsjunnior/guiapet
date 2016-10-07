@@ -98,11 +98,6 @@ class TraceableTwigEnvironment extends Twig_Environment
         $this->twig->disableAutoReload();
     }
 
-    public function isAutoReload()
-    {
-        return $this->twig->isAutoReload();
-    }
-
     public function enableStrictVariables()
     {
         $this->twig->enableStrictVariables();
@@ -128,11 +123,6 @@ class TraceableTwigEnvironment extends Twig_Environment
         $this->twig->setCache($cache);
     }
 
-    public function getCacheFilename($name)
-    {
-        return $this->twig->getCacheFilename($name);
-    }
-
     public function getTemplateClass($name, $index = null)
     {
         return $this->twig->getTemplateClass($name, $index);
@@ -146,11 +136,6 @@ class TraceableTwigEnvironment extends Twig_Environment
     public function render($name, array $context = array())
     {
         return $this->loadTemplate($name)->render($context);
-    }
-
-    public function display($name, array $context = array())
-    {
-        $this->loadTemplate($name)->display($context);
     }
 
     public function loadTemplate($name, $index = null)
@@ -180,9 +165,39 @@ class TraceableTwigEnvironment extends Twig_Environment
         return $this->twig->loadedTemplates[$cls] = new TraceableTwigTemplate($this, new $cls($this));
     }
 
+    public function getCacheFilename($name)
+    {
+        return $this->twig->getCacheFilename($name);
+    }
+
+    public function compileSource($source, $name = null)
+    {
+        return $this->twig->compileSource($source, $name);
+    }
+
+    public function getLoader()
+    {
+        return $this->twig->getLoader();
+    }
+
+    public function isAutoReload()
+    {
+        return $this->twig->isAutoReload();
+    }
+
     public function isTemplateFresh($name, $time)
     {
         return $this->twig->isTemplateFresh($name, $time);
+    }
+
+    public function initRuntime()
+    {
+        $this->twig->initRuntime();
+    }
+
+    public function display($name, array $context = array())
+    {
+        $this->loadTemplate($name)->display($context);
     }
 
     public function resolveTemplate($names)
@@ -245,19 +260,9 @@ class TraceableTwigEnvironment extends Twig_Environment
         return $this->twig->compile($node);
     }
 
-    public function compileSource($source, $name = null)
-    {
-        return $this->twig->compileSource($source, $name);
-    }
-
     public function setLoader(Twig_LoaderInterface $loader)
     {
         $this->twig->setLoader($loader);
-    }
-
-    public function getLoader()
-    {
-        return $this->twig->getLoader();
     }
 
     public function setCharset($charset)
@@ -268,11 +273,6 @@ class TraceableTwigEnvironment extends Twig_Environment
     public function getCharset()
     {
         return $this->twig->getCharset();
-    }
-
-    public function initRuntime()
-    {
-        $this->twig->initRuntime();
     }
 
     public function hasExtension($name)
