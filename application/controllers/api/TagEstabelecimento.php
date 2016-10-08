@@ -43,5 +43,32 @@ class TagEstabelecimento extends CI_Controller
         echo json_encode($saida);
     }
 
+    public function buscaTagEs()
+    {
+
+        $this->output->set_content_type('application/json');/*$id = [
+           "codEs" => $this->uri->segment(4),
+        ];*/;
+        $id = $this->uri->segment(4);
+        $valores = $this->tagEs->getById($id)->result_array();
+
+        foreach ($valores as $valor) {
+
+            $saida[] = [
+                "codTagEs" => $valor['CodTagEstabelecimento'],
+                "codEs" => $valor['EstabelecimentoCod'],
+                "codTag" => $valor['TagCod']
+            ];
+        }
+
+        if (!isset($saida)) {
+            $saida[] = ["vazio" => "Nenhum resultado encontrado!"];
+        }
+
+        echo json_encode($saida);
+
+
+    }
+
 
 }

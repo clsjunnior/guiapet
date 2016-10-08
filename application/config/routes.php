@@ -72,4 +72,5 @@ $route['api/estabelecimentos/buscaEstabelecimentoCategoria'] = 'api/Estabelecime
 
 $route['api/tags/buscaTag'] = 'api/Tag/buscaTag';
 $route['api/tagsEstabelecimento/buscaTag'] = 'api/TagEstabelecimento/buscaTag';
+$route['api/tagsEstabelecimento/buscaTagEs/(:any)'] = 'api/TagEstabelecimento/buscaTagEs';
 //$route['api/estabelecimentos/busca/(:any)'] = 'api/Estabelecimento/busca';
