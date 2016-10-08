@@ -188,6 +188,7 @@ function displayMarkers(map, url_busca) {
                     initMap(url_busca);
                 });
             } else {
+                var idEs = ponto.idEs;
                 var categoria = ponto.categoria;
                 var foto = ponto.foto;
                 var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
@@ -195,7 +196,7 @@ function displayMarkers(map, url_busca) {
                 var descricao = ponto.descricao;
                 var tipoContato = ponto.tipoContato;
                 var contato = ponto.contato;
-                createMarker(categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow);
+                createMarker(idEs, categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow);
 
                 bounds.extend(latlng);
             }
@@ -212,7 +213,7 @@ function displayMarkers(map, url_busca) {
 }
 
 // Função que cria os marcadores e define o conteúdo de cada Info Window.
-function createMarker(categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow) {
+function createMarker(idEs, categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow) {
 
     if (categoria == "Clinica Veterinária") {
         var icone = {
@@ -254,6 +255,18 @@ function createMarker(categoria, foto, latlng, nome, descricao, tipoContato, con
     // Evento que dá instrução à API para estar alerta ao click no marcador.
     // Define o conteúdo e abre a Info Window.
     google.maps.event.addListener(marker, 'click', function() {
+        var url_tag = "index.php/api/tagsEstabelecimento/buscaTagEs/" + idEs;
+        $.getJSON(url_tag, function (resultados) {
+            var tags = " ";
+            $.each(resultados, function (index, resp) {
+                //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
+                // cria os options com os dados do json
+                tags += '<a href="#">' + resp.tagNome + '</a> &#9702; ';
+            });
+            // atribui no campo de tag
+            $("#tagsInfowindow").html(tags);
+
+        });
 
         // Variável que define a estrutura do HTML a inserir na Info Window.
         var conteudo = '<div id="iw-container">' +
@@ -263,6 +276,7 @@ function createMarker(categoria, foto, latlng, nome, descricao, tipoContato, con
             '<img src="' + base_url + 'assets/third_party/app/img/' + foto + '">' +
             '<hr/><p>' + descricao + '<br/><a href="#">Saiba Mais</a></p>' +
             '<div class="iw-subTitle">Palavras-Chave</div>' +
+            '<div id="tagsInfowindow"></div>' +
             '<hr/>'+
         '<a href="#" class="btn btn-primary my-btn btn-block">Conheça!!</a>'+
         '<div class="iw-bottom-gradient"></div>' +

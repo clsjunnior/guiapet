@@ -151,7 +151,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			});
 			// atribui no campo de tag
 			$("#tag").html(tags);
-			console.log(tags);
 		});
 
 		/*Easy autocomplete para busca de estabelecimentos*/

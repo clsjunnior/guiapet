@@ -11,7 +11,9 @@ class TagEstabelecimentoM extends CI_Model
 {
 
     private $table = 'TB_tagestabelecimento';
-    //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
+    private $tag = 'TB_tag';
+    private $viewTagEs = 'vw_tags';
+
 
     /**
      * Estabelecimento constructor.
@@ -29,9 +31,13 @@ class TagEstabelecimentoM extends CI_Model
      */
     public function getById($id)
     {
-
-        return $this->db->get_where($this->table, array('CodTagEstabelecimento' => $id));
+        //$this->db->select("nome");
+        //$this->db->from()
+        //return $this->db->get_where($this->tag, array('NomeTag'))
+        return $this->db->get_where($this->viewTagEs, array('EstabelecimentoCod' => $id));
+        //return $this->db->get_where($this->tag, array('teste' => $tagEs));
     }
+
 
     /**
      * Seleciona tag pela View do banco
@@ -41,7 +47,8 @@ class TagEstabelecimentoM extends CI_Model
      */
     public function getAllBy($where = array())
     {
-        return $this->db->get_where($this->table, $where);
+        //return $this->db->get_where($this->table, $where);
+        return $this->db->get_where($this->viewTagEs, $where);
     }
 
 

@@ -14,6 +14,8 @@ class TagEstabelecimento extends CI_Controller
 
         /** Carregamento de models */
         $this->load->model('TagEstabelecimentoM', 'tagEs');
+        $this->load->model('TagM', 'tag');
+       
     }
 
     public function buscaTag()
@@ -49,15 +51,15 @@ class TagEstabelecimento extends CI_Controller
         $this->output->set_content_type('application/json');/*$id = [
            "codEs" => $this->uri->segment(4),
         ];*/;
-        $id = $this->uri->segment(4);
-        $valores = $this->tagEs->getById($id)->result_array();
+        $where = [
+            "codEs" => $this->uri->segment(4),
+        ];
+        $valores = $this->tagEs->getAllBy($where)->result_array();
 
         foreach ($valores as $valor) {
 
             $saida[] = [
-                "codTagEs" => $valor['CodTagEstabelecimento'],
-                "codEs" => $valor['EstabelecimentoCod'],
-                "codTag" => $valor['TagCod']
+                "tagNome" => $valor['tagNome']
             ];
         }
 

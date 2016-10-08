@@ -29,6 +29,7 @@ class Estabelecimento extends CI_Controller
         foreach ($valores as $valor){
 
             $saida[] = [
+                "idEs" => $valor['EsCodEstabelecimento'],
                 "categoria" => $valor['CaNome'],
                 "nome" => $valor['EsNome'],
                 "descricao" => $valor['EsDescricao'],
@@ -59,6 +60,7 @@ class Estabelecimento extends CI_Controller
         foreach ($valores as $valor) {
 
             $saida[] = [
+                "idEs" => $valor['EsCodEstabelecimento'],
                 "categoria" => $valor['CaNome'],
                 "nome" => $valor['EsNome'],
                 "descricao" => $valor['EsDescricao'],
