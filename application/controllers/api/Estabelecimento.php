@@ -41,13 +41,13 @@ class Estabelecimento extends CI_Controller
         }
 
         if (!isset($saida)){
-            $saida[] = ["nome" => "Nenhum resultado"];
+            $saida[] = ["vazio" => "Nenhum resultado encontrado!"];
         }
 
         echo json_encode($saida);
     }
 
-    public function buscaEstabelecimentoCategoria($id = null)
+    public function buscaEstabelecimentoCategoria()
     {
         $this->output->set_content_type('application/json');
         $where = [
@@ -70,9 +70,11 @@ class Estabelecimento extends CI_Controller
             ];
         }
 
-        if (isset($saida)) {
-            echo json_encode($saida);
+        if (!isset($saida)) {
+            $saida[] = ["vazio" => "Nenhum resultado encontrado!"];
         }
+
+        echo json_encode($saida);
 
     }
 
