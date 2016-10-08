@@ -136,26 +136,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 
-		$("#categoria, #tag").select2({
-			placeholder: 'Selecione uma Opção',
-			maximumInputLength: 30
+        $("#categoria, #tag").select2({
+            placeholder: 'Selecione uma Opção',
+            maximumInputLength: 30
 		});
 
 
-		$.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
-			var tags = " ";
-			$.each(resultados, function (index, resp) {
-				//tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
-				// cria os options com os dados do json
-				tags += '<option value="' + resp.codTag + '">' + resp.tag + '</option>';
-			});
-			// atribui no campo de tag
-			$("#tag").html(tags);
-			console.log(tags);
-		});
+        $.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
+            var tags = " ";
+            $.each(resultados, function (index, resp) {
+                //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
+                // cria os options com os dados do json
+                tags += '<option value="' + resp.codTag + '">' + resp.tag + '</option>';
+            });
+            // atribui no campo de tag
+            $("#tag").html(tags);
+            console.log(tags);
+        });
 
 		/*Easy autocomplete para busca de estabelecimentos*/
-		var pesquisaEstabelecimento = {
+        var pesquisaEstabelecimento = {
 
 			url: function(phrase) {
 //				return "api/countrySearch.php";
@@ -182,7 +182,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			requestDelay: 400
 		};
 
-		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEstabelecimento);
+        $("#estabelecimento-ajax").easyAutocomplete(pesquisaEstabelecimento);
 
 
 		$('#example').barrating({
