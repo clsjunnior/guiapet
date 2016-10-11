@@ -12,8 +12,10 @@
  * <examples>
  *
  * @property CategoriaM $categoria
+ * @property ContatoM $contato
  * @property EstabelecimentoM $estabelecimento
  * @property LocalizacaoM $localizacao
+ * @property TagM $tag
  * @property UsuarioM $usuario
  *
  *

@@ -31,4 +31,19 @@ class ContatoM extends CI_Model
         return $this->db->get_where($this->table, $condicao);
     }
 
+    public function atualizar($contato, $campo, $id)
+    {
+
+        /** Atualiza a localização onde o ID foi passado no parametro */
+        $this->db->where($campo, $id);
+        return $this->db->update($this->table, $contato);
+    }
+
+    public function novo($contato)
+    {
+        /** Insere na tabela TB_Localizacao a localização passado com seus respectivos campos */
+        return $this->db->insert($this->table, $contato);
+
+    }
+
 }

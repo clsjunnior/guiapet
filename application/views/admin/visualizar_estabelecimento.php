@@ -137,27 +137,27 @@
                             <table class="table">
                                 <tr>
                                     <td><b>Telefone principal:</b></td>
-                                    <td></td>
+                                    <td><?= $estabelecimento->CoTelefonePrincipal ?></td>
                                 </tr>
                                 <tr>
                                     <td><b>Telefone secundario:</b></td>
-                                    <td></td>
+                                    <td><?= $estabelecimento->CoTelefoneSecundario ?></td>
                                 </tr>
                                 <tr>
                                     <td><b>Site:</b></td>
-                                    <td></td>
+                                    <td><?= $estabelecimento->CoSite ?></td>
                                 </tr>
                                 <tr>
                                     <td><b>Email:</b></td>
-                                    <td></td>
+                                    <td><?= $estabelecimento->CoEmail ?></td>
                                 </tr>
                                 <tr>
                                     <td><b>Facebook:</b></td>
-                                    <td></td>
+                                    <td><?= $estabelecimento->CoFacebook ?></td>
                                 </tr>
                                 <tr>
                                     <td><b>Twitter:</b></td>
-                                    <td></td>
+                                    <td><?= $estabelecimento->CoTwitter ?></td>
                                 </tr>
                             </table>
                         </div>
@@ -244,7 +244,7 @@
 <div class="modal fade" id="modalContato" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <form action="<?= site_url("dashboard/estabelecimentos/visualizar/$estabelecimento->EsCodEstabelecimento") ?>"
-              class="form-horizontal">
+              class="form-horizontal" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -256,21 +256,24 @@
                     <div class="form-group">
                         <label for="TelefonePrincipal" class="col-sm-4 control-label">Telefone principal:</label>
                         <div class="col-sm-8">
-                            <input type="tel" class="form-control" id="TelefonePrincipal" name="TelefonePrincipal">
+                            <input type="tel" class="form-control" id="TelefonePrincipal"
+                                   value="<?= $estabelecimento->CoTelefonePrincipal ?>" name="TelefonePrincipal">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="TelefoneSecundario" class="col-sm-4 control-label">Telefone secundario:</label>
                         <div class="col-sm-8">
-                            <input type="tel" class="form-control" id="TelefoneSecundario" name="TelefoneSecundario">
+                            <input type="tel" class="form-control" id="TelefoneSecundario"
+                                   value="<?= $estabelecimento->CoTelefoneSecundario ?>" name="TelefoneSecundario">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="Facebook" class="col-sm-4 control-label">Facebook:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="Facebook" name="Facebook"
+                            <input type="text" class="form-control" id="Facebook"
+                                   value="<?= $estabelecimento->CoFacebook ?>" name="Facebook"
                                    placeholder="/MeuEstabelecimento">
                         </div>
                     </div>
@@ -278,7 +281,8 @@
                     <div class="form-group">
                         <label for="Twitter" class="col-sm-4 control-label">Twitter:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="Twitter" name="Twitter"
+                            <input type="text" class="form-control" id="Twitter"
+                                   value="<?= $estabelecimento->CoTwitter ?>" name="Twitter"
                                    placeholder="@MeuEstabelecimento">
                         </div>
                     </div>
@@ -286,7 +290,8 @@
                     <div class="form-group">
                         <label for="Site" class="col-sm-4 control-label">Site:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="Site" name="Site"
+                            <input type="text" class="form-control" id="Site" value="<?= $estabelecimento->CoSite ?>"
+                                   name="Site"
                                    placeholder="www.meuestabelecimento.dominio">
                         </div>
                     </div>
@@ -294,7 +299,8 @@
                     <div class="form-group">
                         <label for="Email" class="col-sm-4 control-label">Email:</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" id="Email" name="Email"
+                            <input type="email" class="form-control" id="Email" value="<?= $estabelecimento->CoEmail ?>"
+                                   name="Email"
                                    placeholder="meuestabelecimento@dominio">
                         </div>
                     </div>
@@ -302,7 +308,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-success">Alterar</button>
+                    <button type="submit" name="submit" value="contato" class="btn btn-success">Alterar</button>
                 </div>
             </div>
         </form>

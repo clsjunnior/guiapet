@@ -25,7 +25,7 @@
  */
 
 /**
- * @property CI_DB_active_record $db              This is the platform-independent base Active Record implementation class.
+ * @property CI_DB_query_builder $db              This is the platform-independent base Active Record implementation class.
  * @property CI_DB_forge $dbforge                 Database Utility Class
  * @property CI_Benchmark $benchmark              This class enables you to mark points and calculate the time difference between them.<br />  Memory consumption can also be displayed.
  * @property CI_Calendar $calendar                This class enables the creation of calendars
@@ -59,7 +59,6 @@
  * @property CI_URI $uri                          Parses URIs and determines routing
  * @property CI_User_agent $user_agent            Identifies the platform, browser, robot, or mobile devise of the browsing agent
  * @property CI_User_agent $agent            Identifies the platform, browser, robot, or mobile devise of the browsing agent
- * @property CI_Validation $validation            //dead
  * @property CI_Xmlrpc $xmlrpc                    XML-RPC request handler class
  * @property CI_Xmlrpcs $xmlrpcs                  XML-RPC server class
  * @property CI_Zip $zip                          Zip Compression Class
