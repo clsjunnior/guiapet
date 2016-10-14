@@ -1,8 +1,8 @@
 /**
  * Created by Windows 10 on 07/09/2016.
  */
-
-var url_busca = "index.php/api/estabelecimento/busca/";
+// busca por categoria - icones
+var url_busca = "index.php/api/estabelecimento/buscaTotal/";
 $('.iconBusca').on('click', function () {
     var valor = $(this).attr("data-id");
 
@@ -22,10 +22,40 @@ $('.iconBusca').on('click', function () {
         url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/5";
         initMap(url_busca);
     } else {
-        url_busca = "index.php/api/estabelecimento/busca/";
+        url_busca = "index.php/api/estabelecimento/buscaTotal/";
         initMap(url_busca);
     }
 
+});
+// busca por categoria - option
+$('#categoriaEs').on('change', function () {
+    var categoria = $(this).val();
+    if (categoria == 1) {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/1";
+        initMap(url_busca);
+    } else if (categoria == 2) {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/2";
+        initMap(url_busca);
+    } else if (categoria == 3) {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/3";
+        initMap(url_busca);
+    } else if (categoria == 4) {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/4";
+        initMap(url_busca);
+    } else if (categoria == 5) {
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/5";
+        initMap(url_busca);
+    } else {
+        url_busca = "index.php/api/estabelecimento/buscaTotal/";
+        initMap(url_busca);
+    }
+});
+
+// busca por nome de estabelecimento mas usando o id
+$('#pesquisaEs').click(function () {
+    var idEs = $('#estabelecimento-ajax').attr('data-id-es');
+    url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoId/" + idEs;
+    initMap(url_busca);
 });
 
 /*window.initMap = function initMap(url_busca) {
@@ -184,7 +214,7 @@ function displayMarkers(map, url_busca) {
                     confirmButtonColor: '#1c3e5e',
                     confirmButtonText: 'Tente outra vez!'
                 }).then(function () {
-                    url_busca = "index.php/api/estabelecimento/busca/";
+                    url_busca = "index.php/api/estabelecimento/buscaTotal/";
                     initMap(url_busca);
                 });
             } else {
@@ -194,9 +224,9 @@ function displayMarkers(map, url_busca) {
                 var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
                 var nome = ponto.nome;
                 var descricao = ponto.descricao;
-                var tipoContato = ponto.tipoContato;
-                var contato = ponto.contato;
-                createMarker(idEs, categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow);
+                //var tipoContato = ponto.tipoContato;
+                //var contato = ponto.contato;
+                createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoWindow);
 
                 bounds.extend(latlng);
             }
@@ -213,7 +243,7 @@ function displayMarkers(map, url_busca) {
 }
 
 // Função que cria os marcadores e define o conteúdo de cada Info Window.
-function createMarker(idEs, categoria, foto, latlng, nome, descricao, tipoContato, contato, map, infoWindow) {
+function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoWindow) {
 
     if (categoria == "Clinica Veterinária") {
         var icone = {
@@ -259,13 +289,9 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, tipoContat
         $.getJSON(url_tag, function (resultados) {
             var tags = " ";
             $.each(resultados, function (index, resp) {
-                //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
-                // cria os options com os dados do json
                 tags += '<a href="#">' + resp.tagNome + '</a> &#9702; ';
             });
-            // atribui no campo de tag
             $("#tagsInfowindow").html(tags);
-
         });
 
         // Variável que define a estrutura do HTML a inserir na Info Window.
@@ -278,7 +304,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, tipoContat
             '<div class="iw-subTitle">Palavras-Chave</div>' +
             '<div id="tagsInfowindow"></div>' +
             '<hr/>'+
-        '<a href="#" class="btn btn-primary my-btn btn-block">Conheça!!</a>'+
+            '<a href="" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
         '<div class="iw-bottom-gradient"></div>' +
         '</div>';
 

@@ -3,8 +3,7 @@
 <!-- MAPS -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_cPiH8zBAbz360dlO4I1wrrqVgKvN4z4"
-></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_cPiH8zBAbz360dlO4I1wrrqVgKvN4z4"></script>
 <script src="<?=base_url('assets/js/mapa.js')?>"></script>
 <!-- owl -->
 <script src="<?=base_url('assets/plugins/owlCarousel/owl.carousel.js')?>"></script>

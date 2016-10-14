@@ -67,7 +67,10 @@ $route['dashboard/estabelecimentos/visualizar/(:num)'] = 'admin/EstabelecimentoV
 //$route['dashboard/estabelecimentos/editar/(:num)'] = 'admin/Estabelecimento/editar/$1';
 
 //API
-$route['api/estabelecimentos/busca'] = 'api/Estabelecimento/busca';
+
+$route['api/estabelecimentos/buscaTotal'] = 'api/Estabelecimento/buscaTotal';
+$route['api/estabelecimentos/buscaEsOrdenada'] = 'api/Estabelecimento/buscaEsOrdenada';
+$route['api/estabelecimentos/buscaEstabelecimentoId/(:any)'] = 'api/Estabelecimento/buscaEstabelecimentoId/';
 $route['api/estabelecimentos/buscaEstabelecimentoCategoria/(:num)'] = 'api/Estabelecimento/buscaEstabelecimentoCategoria/$1';
 
 $route['api/tags/buscaTag'] = 'api/Tag/buscaTag';
