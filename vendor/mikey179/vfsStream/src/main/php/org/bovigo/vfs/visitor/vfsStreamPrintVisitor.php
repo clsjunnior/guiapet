@@ -11,6 +11,7 @@ namespace org\bovigo\vfs\visitor;
 use org\bovigo\vfs\vfsStreamContent;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
+
 /**
  * Visitor which traverses a content structure recursively to print it to an output stream.
  *
@@ -63,6 +64,16 @@ class vfsStreamPrintVisitor extends vfsStreamAbstractVisitor
     }
 
     /**
+     * helper method to print the content
+     *
+     * @param  vfsStreamContent $content
+     */
+    protected function printContent(vfsStreamContent $content)
+    {
+        fwrite($this->out, str_repeat('  ', $this->depth) . '- ' . $content->getName() . "\n");
+    }
+
+    /**
      * visit a directory and process it
      *
      * @param   vfsStreamDirectory  $dir
@@ -78,16 +89,6 @@ class vfsStreamPrintVisitor extends vfsStreamAbstractVisitor
 
         $this->depth--;
         return $this;
-    }
-
-    /**
-     * helper method to print the content
-     *
-     * @param  vfsStreamContent  $content
-     */
-    protected function printContent(vfsStreamContent $content)
-    {
-        fwrite($this->out, str_repeat('  ', $this->depth) . '- ' . $content->getName() . "\n");
     }
 }
 ?>

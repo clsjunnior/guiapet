@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class EstabelecimentoM extends CI_Model {
 
     private $table = 'TB_Estabelecimento';
-    private $viewEstabelecimentos = 'VW_Estabelecimentos2';
+    private $viewEstabelecimentos = 'VW_Estabelecimentos';
 
     /**
      * Estabelecimento constructor.
@@ -50,6 +50,5 @@ class EstabelecimentoM extends CI_Model {
     public function getAllBy($where = array()){
         return $this->db->get_where($this->viewEstabelecimentos, $where);
     }
-
 
 }

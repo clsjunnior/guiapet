@@ -37,11 +37,12 @@ class FileStorage implements StorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param  string $id
+     * @return string
      */
-    public function get($id)
+    public function makeFilename($id)
     {
-        return json_decode(file_get_contents($this->makeFilename($id)), true);
+        return $this->dirname . basename($id) . ".json";
     }
 
     /**
@@ -89,8 +90,16 @@ class FileStorage implements StorageInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function get($id)
+    {
+        return json_decode(file_get_contents($this->makeFilename($id)), true);
+    }
+
+    /**
      * Filter the metadata for matches.
-     * 
+     *
      * @param  array $meta
      * @param  array $filters
      * @return bool
@@ -115,14 +124,5 @@ class FileStorage implements StorageInterface
                 unlink($file->getPathname());
             }
         }
-    }
-
-    /**
-     * @param  string $id
-     * @return string 
-     */
-    public function makeFilename($id)
-    {
-        return $this->dirname . basename($id). ".json";
     }
 }

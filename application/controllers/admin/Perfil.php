@@ -32,8 +32,6 @@ class Perfil extends CI_Controller
     {
         /** Dados para view */
         $dados['title'] = "Editar perfil";
-        $dados['user'] = getSesUser();
-        $dados['location'] = getSesLocalizacao();
 
         /** Seta as regras para o formulario caso seja edição de perfil */
         if ($this->input->post('submit') == 'perfil') {
@@ -98,6 +96,7 @@ class Perfil extends CI_Controller
                     /** Cria nova localização */
                     if ($this->localizacao->novaLocalizacao($location)) {
                         $user = null;
+                        $user = getSesUser();
                         $user['LocalizacaoCod'] = $this->localizacao->getIdLastInsert();
 
                         /** Atualiza o usuario e as session */
@@ -116,27 +115,10 @@ class Perfil extends CI_Controller
             }
 
         }
+        $dados['user'] = getSesUser();
+        $dados['location'] = getSesLocalizacao();
+
         $this->load->view('admin/perfil', $dados);
-    }
-
-
-    /**
-     * Regra de validação para checar se a senha é igual a anterior
-     *
-     * @param $senha
-     * @return bool
-     */
-    public function check($senha)
-    {
-        /** Verifica se a senha informada é igual a atual */
-        if ($this->encrypt->decode(getSesUser(['Senha'])) == $senha) {
-            return true;
-        }
-
-        /** Retorna mensagem caso o usuario ou senha esteja errado */
-        $this->form_validation->set_message('check', 'Senha atual incorreta');
-        return false;
-
     }
 
     /**
@@ -185,6 +167,25 @@ class Perfil extends CI_Controller
         $texto .= $mensagem;
         $texto .= "</div></div></div>";
         return $texto;
+    }
+
+    /**
+     * Regra de validação para checar se a senha é igual a anterior
+     *
+     * @param $senha
+     * @return bool
+     */
+    public function check($senha)
+    {
+        /** Verifica se a senha informada é igual a atual */
+        if ($this->encrypt->decode(getSesUser(['Senha'])) == $senha) {
+            return true;
+        }
+
+        /** Retorna mensagem caso o usuario ou senha esteja errado */
+        $this->form_validation->set_message('check', 'Senha atual incorreta');
+        return false;
+
     }
 
 }

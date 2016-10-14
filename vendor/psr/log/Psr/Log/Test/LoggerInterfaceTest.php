@@ -11,24 +11,15 @@ use Psr\Log\LogLevel;
  */
 abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @return LoggerInterface
-     */
-    abstract function getLogger();
-
-    /**
-     * This must return the log messages in order with a simple formatting: "<LOG LEVEL> <MESSAGE>"
-     *
-     * Example ->error('Foo') would yield "error Foo"
-     *
-     * @return string[]
-     */
-    abstract function getLogs();
-
     public function testImplements()
     {
         $this->assertInstanceOf('Psr\Log\LoggerInterface', $this->getLogger());
     }
+
+    /**
+     * @return LoggerInterface
+     */
+    abstract function getLogger();
 
     /**
      * @dataProvider provideLevelsAndMessages
@@ -45,6 +36,15 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals($expected, $this->getLogs());
     }
+
+    /**
+     * This must return the log messages in order with a simple formatting: "<LOG LEVEL> <MESSAGE>"
+     *
+     * Example ->error('Foo') would yield "error Foo"
+     *
+     * @return string[]
+     */
+    abstract function getLogs();
 
     public function provideLevelsAndMessages()
     {

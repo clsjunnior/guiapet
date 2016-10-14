@@ -13,7 +13,7 @@ class CategoriaM extends CI_Model
 
 
     /**
-     * Categoria constructor.
+     * Categoria constructor
      */
     public function __construct(){
         parent::__construct();
@@ -31,6 +31,17 @@ class CategoriaM extends CI_Model
         $this->console->info($categoria->result());
         /** Retorna todas as categorias (no formato de classe) */
         return $categoria;
+    }
+
+    public function getCatCount()
+    {
+        $this->db->select("TB_Categoria.Nome, count(TB_Estabelecimento.CodEstabelecimento)  as qtd")
+            ->from("TB_Categoria")
+            ->join("TB_Estabelecimento", "TB_Categoria.CodCategoria = TB_Estabelecimento.CategoriaCod", "inner")
+            ->group_by("TB_Categoria.Nome");
+
+        return $this->db->result_id();
+
     }
 
 }

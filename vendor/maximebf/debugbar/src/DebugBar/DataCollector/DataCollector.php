@@ -23,13 +23,34 @@ abstract class DataCollector implements DataCollectorInterface
     protected $dataFormater;
 
     /**
-     * Sets the default data formater instance used by all collectors subclassing this class
+     * Sets the data formater instance used by this collector
      *
      * @param DataFormatterInterface $formater
+     * @return $this
      */
-    public static function setDefaultDataFormatter(DataFormatterInterface $formater)
+    public function setDataFormatter(DataFormatterInterface $formater)
     {
-        self::$defaultDataFormatter = $formater;
+        $this->dataFormater = $formater;
+        return $this;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function formatVar($var)
+    {
+        return $this->getDataFormatter()->formatVar($var);
+    }
+
+    /**
+     * @return DataFormatterInterface
+     */
+    public function getDataFormatter()
+    {
+        if ($this->dataFormater === null) {
+            $this->dataFormater = self::getDefaultDataFormatter();
+        }
+        return $this->dataFormater;
     }
 
     /**
@@ -46,34 +67,13 @@ abstract class DataCollector implements DataCollectorInterface
     }
 
     /**
-     * Sets the data formater instance used by this collector
+     * Sets the default data formater instance used by all collectors subclassing this class
      *
      * @param DataFormatterInterface $formater
-     * @return $this
      */
-    public function setDataFormatter(DataFormatterInterface $formater)
+    public static function setDefaultDataFormatter(DataFormatterInterface $formater)
     {
-        $this->dataFormater = $formater;
-        return $this;
-    }
-
-    /**
-     * @return DataFormatterInterface
-     */
-    public function getDataFormatter()
-    {
-        if ($this->dataFormater === null) {
-            $this->dataFormater = self::getDefaultDataFormatter();
-        }
-        return $this->dataFormater;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function formatVar($var)
-    {
-        return $this->getDataFormatter()->formatVar($var);
+        self::$defaultDataFormatter = $formater;
     }
 
     /**

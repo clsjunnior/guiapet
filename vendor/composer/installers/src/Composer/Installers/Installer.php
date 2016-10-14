@@ -1,8 +1,8 @@
 <?php
 namespace Composer\Installers;
 
-use Composer\IO\IOInterface;
 use Composer\Installer\LibraryInstaller;
+use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 
@@ -75,6 +75,18 @@ class Installer extends LibraryInstaller
         'prestashop'   => 'PrestashopInstaller'
     );
 
+    public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
+    {
+        if (!$repo->hasPackage($package)) {
+            throw new \InvalidArgumentException('Package is not installed: '.$package);
+        }
+
+        $repo->removePackage($package);
+
+        $installPath = $this->getInstallPath($package);
+        $this->io->write(sprintf('Deleting %s - %s', $installPath, $this->filesystem->removeDirectory($installPath) ? '<comment>deleted</comment>' : '<error>not deleted</error>'));
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -93,34 +105,6 @@ class Installer extends LibraryInstaller
         $installer = new $class($package, $this->composer, $this->getIO());
 
         return $installer->getInstallPath($package, $frameworkType);
-    }
-
-    public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
-    {
-        if (!$repo->hasPackage($package)) {
-            throw new \InvalidArgumentException('Package is not installed: '.$package);
-        }
-
-        $repo->removePackage($package);
-
-        $installPath = $this->getInstallPath($package);
-        $this->io->write(sprintf('Deleting %s - %s', $installPath, $this->filesystem->removeDirectory($installPath) ? '<comment>deleted</comment>' : '<error>not deleted</error>'));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function supports($packageType)
-    {
-        $frameworkType = $this->findFrameworkType($packageType);
-
-        if ($frameworkType === false) {
-            return false;
-        }
-
-        $locationPattern = $this->getLocationPattern($frameworkType);
-
-        return preg_match('#' . $frameworkType . '-' . $locationPattern . '#', $packageType, $matches) === 1;
     }
 
     /**
@@ -146,6 +130,32 @@ class Installer extends LibraryInstaller
     }
 
     /**
+     * Get I/O object
+     *
+     * @return IOInterface
+     */
+    private function getIO()
+    {
+        return $this->io;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supports($packageType)
+    {
+        $frameworkType = $this->findFrameworkType($packageType);
+
+        if ($frameworkType === false) {
+            return false;
+        }
+
+        $locationPattern = $this->getLocationPattern($frameworkType);
+
+        return preg_match('#' . $frameworkType . '-' . $locationPattern . '#', $packageType, $matches) === 1;
+    }
+
+    /**
      * Get the second part of the regular expression to check for support of a
      * package type
      *
@@ -164,15 +174,5 @@ class Installer extends LibraryInstaller
         }
 
         return $pattern ? : '(\w+)';
-    }
-
-    /**
-     * Get I/O object
-     *
-     * @return IOInterface
-     */
-    private function getIO()
-    {
-        return $this->io;
     }
 }

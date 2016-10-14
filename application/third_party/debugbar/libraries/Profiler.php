@@ -22,12 +22,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author      Anthony Tansens <atansens@gac-technology.com>
  */
 
-use DebugBar\DebugBar;
 use DebugBar\DataCollector\ConfigCollector;
-use DebugBar\DataCollector\PhpInfoCollector;
+use DebugBar\DataCollector\ExceptionsCollector;
 use DebugBar\DataCollector\MemoryCollector;
 use DebugBar\DataCollector\MessagesCollector;
-use DebugBar\DataCollector\ExceptionsCollector;
+use DebugBar\DataCollector\PhpInfoCollector;
+use DebugBar\DebugBar;
 use DebugBar\JavascriptRenderer;
 use DebugBar\Storage\FileStorage;
 
@@ -132,6 +132,108 @@ class CI_Profiler
                 $this->_compile_{$method} = ($enable !== false);
             }
         }
+    }
+
+    /**
+     * Run the Profiler
+     *
+     * @return string
+     */
+    public function run()
+    {
+        foreach ($this->_available_sections as $section) {
+            if ($this->_compile_{$section} !== false) {
+                $func = '_compile_' . $section;
+                $this->{$func}();
+            }
+        }
+
+        // Add request data collector
+        if (isset($this->CI->codeIgniterRequestCollector)) {
+            $this->debugbar->addCollector($this->CI->codeIgniterRequestCollector);
+        }
+
+        return $this->render();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function render()
+    {
+        $renderer = $this->debugbar->getJavascriptRenderer();
+        $renderer->setOptions($this->config);
+
+        $is_ajax = $this->CI->input->is_ajax_request();
+        $is_json = $this->isJsonOutput();
+        $is_sneaky = ($is_ajax || $is_json) ? TRUE : FALSE;
+        $assets = (!$is_sneaky) ? $this->getAssets($renderer) : null;
+
+        if ($is_sneaky) {
+            $use_open_handler = $this->setStorage();
+            $this->debugbar->sendDataInHeaders($use_open_handler);
+            return;
+        } else {
+            return $assets . $renderer->render(!$is_sneaky);
+        }
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    protected function isJsonOutput()
+    {
+        return (stripos($this->CI->output->get_content_type(), 'json') !== false);
+    }
+
+    /**
+     *
+     * @param JavascriptRenderer $renderer
+     * @return string
+     */
+    protected function getAssets(JavascriptRenderer $renderer)
+    {
+        ob_start();
+        echo '<style type="text/css">' . "\n";
+        $renderer->dumpCssAssets();
+        // Change icon to CI icon, based on https://github.com/bcit-ci/ci-design/blob/master/website/assets/images/ci-logo.png
+        echo 'div.phpdebugbar-header, a.phpdebugbar-restore-btn, div.phpdebugbar-openhandler .phpdebugbar-openhandler-header {'
+            . 'background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAATCAYAAACZZ43PAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U'
+            . '29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIRSURBVHjapJQ9TFRBEMdn7zj5iF8JhpwhxkQxxILgRxAKEkNvuAY7C2oTGxpjtLA1hEISKOwMl'
+            . 'HZqLLDRyoSKBo0Up4QQcgXBEAGB2/U3b+cd7+DOxs39d+ftm/nvf2bnnatclOYjJ+erHbKPtdPodfF7kBbXIv8aNwt7csuLTDU/wzFnEFiqBsYNMJ4L0'
+            . 'gPkOBKCuvgQYQ632RtjuwAGmilomACB/c7JC8x2cBic+OSEUOdjKZyMHiJ4GqsTHIBtsCSmrjZCY4I7LhbsLPgD8uB33sl6rl7AURE9EV4tL9eYVXaHB'
+            . 'Rcspt17Kfoo+yHL3foauFotnoILeqLShSBvSGU0IXQyidsa66Dl/hy8SxSoNCpe4uWABSvZL4Jfcvy8PV8Fw3a7yvEMXI81OJRe5I9awWIyIqdRUIRgB'
+            . 'nsC/LB6aEramWe4mfGEAKMXzssZAj3xHHsTkBSIWIDyAaHv7VpVwR5TX9pI3VY4PbkVfAar7JdIb8RKv8XymPVDxvdUqqBiVdfgMrfyBOe32IucVU7bG'
+            . 'zWKWcxN892KNfCyzPozyTtWdhfSV0Tdx15JestFqfxWefxmfbKQKvhK4Gtrqm37HgLe1eP9DbQ+mvIXn5e5WieGyDZJ4D3WtrTPXaZ9Q0ylxLRBmo+C/'
+            . 'Ue4yqWjnoZ1OFeVNsyP2X43gh44rrD1SWuGr3SVERpCkP8ZfwUYAL2WpEUbzbyiAAAAAElFTkSuQmCC") no-repeat scroll 5px 4px #efefef;'
+            . '}';
+        echo '</style>' . "\n";
+        echo '<script type="text/javascript">' . "\n";
+        $renderer->dumpJsAssets();
+        echo '</script>' . "\n";
+
+        return ob_get_clean();
+    }
+
+    /**
+     * Set storage for debugbar
+     *
+     * @return boolean
+     */
+    protected function setStorage()
+    {
+        if (!isset($this->config['open_handler_url'])) {
+            return false;
+        }
+
+        $path = $this->config['cache_path'];
+        $cache_path = ($path === '') ? APPPATH . 'cache/debugbar/' : $path;
+        file_exists($cache_path) OR mkdir($cache_path, DIR_WRITE_MODE, true);
+        $this->debugbar->setStorage(new FileStorage($cache_path));
+
+        return true;
     }
 
     /**
@@ -328,107 +430,5 @@ class CI_Profiler
     {
         $this->CI->load->library('collectors/IncludedFileCollector', null, 'fileCollector');
         $this->debugbar->addCollector($this->CI->fileCollector);
-    }
-
-    /**
-     * Run the Profiler
-     *
-     * @return string
-     */
-    public function run()
-    {
-        foreach ($this->_available_sections as $section) {
-            if ($this->_compile_{$section} !== false) {
-                $func = '_compile_'.$section;
-                $this->{$func}();
-            }
-        }
-
-        // Add request data collector
-        if (isset($this->CI->codeIgniterRequestCollector)) {
-            $this->debugbar->addCollector($this->CI->codeIgniterRequestCollector);
-        }
-
-        return $this->render();
-    }
-
-    /**
-     * 
-     * @return string
-     */
-    protected function render()
-    {
-        $renderer = $this->debugbar->getJavascriptRenderer();
-        $renderer->setOptions($this->config);
-        
-        $is_ajax = $this->CI->input->is_ajax_request();
-        $is_json = $this->isJsonOutput();
-        $is_sneaky = ($is_ajax || $is_json) ? TRUE : FALSE;        
-        $assets = (!$is_sneaky) ? $this->getAssets($renderer) : null;
-
-        if ($is_sneaky) {
-            $use_open_handler = $this->setStorage();
-            $this->debugbar->sendDataInHeaders($use_open_handler);
-            return;
-        } else {
-            return $assets.$renderer->render(!$is_sneaky);
-        }
-    }
-
-    /**
-     * Set storage for debugbar
-     * 
-     * @return boolean
-     */
-    protected function setStorage()
-    {
-        if (!isset($this->config['open_handler_url'])) {
-            return false;
-        }
-
-        $path = $this->config['cache_path'];
-        $cache_path = ($path === '') ? APPPATH.'cache/debugbar/' : $path;
-        file_exists($cache_path) OR mkdir($cache_path, DIR_WRITE_MODE, true);
-        $this->debugbar->setStorage(new FileStorage($cache_path));
-
-        return true;
-    }
-
-    /**
-     * 
-     * @return boolean
-     */
-    protected function isJsonOutput()
-    {
-        return (stripos($this->CI->output->get_content_type(), 'json') !== false);
-    }
-
-    /**
-     * 
-     * @param JavascriptRenderer $renderer
-     * @return string
-     */
-    protected function getAssets(JavascriptRenderer $renderer)
-    {
-        ob_start();
-        echo '<style type="text/css">'."\n";
-        $renderer->dumpCssAssets();
-        // Change icon to CI icon, based on https://github.com/bcit-ci/ci-design/blob/master/website/assets/images/ci-logo.png
-        echo 'div.phpdebugbar-header, a.phpdebugbar-restore-btn, div.phpdebugbar-openhandler .phpdebugbar-openhandler-header {'
-        . 'background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAATCAYAAACZZ43PAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U'
-        . '29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIRSURBVHjapJQ9TFRBEMdn7zj5iF8JhpwhxkQxxILgRxAKEkNvuAY7C2oTGxpjtLA1hEISKOwMl'
-        . 'HZqLLDRyoSKBo0Up4QQcgXBEAGB2/U3b+cd7+DOxs39d+ftm/nvf2bnnatclOYjJ+erHbKPtdPodfF7kBbXIv8aNwt7csuLTDU/wzFnEFiqBsYNMJ4L0'
-        . 'gPkOBKCuvgQYQ632RtjuwAGmilomACB/c7JC8x2cBic+OSEUOdjKZyMHiJ4GqsTHIBtsCSmrjZCY4I7LhbsLPgD8uB33sl6rl7AURE9EV4tL9eYVXaHB'
-        . 'Rcspt17Kfoo+yHL3foauFotnoILeqLShSBvSGU0IXQyidsa66Dl/hy8SxSoNCpe4uWABSvZL4Jfcvy8PV8Fw3a7yvEMXI81OJRe5I9awWIyIqdRUIRgB'
-        . 'nsC/LB6aEramWe4mfGEAKMXzssZAj3xHHsTkBSIWIDyAaHv7VpVwR5TX9pI3VY4PbkVfAar7JdIb8RKv8XymPVDxvdUqqBiVdfgMrfyBOe32IucVU7bG'
-        . 'zWKWcxN892KNfCyzPozyTtWdhfSV0Tdx15JestFqfxWefxmfbKQKvhK4Gtrqm37HgLe1eP9DbQ+mvIXn5e5WieGyDZJ4D3WtrTPXaZ9Q0ylxLRBmo+C/'
-        . 'Ue4yqWjnoZ1OFeVNsyP2X43gh44rrD1SWuGr3SVERpCkP8ZfwUYAL2WpEUbzbyiAAAAAElFTkSuQmCC") no-repeat scroll 5px 4px #efefef;'
-        . '}';
-        echo '</style>'."\n";
-        echo '<script type="text/javascript">'."\n";
-        $renderer->dumpJsAssets();
-        echo '</script>'."\n";
-
-        return ob_get_clean();
     }
 }

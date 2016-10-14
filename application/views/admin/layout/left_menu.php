@@ -21,6 +21,16 @@
                     <i class="fa fa-building"></i> <span>Estabelecimentos</span>
                 </a>
             </li>
+            <li <?= (strpos(uri_string(), "dashboard/tags") !== FALSE ? 'class="active"' : '') ?>>
+                <a href="<?= site_url('dashboard/tags') ?>">
+                    <i class="glyphicon glyphicon-tag"></i> <span>Tags</span>
+                </a>
+            </li>
+            <li <?= (strpos(uri_string(), "dashboard/categorias") !== FALSE ? 'class="active"' : '') ?>>
+                <a href="<?= site_url('dashboard/categorias') ?>">
+                    <i class="glyphicon glyphicon-bookmark"></i> <span>Categorias</span>
+                </a>
+            </li>
 <!--            <li class="treeview">-->
 <!--                <a href="#">-->
 <!--                    <i class="fa fa-pie-chart"></i>-->

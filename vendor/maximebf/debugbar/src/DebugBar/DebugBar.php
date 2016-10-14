@@ -69,32 +69,6 @@ class DebugBar implements ArrayAccess
     }
 
     /**
-     * Checks if a data collector has been added
-     *
-     * @param string $name
-     * @return boolean
-     */
-    public function hasCollector($name)
-    {
-        return isset($this->collectors[$name]);
-    }
-
-    /**
-     * Returns a data collector
-     *
-     * @param string $name
-     * @return DataCollectorInterface
-     * @throws DebugBarException
-     */
-    public function getCollector($name)
-    {
-        if (!isset($this->collectors[$name])) {
-            throw new DebugBarException("'$name' is not a registered collector");
-        }
-        return $this->collectors[$name];
-    }
-
-    /**
      * Returns an array of all data collectors
      *
      * @return array[DataCollectorInterface]
@@ -105,96 +79,42 @@ class DebugBar implements ArrayAccess
     }
 
     /**
-     * Sets the request id generator
+     * Sends the data through the HTTP headers
      *
-     * @param RequestIdGeneratorInterface $generator
+     * @param bool $useOpenHandler
+     * @param string $headerName
+     * @param integer $maxHeaderLength
      * @return $this
      */
-    public function setRequestIdGenerator(RequestIdGeneratorInterface $generator)
+    public function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096)
     {
-        $this->requestIdGenerator = $generator;
+        if ($useOpenHandler === null) {
+            $useOpenHandler = self::$useOpenHandlerWhenSendingDataHeaders;
+        }
+        if ($useOpenHandler && $this->storage !== null) {
+            $this->getData();
+            $headerName .= '-id';
+            $headers = array($headerName => $this->getCurrentRequestId());
+        } else {
+            $headers = $this->getDataAsHeaders($headerName, $maxHeaderLength);
+        }
+        $this->getHttpDriver()->setHeaders($headers);
         return $this;
     }
 
     /**
-     * @return RequestIdGeneratorInterface
+     * Returns collected data
+     *
+     * Will collect the data if none have been collected yet
+     *
+     * @return array
      */
-    public function getRequestIdGenerator()
+    public function getData()
     {
-        if ($this->requestIdGenerator === null) {
-            $this->requestIdGenerator = new RequestIdGenerator();
+        if ($this->data === null) {
+            $this->collect();
         }
-        return $this->requestIdGenerator;
-    }
-
-    /**
-     * Returns the id of the current request
-     *
-     * @return string
-     */
-    public function getCurrentRequestId()
-    {
-        if ($this->requestId === null) {
-            $this->requestId = $this->getRequestIdGenerator()->generate();
-        }
-        return $this->requestId;
-    }
-
-    /**
-     * Sets the storage backend to use to store the collected data
-     *
-     * @param StorageInterface $storage
-     * @return $this
-     */
-    public function setStorage(StorageInterface $storage = null)
-    {
-        $this->storage = $storage;
-        return $this;
-    }
-
-    /**
-     * @return StorageInterface
-     */
-    public function getStorage()
-    {
-        return $this->storage;
-    }
-
-    /**
-     * Checks if the data will be persisted
-     *
-     * @return boolean
-     */
-    public function isDataPersisted()
-    {
-        return $this->storage !== null;
-    }
-
-    /**
-     * Sets the HTTP driver
-     *
-     * @param HttpDriverInterface $driver
-     * @return $this
-     */
-    public function setHttpDriver(HttpDriverInterface $driver)
-    {
-        $this->httpDriver = $driver;
-        return $this;
-    }
-
-    /**
-     * Returns the HTTP driver
-     *
-     * If no http driver where defined, a PhpHttpDriver is automatically created
-     *
-     * @return HttpDriverInterface
-     */
-    public function getHttpDriver()
-    {
-        if ($this->httpDriver === null) {
-            $this->httpDriver = new PhpHttpDriver();
-        }
-        return $this->httpDriver;
+        return $this->data;
     }
 
     /**
@@ -234,18 +154,39 @@ class DebugBar implements ArrayAccess
     }
 
     /**
-     * Returns collected data
+     * Returns the id of the current request
      *
-     * Will collect the data if none have been collected yet
-     *
-     * @return array
+     * @return string
      */
-    public function getData()
+    public function getCurrentRequestId()
     {
-        if ($this->data === null) {
-            $this->collect();
+        if ($this->requestId === null) {
+            $this->requestId = $this->getRequestIdGenerator()->generate();
         }
-        return $this->data;
+        return $this->requestId;
+    }
+
+    /**
+     * @return RequestIdGeneratorInterface
+     */
+    public function getRequestIdGenerator()
+    {
+        if ($this->requestIdGenerator === null) {
+            $this->requestIdGenerator = new RequestIdGenerator();
+        }
+        return $this->requestIdGenerator;
+    }
+
+    /**
+     * Sets the request id generator
+     *
+     * @param RequestIdGeneratorInterface $generator
+     * @return $this
+     */
+    public function setRequestIdGenerator(RequestIdGeneratorInterface $generator)
+    {
+        $this->requestIdGenerator = $generator;
+        return $this;
     }
 
     /**
@@ -286,26 +227,29 @@ class DebugBar implements ArrayAccess
     }
 
     /**
-     * Sends the data through the HTTP headers
+     * Returns the HTTP driver
      *
-     * @param bool $useOpenHandler
-     * @param string $headerName
-     * @param integer $maxHeaderLength
+     * If no http driver where defined, a PhpHttpDriver is automatically created
+     *
+     * @return HttpDriverInterface
+     */
+    public function getHttpDriver()
+    {
+        if ($this->httpDriver === null) {
+            $this->httpDriver = new PhpHttpDriver();
+        }
+        return $this->httpDriver;
+    }
+
+    /**
+     * Sets the HTTP driver
+     *
+     * @param HttpDriverInterface $driver
      * @return $this
      */
-    public function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096)
+    public function setHttpDriver(HttpDriverInterface $driver)
     {
-        if ($useOpenHandler === null) {
-            $useOpenHandler = self::$useOpenHandlerWhenSendingDataHeaders;
-        }
-        if ($useOpenHandler && $this->storage !== null) {
-            $this->getData();
-            $headerName .= '-id';
-            $headers = array($headerName => $this->getCurrentRequestId());
-        } else {
-            $headers = $this->getDataAsHeaders($headerName, $maxHeaderLength);
-        }
-        $this->getHttpDriver()->setHeaders($headers);
+        $this->httpDriver = $driver;
         return $this;
     }
 
@@ -327,6 +271,35 @@ class DebugBar implements ArrayAccess
         $stack[$this->getCurrentRequestId()] = $data;
         $http->setSessionValue($this->stackSessionNamespace, $stack);
         return $this;
+    }
+
+    /**
+     * Initializes the session for stacked data
+     * @return HttpDriverInterface
+     * @throws DebugBarException
+     */
+    protected function initStackSession()
+    {
+        $http = $this->getHttpDriver();
+        if (!$http->isSessionStarted()) {
+            throw new DebugBarException("Session must be started before using stack data in the debug bar");
+        }
+
+        if (!$http->hasSessionValue($this->stackSessionNamespace)) {
+            $http->setSessionValue($this->stackSessionNamespace, array());
+        }
+
+        return $http;
+    }
+
+    /**
+     * Checks if the data will be persisted
+     *
+     * @return boolean
+     */
+    public function isDataPersisted()
+    {
+        return $this->storage !== null;
     }
 
     /**
@@ -371,6 +344,26 @@ class DebugBar implements ArrayAccess
     }
 
     /**
+     * @return StorageInterface
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * Sets the storage backend to use to store the collected data
+     *
+     * @param StorageInterface $storage
+     * @return $this
+     */
+    public function setStorage(StorageInterface $storage = null)
+    {
+        $this->storage = $storage;
+        return $this;
+    }
+
+    /**
      * Sets the key to use in the $_SESSION array
      *
      * @param string $ns
@@ -393,19 +386,6 @@ class DebugBar implements ArrayAccess
     }
 
     /**
-     * Sets whether to only use the session to store stacked data even
-     * if a storage is enabled
-     *
-     * @param boolean $enabled
-     * @return $this
-     */
-    public function setStackAlwaysUseSessionStorage($enabled = true)
-    {
-        $this->stackAlwaysUseSessionStorage = $enabled;
-        return $this;
-    }
-
-    /**
      * Checks if the session is always used to store stacked data
      * even if a storage is enabled
      *
@@ -417,22 +397,16 @@ class DebugBar implements ArrayAccess
     }
 
     /**
-     * Initializes the session for stacked data
-     * @return HttpDriverInterface
-     * @throws DebugBarException
+     * Sets whether to only use the session to store stacked data even
+     * if a storage is enabled
+     *
+     * @param boolean $enabled
+     * @return $this
      */
-    protected function initStackSession()
+    public function setStackAlwaysUseSessionStorage($enabled = true)
     {
-        $http = $this->getHttpDriver();
-        if (!$http->isSessionStarted()) {
-            throw new DebugBarException("Session must be started before using stack data in the debug bar");
-        }
-
-        if (!$http->hasSessionValue($this->stackSessionNamespace)) {
-            $http->setSessionValue($this->stackSessionNamespace, array());
-        }
-
-        return $http;
+        $this->stackAlwaysUseSessionStorage = $enabled;
+        return $this;
     }
 
     /**
@@ -449,9 +423,6 @@ class DebugBar implements ArrayAccess
         return $this->jsRenderer;
     }
 
-    // --------------------------------------------
-    // ArrayAccess implementation
-
     public function offsetSet($key, $value)
     {
         throw new DebugBarException("DebugBar[] is read-only");
@@ -462,9 +433,38 @@ class DebugBar implements ArrayAccess
         return $this->getCollector($key);
     }
 
+    // --------------------------------------------
+    // ArrayAccess implementation
+
+    /**
+     * Returns a data collector
+     *
+     * @param string $name
+     * @return DataCollectorInterface
+     * @throws DebugBarException
+     */
+    public function getCollector($name)
+    {
+        if (!isset($this->collectors[$name])) {
+            throw new DebugBarException("'$name' is not a registered collector");
+        }
+        return $this->collectors[$name];
+    }
+
     public function offsetExists($key)
     {
         return $this->hasCollector($key);
+    }
+
+    /**
+     * Checks if a data collector has been added
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function hasCollector($name)
+    {
+        return isset($this->collectors[$name]);
     }
 
     public function offsetUnset($key)

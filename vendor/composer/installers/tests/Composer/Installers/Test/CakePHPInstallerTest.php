@@ -1,15 +1,14 @@
 <?php
 namespace Composer\Installers\Test;
 
-use Composer\Installers\CakePHPInstaller;
-use Composer\Repository\RepositoryManager;
-use Composer\Repository\InstalledArrayRepository;
-use Composer\Package\Package;
-use Composer\Package\RootPackage;
-use Composer\Package\Link;
-use Composer\Package\Version\VersionParser;
 use Composer\Composer;
 use Composer\Config;
+use Composer\Installers\CakePHPInstaller;
+use Composer\Package\Package;
+use Composer\Package\RootPackage;
+use Composer\Package\Version\VersionParser;
+use Composer\Repository\InstalledArrayRepository;
+use Composer\Repository\RepositoryManager;
 
 class CakePHPInstallerTest extends TestCase
 {

@@ -299,6 +299,22 @@ class vfsStreamTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * helper function for assertions on vfsStreamFile
+     *
+     * @param  vfsStreamFile $file
+     * @param  string $content
+     */
+    protected function assertVfsFile(vfsStreamFile $file, $content)
+    {
+        $this->assertInstanceOf('org\\bovigo\\vfs\\vfsStreamFile',
+            $file
+        );
+        $this->assertEquals($content,
+            $file->getContent()
+        );
+    }
+
+    /**
      * @test
      * @group  issue_14
      * @group  issue_20
@@ -513,22 +529,6 @@ class vfsStreamTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * helper function for assertions on vfsStreamFile
-     *
-     * @param  vfsStreamFile  $file
-     * @param  string         $content
-     */
-    protected function assertVfsFile(vfsStreamFile $file, $content)
-    {
-        $this->assertInstanceOf('org\\bovigo\\vfs\\vfsStreamFile',
-                                $file
-        );
-        $this->assertEquals($content,
-                            $file->getContent()
-        );
-    }
-
-    /**
      * @test
      * @group  issue_10
      * @since  0.10.0
@@ -577,16 +577,6 @@ class vfsStreamTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * returns path to file system copy resource directory
-     *
-     * @return  string
-     */
-    protected function getFileSystemCopyDir()
-    {
-        return realpath(dirname(__FILE__) . '/../../../../resources/filesystemcopy');
-    }
-
-    /**
      * @test
      * @group  issue_4
      * @expectedException  \InvalidArgumentException
@@ -595,6 +585,16 @@ class vfsStreamTestCase extends \PHPUnit_Framework_TestCase
     public function copyFromFileSystemThrowsExceptionIfNoBaseDirGivenAndNoRootSet()
     {
         vfsStream::copyFromFileSystem($this->getFileSystemCopyDir());
+    }
+
+    /**
+     * returns path to file system copy resource directory
+     *
+     * @return  string
+     */
+    protected function getFileSystemCopyDir()
+    {
+        return realpath(dirname(__FILE__) . '/../../../../resources/filesystemcopy');
     }
 
     /**

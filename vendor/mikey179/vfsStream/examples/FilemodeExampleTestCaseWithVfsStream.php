@@ -9,6 +9,7 @@
  */
 namespace org\bovigo\vfs\example;
 use org\bovigo\vfs\vfsStream;
+
 require_once 'FilemodeExample.php';
 /**
  * Test case for class FilemodeExample.

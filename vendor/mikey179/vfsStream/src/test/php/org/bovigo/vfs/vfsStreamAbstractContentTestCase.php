@@ -14,6 +14,16 @@ namespace org\bovigo\vfs;
 class TestvfsStreamAbstractContent extends vfsStreamAbstractContent
 {
     /**
+     * returns size of content
+     *
+     * @return  int
+     */
+    public function size()
+    {
+        return 0;
+    }
+
+    /**
      * returns default permissions for concrete implementation
      *
      * @return  int
@@ -22,16 +32,6 @@ class TestvfsStreamAbstractContent extends vfsStreamAbstractContent
     protected function getDefaultPermissions()
     {
         return 0777;
-    }
-
-    /**
-     * returns size of content
-     *
-     * @return  int
-     */
-    public function size()
-    {
-        return 0;
     }
 }
 /**

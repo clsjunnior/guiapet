@@ -33,6 +33,20 @@ class PDOCollector extends DataCollector implements Renderable, AssetProvider
     }
 
     /**
+     * Adds a new PDO instance to be collector
+     *
+     * @param TraceablePDO $pdo
+     * @param string $name Optional connection name
+     */
+    public function addConnection(TraceablePDO $pdo, $name = null)
+    {
+        if ($name === null) {
+            $name = spl_object_hash($pdo);
+        }
+        $this->connections[$name] = $pdo;
+    }
+
+    /**
      * Renders the SQL of traced statements with params embeded
      *
      * @param boolean $enabled
@@ -57,20 +71,6 @@ class PDOCollector extends DataCollector implements Renderable, AssetProvider
     public function getSqlQuotationChar()
     {
         return $this->sqlQuotationChar;
-    }
-
-    /**
-     * Adds a new PDO instance to be collector
-     *
-     * @param TraceablePDO $pdo
-     * @param string $name Optional connection name
-     */
-    public function addConnection(TraceablePDO $pdo, $name = null)
-    {
-        if ($name === null) {
-            $name = spl_object_hash($pdo);
-        }
-        $this->connections[$name] = $pdo;
     }
 
     /**

@@ -30,12 +30,16 @@ class SessionCollector extends DataCollector implements DataCollectorInterface, 
     protected $session;
 
     /**
-     * 
-     * @param CI_Session $session
+     * {@inheritdoc}
      */
-    public function setSession(CI_Session $session)
+    public function collect()
     {
-        $this->session = $session;
+        $data = array();
+
+        foreach ($this->getSession()->userdata() as $key => $value) {
+            $data[$key] = is_string($value) ? $value : $this->formatVar($value);
+        }
+        return $data;
     }
 
     /** 
@@ -48,16 +52,12 @@ class SessionCollector extends DataCollector implements DataCollectorInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     *
+     * @param CI_Session $session
      */
-    public function collect()
+    public function setSession(CI_Session $session)
     {
-        $data = array();
-
-        foreach ($this->getSession()->userdata() as $key => $value) {
-            $data[$key] = is_string($value) ? $value : $this->formatVar($value);
-        }
-        return $data;
+        $this->session = $session;
     }
 
     /**

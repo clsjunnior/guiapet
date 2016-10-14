@@ -57,19 +57,6 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
     }
 
     /**
-     * @param array $record
-     */
-    protected function write(array $record)
-    {
-        $this->records[] = array(
-            'message' => $record['formatted'],
-            'is_string' => true,
-            'label' => strtolower($record['level_name']),
-            'time' => $record['datetime']->format('U')
-        );
-    }
-
-    /**
      * @return array
      */
     public function getMessages()
@@ -89,14 +76,6 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @return array
      */
     public function getWidgets()
@@ -113,6 +92,27 @@ class MonologCollector extends AbstractProcessingHandler implements DataCollecto
                 "map" => "$name.count",
                 "default" => "null"
             )
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param array $record
+     */
+    protected function write(array $record)
+    {
+        $this->records[] = array(
+            'message' => $record['formatted'],
+            'is_string' => true,
+            'label' => strtolower($record['level_name']),
+            'time' => $record['datetime']->format('U')
         );
     }
 }

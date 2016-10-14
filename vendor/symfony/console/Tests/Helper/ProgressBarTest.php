@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Helper;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\StreamOutput;
 
 /**
@@ -34,6 +34,18 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
             $this->generateOutput('    0 [>---------------------------]'),
             stream_get_contents($output->getStream())
         );
+    }
+
+    protected function getOutputStream($decorated = true, $verbosity = StreamOutput::VERBOSITY_NORMAL)
+    {
+        return new StreamOutput(fopen('php://memory', 'r+', false), $verbosity, $decorated);
+    }
+
+    protected function generateOutput($expected)
+    {
+        $count = substr_count($expected, "\n");
+
+        return "\x0D\x1B[2K" . ($count ? str_repeat("\x1B[1A\x1B[2K", $count) : '') . $expected;
     }
 
     public function testAdvance()
@@ -648,17 +660,5 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
             array('very_verbose'),
             array('debug'),
         );
-    }
-
-    protected function getOutputStream($decorated = true, $verbosity = StreamOutput::VERBOSITY_NORMAL)
-    {
-        return new StreamOutput(fopen('php://memory', 'r+', false), $verbosity, $decorated);
-    }
-
-    protected function generateOutput($expected)
-    {
-        $count = substr_count($expected, "\n");
-
-        return "\x0D\x1B[2K".($count ? str_repeat("\x1B[1A\x1B[2K", $count) : '').$expected;
     }
 }

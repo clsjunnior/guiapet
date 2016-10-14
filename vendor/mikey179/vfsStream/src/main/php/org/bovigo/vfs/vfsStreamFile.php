@@ -47,17 +47,6 @@ class vfsStreamFile extends vfsStreamAbstractContent
     }
 
     /**
-     * returns default permissions for concrete implementation
-     *
-     * @return  int
-     * @since   0.8.0
-     */
-    protected function getDefaultPermissions()
-    {
-        return 0666;
-    }
-
-    /**
      * checks whether the container can be applied to given name
      *
      * @param   string  $name
@@ -66,18 +55,6 @@ class vfsStreamFile extends vfsStreamAbstractContent
     public function appliesTo($name)
     {
         return ($name === $this->name);
-    }
-
-    /**
-     * alias for withContent()
-     *
-     * @param   string  $content
-     * @return  vfsStreamFile
-     * @see     withContent()
-     */
-    public function setContent($content)
-    {
-        return $this->withContent($content);
     }
 
     /**
@@ -96,30 +73,6 @@ class vfsStreamFile extends vfsStreamAbstractContent
     }
 
     /**
-     * returns the contents of the file
-     *
-     * Getting content does not change the time when the file
-     * was last accessed.
-     *
-     * @return  string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * simply open the file
-     *
-     * @since  0.9
-     */
-    public function open()
-    {
-        $this->seek(0, SEEK_SET);
-        $this->lastAccessed = time();
-    }
-
-    /**
      * open file and set pointer to end of file
      *
      * @since  0.9
@@ -128,6 +81,35 @@ class vfsStreamFile extends vfsStreamAbstractContent
     {
         $this->seek(0, SEEK_END);
         $this->lastAccessed = time();
+    }
+
+    /**
+     * seeks to the given offset
+     *
+     * @param   int $offset
+     * @param   int $whence
+     * @return  bool
+     */
+    public function seek($offset, $whence)
+    {
+        switch ($whence) {
+            case SEEK_CUR:
+                $this->bytes_read += $offset;
+                return true;
+
+            case SEEK_END:
+                $this->bytes_read = strlen($this->content) + $offset;
+                return true;
+
+            case SEEK_SET:
+                $this->bytes_read = $offset;
+                return true;
+
+            default:
+                return false;
+        }
+
+        return false;
     }
 
     /**
@@ -142,6 +124,17 @@ class vfsStreamFile extends vfsStreamAbstractContent
         $time               = time();
         $this->lastAccessed = $time;
         $this->lastModified = $time;
+    }
+
+    /**
+     * simply open the file
+     *
+     * @since  0.9
+     */
+    public function open()
+    {
+        $this->seek(0, SEEK_SET);
+        $this->lastAccessed = time();
     }
 
     /**
@@ -210,6 +203,41 @@ class vfsStreamFile extends vfsStreamAbstractContent
     }
 
     /**
+     * returns size of content
+     *
+     * @return  int
+     */
+    public function size()
+    {
+        return strlen($this->content);
+    }
+
+    /**
+     * returns the contents of the file
+     *
+     * Getting content does not change the time when the file
+     * was last accessed.
+     *
+     * @return  string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * alias for withContent()
+     *
+     * @param   string $content
+     * @return  vfsStreamFile
+     * @see     withContent()
+     */
+    public function setContent($content)
+    {
+        return $this->withContent($content);
+    }
+
+    /**
      * checks whether pointer is at end of file
      *
      * @return  bool
@@ -228,46 +256,6 @@ class vfsStreamFile extends vfsStreamAbstractContent
     {
         return $this->bytes_read;
     }
-
-    /**
-     * seeks to the given offset
-     *
-     * @param   int   $offset
-     * @param   int   $whence
-     * @return  bool
-     */
-    public function seek($offset, $whence)
-    {
-        switch ($whence) {
-            case SEEK_CUR:
-                $this->bytes_read += $offset;
-                return true;
-
-            case SEEK_END:
-                $this->bytes_read = strlen($this->content) + $offset;
-                return true;
-
-            case SEEK_SET:
-                $this->bytes_read = $offset;
-                return true;
-
-            default:
-                return false;
-        }
-
-        return false;
-    }
-
-    /**
-     * returns size of content
-     *
-     * @return  int
-     */
-    public function size()
-    {
-        return strlen($this->content);
-    }
-
 
     /**
      * locks file for
@@ -322,6 +310,17 @@ class vfsStreamFile extends vfsStreamAbstractContent
     public function hasExclusiveLock()
     {
         return (LOCK_EX === $this->lock);
+    }
+
+    /**
+     * returns default permissions for concrete implementation
+     *
+     * @return  int
+     * @since   0.8.0
+     */
+    protected function getDefaultPermissions()
+    {
+        return 0666;
     }
 }
 ?>

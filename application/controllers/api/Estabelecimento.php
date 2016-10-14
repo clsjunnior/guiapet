@@ -67,8 +67,8 @@ class Estabelecimento extends CI_Controller
                 "foto" => $valor['EsFoto'],
                 "lat" => $valor['LoLatitude'],
                 "long" => $valor['LoLongitude'],
-                "tipoContato" => $valor['CoNome'],
-                "contato" => $valor['CoValor']
+                "tipoContato" => $valor['CoTelefonePrincipal'],
+                "contato" => $valor['CoTelefoneSecundario']
             ];
         }
 

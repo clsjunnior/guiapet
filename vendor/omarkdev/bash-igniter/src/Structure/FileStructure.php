@@ -9,6 +9,14 @@ class FileStructure{
 		return $this->getFile("Controller");
 	}
 
+    private function getFile($file)
+    {
+        if (is_null($this->structureFile))
+            $this->structureFile = file_get_contents(__DIR__ . "/Files/{$file}.php");
+
+        return $this->structureFile;
+    }
+
 	public function model(){
 		return $this->getFile("Model");
 	}
@@ -35,13 +43,6 @@ class FileStructure{
 
 	public function coreExtend(){
 		return $this->getFile("CoreExtend");
-	}
-
-	private function getFile($file){
-		if(is_null($this->structureFile))
-			$this->structureFile = file_get_contents(__DIR__."/Files/{$file}.php");
-
-		return $this->structureFile;
 	}
 }
 ?>

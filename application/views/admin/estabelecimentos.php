@@ -64,9 +64,11 @@
                                     <td><?=$estabelecimento['EsNome']?></td>
                                     <td><?=$estabelecimento['CaNome']?></td>
                                     <td><?=$estabelecimento['LoCidade']?></td>
-                                    <td><?=$estabelecimento['EsCNPJ']?></td>
+                                    <td><?= mascara("##.###.###/####.##", $estabelecimento['EsCNPJ']) ?></td>
                                     <td class="text-center">
-                                        <a role="button" class="btn btn-link" type="button">Informações</a>
+                                        <a role="button" class="btn btn-link"
+                                           href="<?= site_url('dashboard/estabelecimentos/visualizar/') . $estabelecimento['EsCodEstabelecimento'] ?>"
+                                           type="button">Informações</a>
                                     </td>
                                 </tr>
                                 <?php endforeach;?>

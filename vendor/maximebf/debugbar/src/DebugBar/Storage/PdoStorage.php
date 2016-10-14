@@ -62,6 +62,23 @@ class PdoStorage implements StorageInterface
     }
 
     /**
+     * Get a SQL Query for a task, with the variables replaced
+     *
+     * @param  string $name
+     * @param  array $vars
+     * @return string
+     */
+    protected function getSqlQuery($name, array $vars = array())
+    {
+        $sql = $this->sqlQueries[$name];
+        $vars = array_merge(array('tablename' => $this->tableName), $vars);
+        foreach ($vars as $k => $v) {
+            $sql = str_replace("%$k%", $v, $sql);
+        }
+        return $sql;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function get($id)
@@ -116,22 +133,5 @@ class PdoStorage implements StorageInterface
     public function clear()
     {
         $this->pdo->exec($this->getSqlQuery('clear'));
-    }
-
-    /**
-     * Get a SQL Query for a task, with the variables replaced
-     *
-     * @param  string $name
-     * @param  array  $vars
-     * @return string
-     */
-    protected function getSqlQuery($name, array $vars = array())
-    {
-        $sql = $this->sqlQueries[$name];
-        $vars = array_merge(array('tablename' => $this->tableName), $vars);
-        foreach ($vars as $k => $v) {
-            $sql = str_replace("%$k%", $v, $sql);
-        }
-        return $sql;
     }
 }

@@ -40,17 +40,6 @@ class vfsStreamDirectory extends vfsStreamAbstractContent implements vfsStreamCo
     }
 
     /**
-     * returns default permissions for concrete implementation
-     *
-     * @return  int
-     * @since   0.8.0
-     */
-    protected function getDefaultPermissions()
-    {
-        return 0777;
-    }
-
-    /**
      * returns size of directory
      *
      * The size of a directory is always 0 bytes. To calculate the summarized
@@ -109,6 +98,16 @@ class vfsStreamDirectory extends vfsStreamAbstractContent implements vfsStreamCo
     }
 
     /**
+     * updates internal timestamps
+     */
+    protected function updateModifications()
+    {
+        $time = time();
+        $this->lastAttributeModified = $time;
+        $this->lastModified = $time;
+    }
+
+    /**
      * removes child from the directory
      *
      * @param   string  $name
@@ -125,16 +124,6 @@ class vfsStreamDirectory extends vfsStreamAbstractContent implements vfsStreamCo
         }
 
         return false;
-    }
-
-    /**
-     * updates internal timestamps
-     */
-    protected function updateModifications()
-    {
-        $time = time();
-        $this->lastAttributeModified = $time;
-        $this->lastModified          = $time;
     }
 
     /**
@@ -230,6 +219,17 @@ class vfsStreamDirectory extends vfsStreamAbstractContent implements vfsStreamCo
     public function getIterator()
     {
         return new vfsStreamContainerIterator($this->children);
+    }
+
+    /**
+     * returns default permissions for concrete implementation
+     *
+     * @return  int
+     * @since   0.8.0
+     */
+    protected function getDefaultPermissions()
+    {
+        return 0777;
     }
 }
 ?>

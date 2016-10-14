@@ -10,8 +10,8 @@
 
 namespace DebugBar\DataCollector;
 
-use Psr\Log\AbstractLogger;
 use DebugBar\DataFormatter\DataFormatterInterface;
+use Psr\Log\AbstractLogger;
 
 /**
  * Provides a way to log messages
@@ -47,14 +47,23 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
     }
 
     /**
-     * @return DataFormatterInterface
+     * Aggregates messages from other collectors
+     *
+     * @param MessagesAggregateInterface $messages
      */
-    public function getDataFormatter()
+    public function aggregate(MessagesAggregateInterface $messages)
     {
-        if ($this->dataFormater === null) {
-            $this->dataFormater = DataCollector::getDefaultDataFormatter();
-        }
-        return $this->dataFormater;
+        $this->aggregates[] = $messages;
+    }
+
+    /**
+     * @param $level
+     * @param $message
+     * @param array $context
+     */
+    public function log($level, $message, array $context = array())
+    {
+        $this->addMessage($message, $level);
     }
 
     /**
@@ -80,13 +89,34 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
     }
 
     /**
-     * Aggregates messages from other collectors
-     *
-     * @param MessagesAggregateInterface $messages
+     * @return DataFormatterInterface
      */
-    public function aggregate(MessagesAggregateInterface $messages)
+    public function getDataFormatter()
     {
-        $this->aggregates[] = $messages;
+        if ($this->dataFormater === null) {
+            $this->dataFormater = DataCollector::getDefaultDataFormatter();
+        }
+        return $this->dataFormater;
+    }
+
+    /**
+     * Deletes all messages
+     */
+    public function clear()
+    {
+        $this->messages = array();
+    }
+
+    /**
+     * @return array
+     */
+    public function collect()
+    {
+        $messages = $this->getMessages();
+        return array(
+            'count' => count($messages),
+            'messages' => $messages
+        );
     }
 
     /**
@@ -115,44 +145,6 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
     }
 
     /**
-     * @param $level
-     * @param $message
-     * @param array $context
-     */
-    public function log($level, $message, array $context = array())
-    {
-        $this->addMessage($message, $level);
-    }
-
-    /**
-     * Deletes all messages
-     */
-    public function clear()
-    {
-        $this->messages = array();
-    }
-
-    /**
-     * @return array
-     */
-    public function collect()
-    {
-        $messages = $this->getMessages();
-        return array(
-            'count' => count($messages),
-            'messages' => $messages
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @return array
      */
     public function getWidgets()
@@ -170,5 +162,13 @@ class MessagesCollector extends AbstractLogger implements DataCollectorInterface
                 "default" => "null"
             )
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
