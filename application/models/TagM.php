@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TagM extends CI_Model
 {
 
-    private $table = 'TB_tag';
+    private $table = 'TB_Tag';
     //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
 
     /**

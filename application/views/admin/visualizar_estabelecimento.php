@@ -1,7 +1,76 @@
 <!--Header-->
 <?php $this->load->view('admin/layout/header') ?>
-
 <body class="hold-transition skin-blue sidebar-mini">
+<link rel="stylesheet" href="<?= base_url('assets/plugins/bootstrap_tagsinput/bootstrap-tagsinput.css') ?>"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.css">
+<style>
+    .icon-github {
+        background: no-repeat url('../img/github-16px.png');
+        width: 16px;
+        height: 16px;
+    }
+
+    .bootstrap-tagsinput {
+        width: 100%;
+    }
+
+    .accordion {
+        margin-bottom: -3px;
+    }
+
+    .accordion-group {
+        border: none;
+    }
+
+    .twitter-typeahead .tt-query,
+    .twitter-typeahead .tt-hint {
+        margin-bottom: 0;
+    }
+
+    .twitter-typeahead .tt-hint {
+        display: none;
+    }
+
+    .tt-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        list-style: none;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+        cursor: pointer;
+    }
+
+    .tt-suggestion {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333333;
+        white-space: nowrap;
+    }
+
+    .tt-suggestion:hover,
+    .tt-suggestion:focus {
+        color: #ffffff;
+        text-decoration: none;
+        outline: 0;
+        background-color: #428bca;
+    }
+</style>
 
 <div class="wrapper">
 
@@ -185,7 +254,9 @@
                         </div>
 
                         <div class="box-footer">
-                            <a role="button" class="btn btn-block btn-primary">Alterar</a>
+                            <button role="button" data-toggle="modal" data-target="#modalTags"
+                                    class="btn btn-block btn-primary">Alterar
+                            </button>
                         </div>
 
                     </div>
@@ -315,8 +386,68 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalTags" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form action="<?= site_url("dashboard/estabelecimentos/visualizar/$estabelecimento->EsCodEstabelecimento") ?>"
+              class="form-horizontal" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Tags</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="Tags" class="col-sm-4 control-label">Tags:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tag" class="form-control" name="tags" data-role="tagsinput">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                    <button type="submit" name="submit" value="tag" id="btnTag" class="btn btn-success">Alterar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--Js e bibliotecas-->
 <?php $this->load->view('admin/layout/footer') ?>
 
+<script src="<?= base_url('assets/plugins/bootstrap_tagsinput/bootstrap-tagsinput.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/bootstrap_tagsinput/typeahead.bundle.js') ?>"></script>
+
+<script>
+
+    var listaTags = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: {
+            url: '<?=site_url("api/Tag/buscaTag/esta")?>',
+            filter: function (list) {
+                return $.map(list, function (tag) {
+                    return {name: tag};
+                });
+            }
+        }
+    });
+    listaTags.initialize();
+
+    $('#tag').tagsinput({
+        maxChars: 8,
+        tagClass: 'label label-primary',
+        trimValue: false,
+        typeaheadjs: {
+            name: 'listaTags',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: listaTags.ttAdapter()
+        }
+    });
+</script>
 </body>
 </html>
