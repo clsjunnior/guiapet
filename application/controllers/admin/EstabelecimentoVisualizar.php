@@ -22,6 +22,7 @@ class EstabelecimentoVisualizar extends CI_Controller
         $this->load->model('EstabelecimentoM', 'estabelecimento');
         $this->load->model('ContatoM', 'contato');
         $this->load->model('TagM', 'tag');
+        $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
 //        $this->load->model('LocalizacaoM', 'localizacao');
 //        $this->load->model('CategoriaM', 'categoria');
 
@@ -55,18 +56,15 @@ class EstabelecimentoVisualizar extends CI_Controller
                     // ERRO
                 }
             }
-        } elseif ($this->input->post("submit") == "contato") {
+        } elseif ($this->input->post("submit") == "tag") {
             $tags = explode(",", $this->input->post("tags"));
             $this->estabelecimento->adicionaTags($id, $tags);
         }
 
         $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result()[0];
+        $dados['tags'] = $this->tagestabelecimento->gtNmTagByEstabelecimento($id)->result_array();
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('admin/visualizar_estabelecimento', $dados);
-//        $dados['title'] = 'Visualizar: ' . $dados['estabelecimento']['EsNome'];
-//        $this->console->info("Select estabelecimentos:");
-//        $this->console->info($dados['estabelecimento']);
-//        $this->load->view('admin/visualizar_estabelecimento', $dados);
     }
 
 

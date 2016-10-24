@@ -10,7 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TagEstabelecimentoM extends CI_Model
 {
 
-    private $table = 'TB_tagestabelecimento';
+    private $table = 'TB_TagEstabelecimento';
+    private $tableTag = 'TB_Tag';
     //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
 
     /**
@@ -29,7 +30,6 @@ class TagEstabelecimentoM extends CI_Model
      */
     public function getById($id)
     {
-
         return $this->db->get_where($this->table, array('CodTagEstabelecimento' => $id));
     }
 
@@ -44,5 +44,12 @@ class TagEstabelecimentoM extends CI_Model
         return $this->db->get_where($this->table, $where);
     }
 
+    public function gtNmTagByEstabelecimento($estabelecimentoID){
+        return $this->db->select("Nome")
+            ->from($this->tableTag. " as t")
+            ->join($this->table." as te", "t.CodTag = te.TagCod", "inner")
+            ->where("te.EstabelecimentoCod", $estabelecimentoID)
+            ->get();
+    }
 
 }

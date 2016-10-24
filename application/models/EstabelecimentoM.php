@@ -56,40 +56,46 @@ class EstabelecimentoM extends CI_Model {
     public function adicionaTags($idEstabelecimento, $tags = [])
     {
 
-        for ($i = 0; $i <= count($tags); $i++) {
-            $tags[$i] = strtolower(str_replace(" ", "", $tags[$i]));
-        }
+//        for ($i = 0; $i <= count($tags); $i++) {
+//            $tags[$i] = strtolower(str_replace(" ", "", $tags[$i]));
+//        }
 
         $this->db->reset_query();
-        $listTagEstabelecimento = $this->db->select("*")
-            ->from($this->tableTagEstabelecimento . " as est")
-            ->join($this->tableTag . " as tag", "est.TagCod = tag.CodTag")
-            ->where("EstabelecimentoCod", $idEstabelecimento)
-            ->get()->result_array();
-
-        $this->db->reset_query();
-        $listTags = $this->db->select("*")
+        $tagsDB = $this->db->select("*")
             ->from($this->tableTag)
             ->where_in("Nome", $tags)
             ->get()->result_array();
 
-//        $addEstabelecimento = [];
-//        $removeEstabelecimento = [];
-        $addTag = [];
-        foreach ($tags as $tag) {
-            if (!in_array($tag, $listTags['Nome'])) {
-                $addTag[]['Nome'] = $tag;
+        $tagsVr = [];
+        foreach ($tagsDB as $tag){
+            $tagsVr[] = $tag["Nome"];
+        }
+        $tagsAdd = [];
+        $tagAtual = null;
+        foreach ($tags as $tag){
+            foreach ($tagsDB as $tagDB){
+                if ($tag == $tagDB["Nome"]){
+                    $tagAtual["CodTag"] = $tagDB["CodTag"];
+                    $tagAtual["Nome"] = $tagDB["Nome"];
+                }
+            }
+
+            if ($tagAtual != null){
+                $tagsAdd[] = $tagAtual["CodTag"];
+                $tagAtual = null;
+            }else{
+                $this->db->insert($this->tableTag,["Nome" => $tag]);
+                $tagsAdd[] = $this->db->insert_id();
             }
         }
 
-        $this->db->insert($this->tableTag, $addTag);
-
         $this->db->reset_query();
-        $listTags = $this->db->select("*")
-            ->from($this->tableTag)
-            ->where_in("Nome", $tags)
-            ->get()->result_array();
+        $this->db->delete($this->tableTagEstabelecimento, array("EstabelecimentoCod" => $idEstabelecimento));
 
+        foreach ($tagsAdd as $tag){
+            $this->db->reset_query();
+            $this->db->insert($this->tableTagEstabelecimento, ["EstabelecimentoCod" => $idEstabelecimento, "TagCod" => $tag]);
+        }
 
     }
 

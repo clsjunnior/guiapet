@@ -1,10 +1,10 @@
-ALTER TABLE pet.TB_Avaliacao CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL;
-ALTER TABLE pet.TB_Contato CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL ;
-ALTER TABLE pet.TB_Galeria CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL ;
-ALTER TABLE pet.TB_Localizacao CHANGE EditadoEm AtualizadoEm TIMESTAMP NULL ;
-ALTER TABLE pet.TB_Usuario CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL ;
+ALTER TABLE TB_Avaliacao CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL;
+ALTER TABLE TB_Contato CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL ;
+ALTER TABLE TB_Galeria CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL ;
+ALTER TABLE TB_Localizacao CHANGE EditadoEm AtualizadoEm TIMESTAMP NULL ;
+ALTER TABLE TB_Usuario CHANGE ModificadoEm AtualizadoEm TIMESTAMP NULL ;
 
-DROP VIEW pet.VW_Estabelecimentos;
+DROP VIEW VW_Estabelecimentos;
 CREATE VIEW VW_Estabelecimentos AS
   SELECT es.CodEstabelecimento as EsCodEstabelecimento, es.Nome as EsNome, es.Descricao as EsDescricao,
          es.Foto as EsFoto, es.CriadoEm as EsCriadoEm, es.AtualizadoEm as EsAtualizadoEm, es.CNPJ as EsCNPJ,

@@ -1,14 +1,14 @@
-ALTER TABLE pet.TB_Contato ADD TelefoneSecundario VARCHAR(9) NULL;
-ALTER TABLE pet.TB_Contato ADD Facebook VARCHAR(255) NULL;
-ALTER TABLE pet.TB_Contato ADD Twitter VARCHAR(255) NULL;
-ALTER TABLE pet.TB_Contato ADD Site VARCHAR(255) NULL;
-ALTER TABLE pet.TB_Contato ADD Email VARCHAR(255) NULL;
-ALTER TABLE pet.TB_Contato CHANGE Valor TelefonePrincipal VARCHAR(9) NOT NULL;
-ALTER TABLE pet.TB_Contato DROP Nome;
-ALTER TABLE pet.TB_Contato DROP CriadoEm;
-ALTER TABLE pet.TB_Contato DROP AtualizadoEm;
+ALTER TABLE TB_Contato ADD TelefoneSecundario VARCHAR(9) NULL;
+ALTER TABLE TB_Contato ADD Facebook VARCHAR(255) NULL;
+ALTER TABLE TB_Contato ADD Twitter VARCHAR(255) NULL;
+ALTER TABLE TB_Contato ADD Site VARCHAR(255) NULL;
+ALTER TABLE TB_Contato ADD Email VARCHAR(255) NULL;
+ALTER TABLE TB_Contato CHANGE Valor TelefonePrincipal VARCHAR(9) NOT NULL;
+ALTER TABLE TB_Contato DROP Nome;
+ALTER TABLE TB_Contato DROP CriadoEm;
+ALTER TABLE TB_Contato DROP AtualizadoEm;
 
-DROP VIEW pet.VW_Estabelecimentos;
+DROP VIEW VW_Estabelecimentos;
 CREATE VIEW VW_Estabelecimentos AS
   SELECT es.CodEstabelecimento as EsCodEstabelecimento, es.Nome as EsNome, es.Descricao as EsDescricao,
          es.Foto as EsFoto, es.CriadoEm as EsCriadoEm, es.AtualizadoEm as EsAtualizadoEm, es.CNPJ as EsCNPJ,

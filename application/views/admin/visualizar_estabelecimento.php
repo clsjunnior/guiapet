@@ -250,7 +250,9 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            Start creating your amazing application!
+                            <?php foreach ($tags as $tag):?>
+                                <?=$tag["Nome"].", "?>
+                            <?php endforeach;?>
                         </div>
 
                         <div class="box-footer">
@@ -401,7 +403,7 @@
                     <div class="form-group">
                         <label for="Tags" class="col-sm-4 control-label">Tags:</label>
                         <div class="col-sm-8">
-                            <input type="text" id="tag" class="form-control" name="tags" data-role="tagsinput">
+                            <input type="text" id="tagPut" class="form-control" name="tags" data-role="tagsinput" value="<?php foreach ($tags as $tag){ echo $tag["Nome"].", "; }?>">
                         </div>
                     </div>
 
@@ -437,7 +439,7 @@
     });
     listaTags.initialize();
 
-    $('#tag').tagsinput({
+    $('#tagPut').tagsinput({
         maxChars: 8,
         tagClass: 'label label-primary',
         trimValue: false,

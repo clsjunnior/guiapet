@@ -1,0 +1,1 @@
+ALTER TABLE guiapet.TB_Estabelecimento MODIFY CNPJ VARCHAR(14) NOT NULL;
