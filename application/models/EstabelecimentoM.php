@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class EstabelecimentoM extends CI_Model {
 
     private $table = 'TB_Estabelecimento';
+    private $tableTagEstabelecimento = 'TB_TagEstabelecimento';
+    private $tableTag = 'TB_Tag';
     private $viewEstabelecimentos = 'VW_Estabelecimentos';
 
     /**
@@ -49,6 +51,46 @@ class EstabelecimentoM extends CI_Model {
      */
     public function getAllBy($where = array()){
         return $this->db->get_where($this->viewEstabelecimentos, $where);
+    }
+
+    public function adicionaTags($idEstabelecimento, $tags = [])
+    {
+
+        for ($i = 0; $i <= count($tags); $i++) {
+            $tags[$i] = strtolower(str_replace(" ", "", $tags[$i]));
+        }
+
+        $this->db->reset_query();
+        $listTagEstabelecimento = $this->db->select("*")
+            ->from($this->tableTagEstabelecimento . " as est")
+            ->join($this->tableTag . " as tag", "est.TagCod = tag.CodTag")
+            ->where("EstabelecimentoCod", $idEstabelecimento)
+            ->get()->result_array();
+
+        $this->db->reset_query();
+        $listTags = $this->db->select("*")
+            ->from($this->tableTag)
+            ->where_in("Nome", $tags)
+            ->get()->result_array();
+
+//        $addEstabelecimento = [];
+//        $removeEstabelecimento = [];
+        $addTag = [];
+        foreach ($tags as $tag) {
+            if (!in_array($tag, $listTags['Nome'])) {
+                $addTag[]['Nome'] = $tag;
+            }
+        }
+
+        $this->db->insert($this->tableTag, $addTag);
+
+        $this->db->reset_query();
+        $listTags = $this->db->select("*")
+            ->from($this->tableTag)
+            ->where_in("Nome", $tags)
+            ->get()->result_array();
+
+
     }
 
 }

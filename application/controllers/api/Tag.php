@@ -16,7 +16,7 @@ class Tag extends CI_Controller
         $this->load->model('TagM', 'tag');
     }
 
-    public function buscaTag()
+    public function buscaTag($param = null)
     {
         $this->output->set_content_type('application/json');
         $where = null;
@@ -27,12 +27,16 @@ class Tag extends CI_Controller
 
         $valores = $this->tag->getAllBy($where)->result_array();
 
-        foreach ($valores as $valor) {
 
-            $saida[] = [
-                "codTag" => $valor['CodTag'],
-                "tag" => $valor['Nome']
-            ];
+        foreach ($valores as $valor) {
+            if ($param == null) {
+                $saida[] = [
+                    "codTag" => $valor['CodTag'],
+                    "tag" => $valor['Nome']
+                ];
+            } else {
+                $saida[] = $valor['Nome'];
+            }
         }
 
         if (!isset($saida)) {
