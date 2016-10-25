@@ -26,6 +26,7 @@ class Estabelecimento extends CI_Controller
         $this->load->model('EstabelecimentoM', 'estabelecimento');
         $this->load->model('LocalizacaoM', 'localizacao');
         $this->load->model('CategoriaM', 'categoria');
+        $this->load->model('ContatoM', 'contato');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
 
         $this->estabelecimentoP = null;
@@ -55,7 +56,8 @@ class Estabelecimento extends CI_Controller
             $contato['Twitter'] = $this->input->post("Twitter");
             $contato['Site'] = $this->input->post("Site");
             $contato['Email'] = $this->input->post("Email");
-            if (isset($this->contato->getAllBy(['EstabelecimentoCod' => $id])->result_array()[0])) {
+            $contAtual = $this->contato->getAllBy(['EstabelecimentoCod' => $id])->result_array();
+            if (isset($contAtual[0])) {
                 if ($this->contato->atualizar($contato, 'EstabelecimentoCod', $id)) {
                     // SUCESSO
                 } else {
