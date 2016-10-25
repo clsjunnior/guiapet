@@ -99,4 +99,14 @@ class EstabelecimentoM extends CI_Model {
 
     }
 
+    /**
+     * Retorna o ID do ultimo registro inserido no banco
+     *
+     * @return int
+     */
+    public function getIdLastInsert()
+    {
+        return $this->db->insert_id();
+    }
+
 }

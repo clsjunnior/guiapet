@@ -138,7 +138,9 @@
                             <div class="well"><?= $estabelecimento->EsDescricao ?></div>
                         </div>
                         <div class="box-footer">
-                            <a role="button" class="btn btn-block btn-primary">Alterar</a>
+                            <a role="button"
+                               href="<?= site_url("dashboard/estabelecimentos/editar/" . $estabelecimento->EsCodEstabelecimento) ?>"
+                               class="btn btn-block btn-primary">Alterar</a>
                         </div>
                     </div>
                     <div class="box">

@@ -27,7 +27,11 @@
 
         <section class="content">
 
-            <form action="<?= site_url('dashboard/estabelecimentos/editar') ?>" enctype="multipart/form-data" method="post" class="form-horizontal">
+            <form action="<?php if ($id == null) {
+                echo site_url('dashboard/estabelecimentos/novo');
+            } else {
+                echo site_url('dashboard/estabelecimentos/editar/' . $id);
+            } ?>" enctype="multipart/form-data" method="post" class="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Estabelecimento</h3>
@@ -51,7 +55,7 @@
                                     <label class="col-sm-2 control-label" for="name">Nome:</label>
                                     <div class="col-sm-10">
                                         <input type="text" placeholder="Nome" id="name" name="name"
-                                               value="<?= set_value('name', $establishment['name']) ?>" required
+                                               value="<?= set_value('name', $establishment['Nome']) ?>" required
                                                class="form-control">
                                     </div>
                                 </div>
@@ -67,7 +71,7 @@
                                     <div class="col-sm-8">
                                         <input type="text" placeholder="CNPJ" id="cnpj" name="cnpj"
                                                class="form-control" required
-                                               value="<?= set_value('cnpj', $establishment['cnpj']) ?>">
+                                               value="<?= set_value('cnpj', $establishment['CNPJ']) ?>">
                                     </div>
                                 </div>
                             </div>
@@ -93,11 +97,13 @@
                                 <?= form_error('photograp', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-2 pull-left">
-                                        <img alt="Foto estabelecimento" class="img-responsive img-md" id="imgE">
+                                        <img alt="Foto estabelecimento" class="img-responsive img-md"
+                                             src="<?= base_url(DIR_IMG) . "/" . $establishment['Foto'] ?>" id="imgE">
                                     </div>
                                     <div class="col-sm-8">
                                         <label for="photograph">Fotografia</label>
-                                        <input id="photograph" name="photograp" type="file" accept="image/*" required
+                                        <input id="photograph" name="photograp" type="file" accept="image/*"
+                                               <?php if ($id == null){ ?>required <?php } ?>
                                                onchange="loadFile(event)">
                                     </div>
                                 </div>
@@ -121,19 +127,20 @@
                                                 <button data-wysihtml-command="italic" class="btn btn-default"
                                                         type="button"><i class="fa fa-italic"></i></button>
                                             </div>
-                                            <div class="btn-group">
-                                                <button data-wysihtml-command="alignLeftStyle" class="btn btn-default"
-                                                        type="button"><i class="fa fa-align-left"></i></button>
-                                                <button data-wysihtml-command="alignCenterStyle" class="btn btn-default"
-                                                        type="button"><i class="fa fa-align-center"></i></button>
-                                                <button data-wysihtml-command="alignRightStyle" class="btn btn-default"
-                                                        type="button"><i class="fa fa-align-right"></i></button>
-                                            </div>
+                                            <!--                                            <div class="btn-group">-->
+                                            <!--                                                <button data-wysihtml-command="alignLeftStyle" class="btn btn-default"-->
+                                            <!--                                                        type="button"><i class="fa fa-align-left"></i></button>-->
+                                            <!--                                                <button data-wysihtml-command="alignCenterStyle" class="btn btn-default"-->
+                                            <!--                                                        type="button"><i class="fa fa-align-center"></i></button>-->
+                                            <!--                                                <button data-wysihtml-command="alignRightStyle" class="btn btn-default"-->
+                                            <!--                                                        type="button"><i class="fa fa-align-right"></i></button>-->
+                                            <!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
                                 <textarea name="description" id="description" style="width: 100%"
-                                          rows="5" required><?= set_value('description', $location['description']) ?></textarea>
+                                          rows="5"
+                                          required><?= set_value('description', $establishment['Descricao']) ?></textarea>
                             </div>
                         </div>
 

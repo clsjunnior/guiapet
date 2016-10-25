@@ -108,8 +108,8 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="complement">Complemento:</label>
-                            <div class="col-sm-10">
+                            <label class="col-sm-3 control-label" for="complement">Complemento:</label>
+                            <div class="col-sm-9">
                                 <input type="text" placeholder="Complemento" id="complement" name="complement" value="<?=set_value('complement',$location['Complemento'])?>" class="form-control">
                             </div>
                         </div>

@@ -41,7 +41,8 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-xs-12 text-right">
-                            <a role="button" class="btn btn-success" type="button" href="<?=site_url('dashboard/estabelecimentos/editar')?>">Novo</a>
+                            <a role="button" class="btn btn-success" type="button"
+                               href="<?= site_url('dashboard/estabelecimentos/novo') ?>">Novo</a>
                         </div>
                     </div>
                     <br>
