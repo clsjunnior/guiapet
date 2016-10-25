@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'geral/Inicial';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['estabelecimento/(:num)'] = 'geral/InfoEstabelecimento/index/$1';
 
 $route['login'] = 'geral/Login';
 $route['registrar'] = 'geral/Registrar';
@@ -76,4 +77,9 @@ $route['api/estabelecimentos/buscaEstabelecimentoCategoria/(:num)'] = 'api/Estab
 $route['api/tags/buscaTag'] = 'api/Tag/buscaTag';
 $route['api/tagsEstabelecimento/buscaTag'] = 'api/TagEstabelecimento/buscaTag';
 $route['api/tagsEstabelecimento/buscaTagEs/(:any)'] = 'api/TagEstabelecimento/buscaTagEs';
+
+$route['api/avaliacao/buscaAvaliacaoEs/(:any)'] = 'api/Avaliacao/buscaAvaliacaoEs/';
+$route['api/avaliacao/buscaEsAvaliacao/(:any)'] = 'api/Avaliacao/buscaEsAvaliacao/';
 //$route['api/estabelecimentos/busca/(:any)'] = 'api/Estabelecimento/busca';
+
+

@@ -77,13 +77,8 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-<<<<<<< Updated upstream
-    'password' => 'root',
-    'database' => 'pet',
-=======
     'password' => '',
     'database' => 'guiapet',
->>>>>>> Stashed changes
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

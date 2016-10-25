@@ -12,7 +12,7 @@ class TagEstabelecimentoM extends CI_Model
 
     private $table = 'TB_tagestabelecimento';
     private $tag = 'TB_tag';
-    private $viewTagEs = 'vw_tags';
+    private $viewTagEs = 'vw_estabelecimentotags';
 
 
     /**
@@ -34,7 +34,7 @@ class TagEstabelecimentoM extends CI_Model
         //$this->db->select("nome");
         //$this->db->from()
         //return $this->db->get_where($this->tag, array('NomeTag'))
-        return $this->db->get_where($this->viewTagEs, array('EstabelecimentoCod' => $id));
+        return $this->db->get_where($this->viewTagEs, array('EsCodEstabelecimento' => $id));
         //return $this->db->get_where($this->tag, array('teste' => $tagEs));
     }
 

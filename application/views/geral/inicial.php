@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</div>-->
 		<div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
-			<div class="panel panel-default">
+			<div class="panel panel-default panel-inicial">
 				<div class="panel-heading">
 					<h3>Opções de Pesquisa</h3>
 				</div>
@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="form-group">
 							<label>Avaliação</label><br>
-							<select id="example">
+							<select id="avaliacao">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="form-group">
 							<label>Pesquisa por proximidade</label><br>
-							<button class="btn btn-primary btn-lg my-btn">Ativar minha localização</button>
+							<a class="btn btn-primary btn-lg my-btn" id="btnLocalizacao">Ativar minha localização</a>
 						</div>
 					</form>
 				</div>
@@ -169,6 +169,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				str.push($(selecionado).val());
 			});
 			$(this).attr('data-tag-id', str);
+			console.log(str);
 		});
 
 		/*Easy autocomplete para busca de estabelecimentos*/
@@ -228,10 +229,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					return false;
 				}
 			});
-			$('button').prop('disabled', !preenchidos);
+			$('#pesquisaEs').prop('disabled', !preenchidos);
 		}
 
-		$('#example').barrating({
+		$('#avaliacao').barrating({
 			theme: 'fontawesome-stars'
 		});
 

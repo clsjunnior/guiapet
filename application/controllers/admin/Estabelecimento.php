@@ -31,7 +31,6 @@ class Estabelecimento extends CI_Controller
         $this->localizacaoP = null;
     }
 
-
     /**
      *  Página inicial de estabelecimentos
      */

@@ -58,18 +58,67 @@ $('#pesquisaEs').click(function () {
     initMap(url_busca);
 });
 
-/*window.initMap = function initMap(url_busca) {
-    // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('mapa'), {
- center: {lat: -21.673253, lng: -49.747381},
- scrollwheel: true,
-        zoom: 16,
-        styles: [{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#e3e3e2"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#bfccde"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#c8de8f"}]},{"featureType":"poi.place_of_worship","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#514e4e"},{"lightness":54}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":43},{"lightness":-11},{"color":"#6286b8"}]}]
+// pesquisa por avaliacao
+$('#avaliacao').change(function () {
+    var nota = $(this).val();
+    url_busca = "index.php/api/avaliacao/buscaEsAvaliacao/" + nota;
+    initMap(url_busca);
+    console.log(nota);
+});
 
+
+//obter localizao atual usuario
+function initMapLocation() {
+    var map = new google.maps.Map(document.getElementById('mapa'), {
+        center: {lat: -21.673253, lng: -49.747381},
+        zoom: 17
     });
 
- displayMarkers(map,url_busca);
- };*/
+    var infoWindow = new google.maps.InfoWindow({map: map});
+
+    ModificaInfowindow(infoWindow);
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            $('.gm-style-iw').css("width", "250px");
+            var conteudoLocation = '<div id="iw-container" style="width:250px !important; overflow: hidden">' +
+                '<div class="iw-title"> Localização Atual</div>' +
+                '<div class="iw-content">' +
+                '<h3> Olá, você esta aqui!!</h3>' +
+                '</div>' +
+                '<div class="iw-bottom-gradient"></div>' +
+                '</div>';
+
+            // O conteúdo da variável iwContent é inserido na Info Window.
+            infoWindow.setContent(conteudoLocation);
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+}
+
+$('#btnLocalizacao').click(function () {
+    initMapLocation();
+});
+
+
 
 function initMap(url_busca) {
     var map = new google.maps.Map(document.getElementById('mapa'), {
@@ -282,18 +331,47 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
     map.setCenter(marker.getPosition()); // centraliza depois q pesquisa
     map.setZoom(16);
 
-    // Evento que dá instrução à API para estar alerta ao click no marcador.
-    // Define o conteúdo e abre a Info Window.
+
     google.maps.event.addListener(marker, 'click', function() {
         var url_tag = "index.php/api/tagsEstabelecimento/buscaTagEs/" + idEs;
+
         $.getJSON(url_tag, function (resultados) {
             var tags = " ";
             $.each(resultados, function (index, resp) {
-                tags += '<a href="#">' + resp.tagNome + '</a> &#9702; ';
+                var nenhumResultado = resp.vazio;
+                if (typeof(nenhumResultado) != "undefined") {
+                    tags += "Nenhuma Tag adicionada!";
+                } else {
+                    tags += '<a href="#">' + resp.tagNome + '</a> &#9702; ';
+                }
             });
             $("#tagsInfowindow").html(tags);
         });
 
+        var url_avaliacao = "index.php/api/avaliacao/buscaAvaliacaoEs/" + idEs;
+        $.getJSON(url_avaliacao, function (resultados) {
+            var avaliacao = " ";
+            $.each(resultados, function (index, resp) {
+
+                if (resp.media == null) {
+                    avaliacao += "Nenhuma avaliação realizada!";
+                } else {
+                    //avaliacao += "<b>" +resp.media + " estrelas!!</b>";
+                    if (resp.media == 1)
+                        avaliacao += "<span class='fa fa-star fa-2x'></span>";
+                    else if (resp.media == 2)
+                        avaliacao += "<span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span>";
+                    else if (resp.media == 3)
+                        avaliacao += "<span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span>";
+                    else if (resp.media == 4)
+                        avaliacao += "<span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span>";
+                    else
+                        avaliacao += "<span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span> <span class='fa fa-star fa-2x'></span>";
+                }
+            });
+            $("#avaliacaoInfowindow").html(avaliacao);
+        });  
+        
         // Variável que define a estrutura do HTML a inserir na Info Window.
         var conteudo = '<div id="iw-container">' +
         '<div class="iw-title">'+ nome +'</div>' +
@@ -304,7 +382,10 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
             '<div class="iw-subTitle">Palavras-Chave</div>' +
             '<div id="tagsInfowindow"></div>' +
             '<hr/>'+
-            '<a href="" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
+            '<div class="iw-subTitle">Avaliação</div>' +
+            '<div id="avaliacaoInfowindow"></div>' +
+            '<hr/>' +
+            '<a href="index.php/estabelecimento/' + idEs + '" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
         '<div class="iw-bottom-gradient"></div>' +
         '</div>';
 
