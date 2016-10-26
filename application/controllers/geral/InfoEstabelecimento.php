@@ -27,7 +27,7 @@ class InfoEstabelecimento extends CI_Controller
     {
 
         $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result()[0];
-        
+
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('geral/estabelecimentos', $dados);
 

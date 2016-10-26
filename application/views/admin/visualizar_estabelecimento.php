@@ -136,24 +136,8 @@
                             </table>
                             <p class="text-center"><b>Descrição:</b></p>
                             <div class="well"><?= $estabelecimento->EsDescricao ?></div>
-                        </div>
-                        <div class="box-footer">
-                            <a role="button"
-                               href="<?= site_url("dashboard/estabelecimentos/editar/" . $estabelecimento->EsCodEstabelecimento) ?>"
-                               class="btn btn-block btn-primary">Alterar</a>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Localização</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"
-                                        data-toggle="tooltip"
-                                        title="Collapse">
-                                    <i class="fa fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
+                            <br>
+                            <h4>Localizaçao</h4>
                             <table class="table">
                                 <tr>
                                     <td><b>Estado:</b></td>
@@ -185,11 +169,11 @@
                                 </tr>
                             </table>
                         </div>
-
                         <div class="box-footer">
-                            <a role="button" class="btn btn-block btn-primary">Alterar</a>
+                            <a role="button"
+                               href="<?= site_url("dashboard/estabelecimentos/editar/" . $estabelecimento->EsCodEstabelecimento) ?>"
+                               class="btn btn-block btn-primary">Alterar</a>
                         </div>
-
                     </div>
                 </div>
 
@@ -276,7 +260,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            Start creating your amazing application!
+                            <div class="small-box bg-aqua">
+                                <div class="inner text-center">
+                                    <p>Média</p>
+                                    <h3><?= $avaliacao['media'] ?></h3>
+
+                                </div>
+                            </div>
                         </div>
 
                     </div>

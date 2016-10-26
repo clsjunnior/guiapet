@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</div>-->
 		<div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
-			<div class="panel panel-default panel-inicial">
+            <div class="panel panel-default panel-inicial">
 				<div class="panel-heading">
 					<h3>Opções de Pesquisa</h3>
 				</div>
@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<form>
 						<div class="form-group">
 							<label for="categoria">Estabelecimentos por categoria</label>
-							<select class="form-control" id="categoriaEs">
+                            <select class="form-control" id="categoriaEs">
 								<option>Selecione uma Categoria</option>
 								<?php if(count($cat)):?>
 									<?php foreach ($cat as $list):?>
@@ -66,31 +66,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<div class="form-group">
 							<label for="estabelecimentos">Estabelecimentos</label>
-							<div class="input-group">
-								<input type="text" id="estabelecimento-ajax" data-id-es="" class="form-control"
-									   placeholder="Informe o nome do estabelecimento">
-								  <span class="input-group-btn">
+                            <div class="input-group">
+                                <input type="text" id="estabelecimento-ajax" data-id-es="" class="form-control"
+                                       placeholder="Informe o nome do estabelecimento">
+                                <span class="input-group-btn">
 									<button id="pesquisaEs" disabled="disabled" class="btn btn-default my-btn"
-											type="button" style="height: 34px; color:#fff;"><i
-											class="fa fa-search fa-lg"></i> </button>
+                                            type="button" style="height: 34px; color:#fff;"><i
+                                            class="fa fa-search fa-lg"></i> </button>
 								  </span>
-							</div><!-- /input-group -->
+                            </div><!-- /input-group -->
 						</div>
 						<div class="form-group">
 							<label for="tag">Tag - Palavras-Chave</label>
-							<div class="input-group">
-								<select class="form-control" id="tag" multiple="multiple" data-tag-id="">
-								</select>
-								<span class="input-group-btn">
+                            <div class="input-group">
+                                <select class="form-control" id="tag" multiple="multiple" data-tag-id="">
+                                </select>
+                                <span class="input-group-btn">
 									<button id="pesquisaEsTag" disabled="disabled" class="btn btn-default my-btn"
-											type="button" style="height: 34px; color:#fff;"><i
-											class="fa fa-search fa-lg"></i> </button>
+                                            type="button" style="height: 34px; color:#fff;"><i
+                                            class="fa fa-search fa-lg"></i> </button>
 								</span>
-							</div>
+                            </div>
 						</div>
 						<div class="form-group">
 							<label>Avaliação</label><br>
-							<select id="avaliacao">
+                            <select id="avaliacao">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="form-group">
 							<label>Pesquisa por proximidade</label><br>
-							<a class="btn btn-primary btn-lg my-btn" id="btnLocalizacao">Ativar minha localização</a>
+                            <a class="btn btn-primary btn-lg my-btn" id="btnLocalizacao">Ativar minha localização</a>
 						</div>
 					</form>
 				</div>
@@ -146,93 +146,93 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 
-		$("#categoriaEs, #tag").select2({
-			placeholder: 'Selecione uma Opção',
-			maximumInputLength: 30
+        $("#categoriaEs, #tag").select2({
+            placeholder: 'Selecione uma Opção',
+            maximumInputLength: 30
 		});
 
 
-		$.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
-			var tags = " ";
-			$.each(resultados, function (index, resp) {
-				//tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
-				// cria os options com os dados do json
-				tags += '<option value="' + resp.codTag + '">' + resp.tag + '</option>';
-			});
-			// atribui no campo de tag
-			$("#tag").html(tags);
-		});
+        $.getJSON("api/tags/buscaTag/", function (resultados) {
+            var tags = " ";
+            $.each(resultados, function (index, resp) {
+                //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
+                // cria os options com os dados do json
+                tags += '<option value="' + resp.codTag + '">' + resp.tag + '</option>';
+            });
+            // atribui no campo de tag
+            $("#tag").html(tags);
+        });
 
-		$("#tag").change(function () {
-			var str = [];
-			$('#tag :selected').each(function (i, selecionado) {
-				str.push($(selecionado).val());
-			});
-			$(this).attr('data-tag-id', str);
-			console.log(str);
-		});
+        $("#tag").change(function () {
+            var str = [];
+            $('#tag :selected').each(function (i, selecionado) {
+                str.push($(selecionado).val());
+            });
+            $(this).attr('data-tag-id', str);
+            console.log(str);
+        });
 
 		/*Easy autocomplete para busca de estabelecimentos*/
-		var pesquisaEstabelecimento = {
-			url: "<?php echo site_url(); ?>" + "/api/estabelecimento/buscaEsOrdenada/",
+        var pesquisaEstabelecimento = {
+            url: "<?php echo site_url(); ?>" + "/api/estabelecimento/buscaEsOrdenada/",
 
-			categories: [{
-				listLocation: "Clinica Veterinária",
-				maxNumberOfElements: 10,
-				header: "--- Clinicas Veterinárias ---"
-			}, {
-				listLocation: "Pet Shop",
-				maxNumberOfElements: 10,
-				header: "--- Pet Shops ---"
-			}, {
-				listLocation: "Hoteis para Pet",
-				maxNumberOfElements: 10,
-				header: "--- Hoteis para Pet ---"
-			}, {
-				listLocation: "Adestradores",
-				maxNumberOfElements: 10,
-				header: "--- Adestradores ---"
-			}, {
-				listLocation: "Taxi Pet",
-				maxNumberOfElements: 10,
-				header: "--- Taxi Pet ---"
-			}
-			],
+            categories: [{
+                listLocation: "Clinica Veterinária",
+                maxNumberOfElements: 10,
+                header: "--- Clinicas Veterinárias ---"
+            }, {
+                listLocation: "Pet Shop",
+                maxNumberOfElements: 10,
+                header: "--- Pet Shops ---"
+            }, {
+                listLocation: "Hoteis para Pet",
+                maxNumberOfElements: 10,
+                header: "--- Hoteis para Pet ---"
+            }, {
+                listLocation: "Adestradores",
+                maxNumberOfElements: 10,
+                header: "--- Adestradores ---"
+            }, {
+                listLocation: "Taxi Pet",
+                maxNumberOfElements: 10,
+                header: "--- Taxi Pet ---"
+            }
+            ],
 
 			getValue: function(element) {
-				var id = parseFloat(element.idEs);
-				$("#estabelecimento-ajax").attr("data-id-es", id);
+                var id = parseFloat(element.idEs);
+                $("#estabelecimento-ajax").attr("data-id-es", id);
 				return element.nome;
 			},
-			list: {
-				match: {
-					enabled: true
+            list: {
+                match: {
+                    enabled: true
 				}
 
-			}
+            }
 		};
 
-		$("#estabelecimento-ajax").easyAutocomplete(pesquisaEstabelecimento);
+        $("#estabelecimento-ajax").easyAutocomplete(pesquisaEstabelecimento);
 
-		/** verifica se o campo de estabelecimento esta preenchido para poder acionar o botao
-		 *
-		 * @type {*|jQuery|HTMLElement}
-		 */
-		var input = $('#estabelecimento-ajax');
-		input.on('keyup', verificarInputs);
+        /** verifica se o campo de estabelecimento esta preenchido para poder acionar o botao
+         *
+         * @type {*|jQuery|HTMLElement}
+         */
+        var input = $('#estabelecimento-ajax');
+        input.on('keyup', verificarInputs);
 
-		function verificarInputs() {
-			var preenchidos = true;
-			input.each(function () {
-				if (!this.value) {
-					preenchidos = false;
-					return false;
-				}
-			});
-			$('#pesquisaEs').prop('disabled', !preenchidos);
-		}
+        function verificarInputs() {
+            var preenchidos = true;
+            input.each(function () {
+                if (!this.value) {
+                    preenchidos = false;
+                    return false;
+                }
+            });
+            $('#pesquisaEs').prop('disabled', !preenchidos);
+        }
 
-		$('#avaliacao').barrating({
+        $('#avaliacao').barrating({
 			theme: 'fontawesome-stars'
 		});
 

@@ -8,7 +8,7 @@
  */
 class AvaliacaoM extends CI_Model
 {
-    private $table = 'tb_avaliacao';
+    private $table = 'TB_Avaliacao';
     private $viewAvaliacao = 'vw_estabelecimentosavaliacao';
 
     /**
@@ -24,28 +24,14 @@ class AvaliacaoM extends CI_Model
     {
 
         $this->db->reset_query();
-        $this->db->select("e.Nome, round(avg(nota)) as media")
-            ->from("tb_avaliacao as a")
-            ->join("tb_estabelecimento as e", "a.EstabelecimentoCod = e.CodEstabelecimento", "inner")
+        $this->db->select("e.Nome, round(avg(a.Nota)) as media")
+            ->from("TB_Avaliacao as a")
+            ->join("TB_Estabelecimento as e", "a.EstabelecimentoCod = e.CodEstabelecimento", "inner")
             ->where("e.CodEstabelecimento", $id);
 
         return $this->db->get();
-//            ->group_by("e.CodEstabelecimento");
-//        return $this->db->get_where($this->table, array('CodEstabelecimento' => $id));
-
     }
 
-//    public function getByAvaliacao($nota){
-//        $this->db->reset_query();
-//        $this->db->select("e.CodEstabelecimento, round(avg(a.Nota)) as media")
-//            ->from("tb_avaliacao a")
-//            ->join("tb_estabelecimento as e", "a.EstabelecimentoCod = e.CodEstabelecimento", "inner")
-//            ->group_by("e.CodEstabelecimento")
-//            ->having("media", $nota);
-//
-//        return $this->db->get();
-//
-//    }
 
     public function getAllBy($where = array())
     {
