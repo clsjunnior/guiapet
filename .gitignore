@@ -1,12 +1,7 @@
-.DS_Store
 
 application/cache/*
-!application/cache/index.html
-!application/cache/.htaccess
 
 application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
@@ -27,7 +22,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /ci_sessions/
 /user_guide/
-/bancoV3.mwb.bak
-/bancoV3.mwb.beforefix
 /application/config/database.php
 .idea/
