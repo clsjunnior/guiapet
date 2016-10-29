@@ -51,7 +51,6 @@ class TagM extends CI_Model
             ->from($this->table . " as tg")
             ->join('TB_TagEstabelecimento as tge', 'tg.CodTag = tge.TagCod', 'left')
             ->group_by('tg.Nome');
-
         return $this->db->get();
     }
 

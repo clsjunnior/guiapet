@@ -44,4 +44,14 @@ class CategoriaM extends CI_Model
 
     }
 
+    public function getAllCount()
+    {
+        $this->db->reset_query();
+        $this->db->select("ct.Nome, count(es.CodEstabelecimento) as qtd")
+            ->from($this->table . " as ct")
+            ->join('tb_estabelecimento as es', 'ct.CodCategoria = es.CategoriaCod', 'left')
+            ->group_by('ct.Nome');
+        return $this->db->get();
+    }
+
 }

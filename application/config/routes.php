@@ -66,6 +66,7 @@ $route['dashboard/estabelecimentos'] = 'admin/Estabelecimento';
 $route['dashboard/estabelecimentos/novo'] = 'admin/Estabelecimento/novo';
 $route['dashboard/estabelecimentos/visualizar/(:num)'] = 'admin/Estabelecimento/visualizar/$1';
 $route['dashboard/tags'] = 'admin/Tag/index';
+$route['dashboard/categorias'] = 'admin/Categoria/index';
 
 //API
 $route['api/estabelecimentos/buscaTotal'] = 'api/Estabelecimento/buscaTotal';
