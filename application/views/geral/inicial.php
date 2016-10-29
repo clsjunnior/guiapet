@@ -140,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					items:6
 				}
 			}
-		})
+        });
 
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()

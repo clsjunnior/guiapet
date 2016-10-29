@@ -32,10 +32,6 @@ class EstabelecimentoM extends CI_Model {
      */
     public function novoEstabelecimento($estabelecimento)
     {
-        /** Preenche o campo CriadoEm com a data e hora atual no formato do banco de dados*/
-        $estabelecimento['CriadoEm'] = gmdate('Y-m-d H:i:s', time());
-        $estabelecimento['AtualizadoEm'] = gmdate('Y-m-d H:i:s', time());
-
         /** Insere na tabela de estabelecimento o estabelecimento passado com seus respectivos campos */
         $this->db->insert($this->table, $estabelecimento);
 

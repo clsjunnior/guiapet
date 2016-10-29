@@ -11,393 +11,393 @@ SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema guiapet
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `guiapet`
+CREATE SCHEMA IF NOT EXISTS guiapet
   DEFAULT CHARACTER SET utf8;
-USE `guiapet`;
+
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_sessions`
+-- Table tb_sessions
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_sessions` (
-  `id`         VARCHAR(40) NOT NULL,
-  `ip_address` VARCHAR(45) NOT NULL,
-  `timestamp`  INT(10)     NOT NULL,
-  `data`       BLOB        NOT NULL
+CREATE TABLE IF NOT EXISTS tb_sessions (
+  id         VARCHAR(40) NOT NULL,
+  ip_address VARCHAR(45) NOT NULL,
+  timestamp  INT(10)     NOT NULL,
+  data       BLOB        NOT NULL
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_localizacao`
+-- Table tb_localizacao
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_localizacao` (
-  `CodLocalizacao` INT          NOT NULL AUTO_INCREMENT,
-  `Estado`         VARCHAR(2)   NULL,
-  `Cidade`         VARCHAR(125) NULL,
-  `Cep`            VARCHAR(11)  NULL,
-  `Rua`            VARCHAR(255) NULL,
-  `Numero`         VARCHAR(11)  NULL,
-  `Bairro`         VARCHAR(255) NULL,
-  `Complemento`    VARCHAR(255) NULL,
-  `Latitude`       VARCHAR(255) NULL,
-  `Longitude`      VARCHAR(255) NULL,
-  PRIMARY KEY (`CodLocalizacao`),
-  UNIQUE INDEX `CodLocalizacao_UNIQUE` (`CodLocalizacao` ASC)
+CREATE TABLE IF NOT EXISTS tb_localizacao (
+  CodLocalizacao INT          NOT NULL AUTO_INCREMENT,
+  Estado         VARCHAR(2)   NULL,
+  Cidade         VARCHAR(125) NULL,
+  Cep            VARCHAR(11)  NULL,
+  Rua            VARCHAR(255) NULL,
+  Numero         VARCHAR(11)  NULL,
+  Bairro         VARCHAR(255) NULL,
+  Complemento    VARCHAR(255) NULL,
+  Latitude       VARCHAR(255) NULL,
+  Longitude      VARCHAR(255) NULL,
+  PRIMARY KEY (CodLocalizacao),
+  UNIQUE INDEX CodLocalizacao_UNIQUE (CodLocalizacao ASC)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_contato`
+-- Table tb_contato
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_contato` (
-  `CodContato`         INT          NOT NULL AUTO_INCREMENT,
-  `TelefonePrincipal`  VARCHAR(15)  NULL,
-  `TelefoneSecundario` VARCHAR(15)  NULL,
-  `Facebook`           VARCHAR(255) NULL,
-  `Twitter`            VARCHAR(255) NULL,
-  `Site`               VARCHAR(255) NULL,
-  `Email`              VARCHAR(255) NULL,
-  PRIMARY KEY (`CodContato`)
+CREATE TABLE IF NOT EXISTS tb_contato (
+  CodContato         INT          NOT NULL AUTO_INCREMENT,
+  TelefonePrincipal  VARCHAR(15)  NULL,
+  TelefoneSecundario VARCHAR(15)  NULL,
+  Facebook           VARCHAR(255) NULL,
+  Twitter            VARCHAR(255) NULL,
+  Site               VARCHAR(255) NULL,
+  Email              VARCHAR(255) NULL,
+  PRIMARY KEY (CodContato)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_permissao`
+-- Table tb_permissao
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_permissao` (
-  `CodPermissao` INT         NOT NULL AUTO_INCREMENT,
-  `Nome`         VARCHAR(60) NOT NULL,
-  `Descricao`    TEXT        NULL,
-  PRIMARY KEY (`CodPermissao`),
-  UNIQUE INDEX `CodPermissao_UNIQUE` (`CodPermissao` ASC)
+CREATE TABLE IF NOT EXISTS tb_permissao (
+  CodPermissao INT         NOT NULL AUTO_INCREMENT,
+  Nome         VARCHAR(60) NOT NULL,
+  Descricao    TEXT        NULL,
+  PRIMARY KEY (CodPermissao),
+  UNIQUE INDEX CodPermissao_UNIQUE (CodPermissao ASC)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_usuario`
+-- Table tb_usuario
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_usuario` (
-  `CodUsuario`     INT             NOT NULL AUTO_INCREMENT,
-  `Nome`           VARCHAR(120)    NOT NULL,
-  `Login`          VARCHAR(50)     NOT NULL,
-  `Senha`          VARCHAR(150)    NOT NULL,
-  `Email`          VARCHAR(255)    NOT NULL,
-  `Sexo`           ENUM ('M', 'F') NOT NULL,
-  `LocalizacaoCod` INT             NULL,
-  `ContatoCod`     INT             NULL,
-  `PermissaoCod`   INT             NOT NULL,
-  PRIMARY KEY (`CodUsuario`),
-  UNIQUE INDEX `CodUsuario_UNIQUE` (`CodUsuario` ASC),
-  INDEX `fk_tb_usuario_tb_localizacao1_idx` (`LocalizacaoCod` ASC),
-  INDEX `fk_tb_usuario_tb_contato1_idx` (`ContatoCod` ASC),
-  INDEX `fk_tb_usuario_tb_permissao1_idx` (`PermissaoCod` ASC),
-  CONSTRAINT `fk_tb_usuario_tb_localizacao1`
-  FOREIGN KEY (`LocalizacaoCod`)
-  REFERENCES `guiapet`.`tb_localizacao` (`CodLocalizacao`)
+CREATE TABLE IF NOT EXISTS tb_usuario (
+  CodUsuario     INT             NOT NULL AUTO_INCREMENT,
+  Nome           VARCHAR(120)    NOT NULL,
+  Login          VARCHAR(50)     NOT NULL,
+  Senha          VARCHAR(150)    NOT NULL,
+  Email          VARCHAR(255)    NOT NULL,
+  Sexo           ENUM ('M', 'F') NOT NULL,
+  LocalizacaoCod INT             NULL,
+  ContatoCod     INT             NULL,
+  PermissaoCod   INT             NOT NULL,
+  PRIMARY KEY (CodUsuario),
+  UNIQUE INDEX CodUsuario_UNIQUE (CodUsuario ASC),
+  INDEX fk_tb_usuario_tb_localizacao1_idx (LocalizacaoCod ASC),
+  INDEX fk_tb_usuario_tb_contato1_idx (ContatoCod ASC),
+  INDEX fk_tb_usuario_tb_permissao1_idx (PermissaoCod ASC),
+  CONSTRAINT fk_tb_usuario_tb_localizacao1
+  FOREIGN KEY (LocalizacaoCod)
+  REFERENCES tb_localizacao (CodLocalizacao)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_usuario_tb_contato1`
-  FOREIGN KEY (`ContatoCod`)
-  REFERENCES `guiapet`.`tb_contato` (`CodContato`)
+  CONSTRAINT fk_tb_usuario_tb_contato1
+  FOREIGN KEY (ContatoCod)
+  REFERENCES tb_contato (CodContato)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_usuario_tb_permissao1`
-  FOREIGN KEY (`PermissaoCod`)
-  REFERENCES `guiapet`.`tb_permissao` (`CodPermissao`)
+  CONSTRAINT fk_tb_usuario_tb_permissao1
+  FOREIGN KEY (PermissaoCod)
+  REFERENCES tb_permissao (CodPermissao)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_categoria`
+-- Table tb_categoria
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_categoria` (
-  `CodCategoria` INT         NOT NULL AUTO_INCREMENT,
-  `Nome`         VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`CodCategoria`),
-  UNIQUE INDEX `CodCategoria_UNIQUE` (`CodCategoria` ASC)
+CREATE TABLE IF NOT EXISTS tb_categoria (
+  CodCategoria INT         NOT NULL AUTO_INCREMENT,
+  Nome         VARCHAR(30) NOT NULL,
+  PRIMARY KEY (CodCategoria),
+  UNIQUE INDEX CodCategoria_UNIQUE (CodCategoria ASC)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_estabelecimento`
+-- Table tb_estabelecimento
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_estabelecimento` (
-  `CodEstabelecimento` INT          NOT NULL AUTO_INCREMENT,
-  `Nome`               VARCHAR(120) NOT NULL,
-  `Descricao`          TEXT         NOT NULL,
-  `Foto`               TEXT         NOT NULL,
-  `CNPJ`               VARCHAR(14)  NOT NULL,
-  `LocalizacaoCod`     INT          NOT NULL,
-  `ContatoCod`         INT          NULL,
-  `UsuarioCod`         INT          NOT NULL,
-  `CategoriaCod`       INT          NOT NULL,
-  PRIMARY KEY (`CodEstabelecimento`),
-  UNIQUE INDEX `CodEstabelecimento_UNIQUE` (`CodEstabelecimento` ASC),
-  INDEX `fk_tb_estabelecimento_tb_localizacao1_idx` (`LocalizacaoCod` ASC),
-  INDEX `fk_tb_estabelecimento_tb_contato1_idx` (`ContatoCod` ASC),
-  INDEX `fk_tb_estabelecimento_tb_usuario1_idx` (`UsuarioCod` ASC),
-  INDEX `fk_tb_estabelecimento_tb_categoria1_idx` (`CategoriaCod` ASC),
-  CONSTRAINT `fk_tb_estabelecimento_tb_localizacao1`
-  FOREIGN KEY (`LocalizacaoCod`)
-  REFERENCES `guiapet`.`tb_localizacao` (`CodLocalizacao`)
+CREATE TABLE IF NOT EXISTS tb_estabelecimento (
+  CodEstabelecimento INT          NOT NULL AUTO_INCREMENT,
+  Nome               VARCHAR(120) NOT NULL,
+  Descricao          TEXT         NOT NULL,
+  Foto               TEXT         NOT NULL,
+  CNPJ               VARCHAR(14)  NOT NULL,
+  LocalizacaoCod     INT          NOT NULL,
+  ContatoCod         INT          NULL,
+  UsuarioCod         INT          NOT NULL,
+  CategoriaCod       INT          NOT NULL,
+  PRIMARY KEY (CodEstabelecimento),
+  UNIQUE INDEX CodEstabelecimento_UNIQUE (CodEstabelecimento ASC),
+  INDEX fk_tb_estabelecimento_tb_localizacao1_idx (LocalizacaoCod ASC),
+  INDEX fk_tb_estabelecimento_tb_contato1_idx (ContatoCod ASC),
+  INDEX fk_tb_estabelecimento_tb_usuario1_idx (UsuarioCod ASC),
+  INDEX fk_tb_estabelecimento_tb_categoria1_idx (CategoriaCod ASC),
+  CONSTRAINT fk_tb_estabelecimento_tb_localizacao1
+  FOREIGN KEY (LocalizacaoCod)
+  REFERENCES tb_localizacao (CodLocalizacao)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_estabelecimento_tb_contato1`
-  FOREIGN KEY (`ContatoCod`)
-  REFERENCES `guiapet`.`tb_contato` (`CodContato`)
+  CONSTRAINT fk_tb_estabelecimento_tb_contato1
+  FOREIGN KEY (ContatoCod)
+  REFERENCES tb_contato (CodContato)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_estabelecimento_tb_usuario1`
-  FOREIGN KEY (`UsuarioCod`)
-  REFERENCES `guiapet`.`tb_usuario` (`CodUsuario`)
+  CONSTRAINT fk_tb_estabelecimento_tb_usuario1
+  FOREIGN KEY (UsuarioCod)
+  REFERENCES tb_usuario (CodUsuario)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_estabelecimento_tb_categoria1`
-  FOREIGN KEY (`CategoriaCod`)
-  REFERENCES `guiapet`.`tb_categoria` (`CodCategoria`)
+  CONSTRAINT fk_tb_estabelecimento_tb_categoria1
+  FOREIGN KEY (CategoriaCod)
+  REFERENCES tb_categoria (CodCategoria)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_historico`
+-- Table tb_historico
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_historico` (
-  `CodHistorico`       INT  NOT NULL AUTO_INCREMENT,
-  `TagsCod`            TEXT NULL,
-  `UsuarioCod`         INT  NOT NULL,
-  `EstabelecimentoCod` INT  NOT NULL,
-  `CategoriaCod`       INT  NOT NULL,
-  PRIMARY KEY (`CodHistorico`),
-  UNIQUE INDEX `CodHistorico_UNIQUE` (`CodHistorico` ASC),
-  INDEX `fk_tb_historico_tb_usuario_idx` (`UsuarioCod` ASC),
-  INDEX `fk_tb_historico_tb_estabelecimento1_idx` (`EstabelecimentoCod` ASC),
-  INDEX `fk_tb_historico_tb_categoria1_idx` (`CategoriaCod` ASC),
-  CONSTRAINT `fk_tb_historico_tb_usuario`
-  FOREIGN KEY (`UsuarioCod`)
-  REFERENCES `guiapet`.`tb_usuario` (`CodUsuario`)
+CREATE TABLE IF NOT EXISTS tb_historico (
+  CodHistorico       INT  NOT NULL AUTO_INCREMENT,
+  TagsCod            TEXT NULL,
+  UsuarioCod         INT  NOT NULL,
+  EstabelecimentoCod INT  NOT NULL,
+  CategoriaCod       INT  NOT NULL,
+  PRIMARY KEY (CodHistorico),
+  UNIQUE INDEX CodHistorico_UNIQUE (CodHistorico ASC),
+  INDEX fk_tb_historico_tb_usuario_idx (UsuarioCod ASC),
+  INDEX fk_tb_historico_tb_estabelecimento1_idx (EstabelecimentoCod ASC),
+  INDEX fk_tb_historico_tb_categoria1_idx (CategoriaCod ASC),
+  CONSTRAINT fk_tb_historico_tb_usuario
+  FOREIGN KEY (UsuarioCod)
+  REFERENCES tb_usuario (CodUsuario)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_historico_tb_estabelecimento1`
-  FOREIGN KEY (`EstabelecimentoCod`)
-  REFERENCES `guiapet`.`tb_estabelecimento` (`CodEstabelecimento`)
+  CONSTRAINT fk_tb_historico_tb_estabelecimento1
+  FOREIGN KEY (EstabelecimentoCod)
+  REFERENCES tb_estabelecimento (CodEstabelecimento)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_historico_tb_categoria1`
-  FOREIGN KEY (`CategoriaCod`)
-  REFERENCES `guiapet`.`tb_categoria` (`CodCategoria`)
+  CONSTRAINT fk_tb_historico_tb_categoria1
+  FOREIGN KEY (CategoriaCod)
+  REFERENCES tb_categoria (CodCategoria)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_tag`
+-- Table tb_tag
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_tag` (
-  `CodTag` INT         NOT NULL AUTO_INCREMENT,
-  `Nome`   VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`CodTag`),
-  UNIQUE INDEX `CodTag_UNIQUE` (`CodTag` ASC)
+CREATE TABLE IF NOT EXISTS tb_tag (
+  CodTag INT         NOT NULL AUTO_INCREMENT,
+  Nome   VARCHAR(30) NOT NULL,
+  PRIMARY KEY (CodTag),
+  UNIQUE INDEX CodTag_UNIQUE (CodTag ASC)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_tagestabelecimento`
+-- Table tb_tagestabelecimento
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_tagestabelecimento` (
-  `CodTagEstabelecimento` INT NOT NULL AUTO_INCREMENT,
-  `TagCod`                INT NOT NULL,
-  `EstabelecimentoCod`    INT NOT NULL,
-  PRIMARY KEY (`CodTagEstabelecimento`),
-  UNIQUE INDEX `CodfTagEstabelecimento_UNIQUE` (`CodTagEstabelecimento` ASC),
-  INDEX `fk_tb_tagestabelecimento_tb_tag1_idx` (`TagCod` ASC),
-  INDEX `fk_tb_tagestabelecimento_tb_estabelecimento1_idx` (`EstabelecimentoCod` ASC),
-  CONSTRAINT `fk_tb_tagestabelecimento_tb_tag1`
-  FOREIGN KEY (`TagCod`)
-  REFERENCES `guiapet`.`tb_tag` (`CodTag`)
+CREATE TABLE IF NOT EXISTS tb_tagestabelecimento (
+  CodTagEstabelecimento INT NOT NULL AUTO_INCREMENT,
+  TagCod                INT NOT NULL,
+  EstabelecimentoCod    INT NOT NULL,
+  PRIMARY KEY (CodTagEstabelecimento),
+  UNIQUE INDEX CodfTagEstabelecimento_UNIQUE (CodTagEstabelecimento ASC),
+  INDEX fk_tb_tagestabelecimento_tb_tag1_idx (TagCod ASC),
+  INDEX fk_tb_tagestabelecimento_tb_estabelecimento1_idx (EstabelecimentoCod ASC),
+  CONSTRAINT fk_tb_tagestabelecimento_tb_tag1
+  FOREIGN KEY (TagCod)
+  REFERENCES tb_tag (CodTag)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_tagestabelecimento_tb_estabelecimento1`
-  FOREIGN KEY (`EstabelecimentoCod`)
-  REFERENCES `guiapet`.`tb_estabelecimento` (`CodEstabelecimento`)
+  CONSTRAINT fk_tb_tagestabelecimento_tb_estabelecimento1
+  FOREIGN KEY (EstabelecimentoCod)
+  REFERENCES tb_estabelecimento (CodEstabelecimento)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_galeria`
+-- Table tb_galeria
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_galeria` (
-  `CodGaleria`         INT          NOT NULL AUTO_INCREMENT,
-  `Nome`               VARCHAR(120) NULL,
-  `Descricao`          VARCHAR(255) NULL,
-  `Arquivo`            TEXT         NOT NULL,
-  `EstabelecimentoCod` INT          NOT NULL,
-  PRIMARY KEY (`CodGaleria`),
-  UNIQUE INDEX `CodGaleria_UNIQUE` (`CodGaleria` ASC),
-  INDEX `fk_tb_galeria_tb_estabelecimento1_idx` (`EstabelecimentoCod` ASC),
-  CONSTRAINT `fk_tb_galeria_tb_estabelecimento1`
-  FOREIGN KEY (`EstabelecimentoCod`)
-  REFERENCES `guiapet`.`tb_estabelecimento` (`CodEstabelecimento`)
+CREATE TABLE IF NOT EXISTS tb_galeria (
+  CodGaleria         INT          NOT NULL AUTO_INCREMENT,
+  Nome               VARCHAR(120) NULL,
+  Descricao          VARCHAR(255) NULL,
+  Arquivo            TEXT         NOT NULL,
+  EstabelecimentoCod INT          NOT NULL,
+  PRIMARY KEY (CodGaleria),
+  UNIQUE INDEX CodGaleria_UNIQUE (CodGaleria ASC),
+  INDEX fk_tb_galeria_tb_estabelecimento1_idx (EstabelecimentoCod ASC),
+  CONSTRAINT fk_tb_galeria_tb_estabelecimento1
+  FOREIGN KEY (EstabelecimentoCod)
+  REFERENCES tb_estabelecimento (CodEstabelecimento)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `guiapet`.`tb_avaliacao`
+-- Table tb_avaliacao
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`tb_avaliacao` (
-  `CodAvaliacao`       INT    NOT NULL AUTO_INCREMENT,
-  `Nota`               INT(1) NOT NULL,
-  `EstabelecimentoCod` INT    NOT NULL,
-  `UsuarioCod`         INT    NOT NULL,
-  PRIMARY KEY (`CodAvaliacao`),
-  UNIQUE INDEX `CodAvaliacao_UNIQUE` (`CodAvaliacao` ASC),
-  INDEX `fk_tb_avaliacao_tb_estabelecimento1_idx` (`EstabelecimentoCod` ASC),
-  INDEX `fk_tb_avaliacao_tb_usuario1_idx` (`UsuarioCod` ASC),
-  CONSTRAINT `fk_tb_avaliacao_tb_estabelecimento1`
-  FOREIGN KEY (`EstabelecimentoCod`)
-  REFERENCES `guiapet`.`tb_estabelecimento` (`CodEstabelecimento`)
+CREATE TABLE IF NOT EXISTS tb_avaliacao (
+  CodAvaliacao       INT    NOT NULL AUTO_INCREMENT,
+  Nota               INT(1) NOT NULL,
+  EstabelecimentoCod INT    NOT NULL,
+  UsuarioCod         INT    NOT NULL,
+  PRIMARY KEY (CodAvaliacao),
+  UNIQUE INDEX CodAvaliacao_UNIQUE (CodAvaliacao ASC),
+  INDEX fk_tb_avaliacao_tb_estabelecimento1_idx (EstabelecimentoCod ASC),
+  INDEX fk_tb_avaliacao_tb_usuario1_idx (UsuarioCod ASC),
+  CONSTRAINT fk_tb_avaliacao_tb_estabelecimento1
+  FOREIGN KEY (EstabelecimentoCod)
+  REFERENCES tb_estabelecimento (CodEstabelecimento)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_avaliacao_tb_usuario1`
-  FOREIGN KEY (`UsuarioCod`)
-  REFERENCES `guiapet`.`tb_usuario` (`CodUsuario`)
+  CONSTRAINT fk_tb_avaliacao_tb_usuario1
+  FOREIGN KEY (UsuarioCod)
+  REFERENCES tb_usuario (CodUsuario)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-USE `guiapet`;
+
 
 -- -----------------------------------------------------
--- Placeholder table for view `guiapet`.`VW_Estabelecimentosavaliacao`
+-- Placeholder table for view VW_Estabelecimentosavaliacao
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`VW_Estabelecimentosavaliacao` (
-  `EsCodEstabelecimento` INT,
-  `EsNome`               INT,
-  `EsDescricao`          INT,
-  `EsFoto`               INT,
-  `EsCNPJ`               INT,
-  `CaCodCategoria`       INT,
-  `CaNome`               INT,
-  `CoCodLocalizacao`     INT,
-  `LoEstado`             INT,
-  `LoCidade`             INT,
-  `LoCep`                INT,
-  `LoRua`                INT,
-  `LoNumero`             INT,
-  `LoBairro`             INT,
-  `LoComplemento`        INT,
-  `LoLatitude`           INT,
-  `LoLongitude`          INT,
-  `UsCodUsuario`         INT,
-  `UsNome`               INT,
-  `UsLogin`              INT,
-  `UsSenha`              INT,
-  `UsEmail`              INT,
-  `UsSexo`               INT,
-  `CoTelefonePrincipal`  INT,
-  `CoTelefoneSecundario` INT,
-  `CoFacebook`           INT,
-  `CoTwitter`            INT,
-  `CoSite`               INT,
-  `CoEmail`              INT,
-  `media`                INT
+CREATE TABLE IF NOT EXISTS VW_Estabelecimentosavaliacao (
+  EsCodEstabelecimento INT,
+  EsNome               INT,
+  EsDescricao          INT,
+  EsFoto               INT,
+  EsCNPJ               INT,
+  CaCodCategoria       INT,
+  CaNome               INT,
+  CoCodLocalizacao     INT,
+  LoEstado             INT,
+  LoCidade             INT,
+  LoCep                INT,
+  LoRua                INT,
+  LoNumero             INT,
+  LoBairro             INT,
+  LoComplemento        INT,
+  LoLatitude           INT,
+  LoLongitude          INT,
+  UsCodUsuario         INT,
+  UsNome               INT,
+  UsLogin              INT,
+  UsSenha              INT,
+  UsEmail              INT,
+  UsSexo               INT,
+  CoTelefonePrincipal  INT,
+  CoTelefoneSecundario INT,
+  CoFacebook           INT,
+  CoTwitter            INT,
+  CoSite               INT,
+  CoEmail              INT,
+  media                INT
 );
 
 -- -----------------------------------------------------
--- Placeholder table for view `guiapet`.`vw_estabelecimentoTags`
+-- Placeholder table for view vw_estabelecimentoTags
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`vw_estabelecimentoTags` (
-  `EsCodEstabelecimento` INT,
-  `EsNome`               INT,
-  `EsDescricao`          INT,
-  `EsFoto`               INT,
-  `EsCNPJ`               INT,
-  `CaCodCategoria`       INT,
-  `CaNome`               INT,
-  `CoCodLocalizacao`     INT,
-  `LoEstado`             INT,
-  `LoCidade`             INT,
-  `LoCep`                INT,
-  `LoRua`                INT,
-  `LoNumero`             INT,
-  `LoBairro`             INT,
-  `LoComplemento`        INT,
-  `LoLatitude`           INT,
-  `LoLongitude`          INT,
-  `UsCodUsuario`         INT,
-  `UsNome`               INT,
-  `UsLogin`              INT,
-  `UsSenha`              INT,
-  `UsEmail`              INT,
-  `UsSexo`               INT,
-  `CoTelefonePrincipal`  INT,
-  `CoTelefoneSecundario` INT,
-  `CoFacebook`           INT,
-  `CoTwitter`            INT,
-  `CoSite`               INT,
-  `CoEmail`              INT,
-  `tgNome`               INT,
-  `tgCod`                INT
+CREATE TABLE IF NOT EXISTS vw_estabelecimentoTags (
+  EsCodEstabelecimento INT,
+  EsNome               INT,
+  EsDescricao          INT,
+  EsFoto               INT,
+  EsCNPJ               INT,
+  CaCodCategoria       INT,
+  CaNome               INT,
+  CoCodLocalizacao     INT,
+  LoEstado             INT,
+  LoCidade             INT,
+  LoCep                INT,
+  LoRua                INT,
+  LoNumero             INT,
+  LoBairro             INT,
+  LoComplemento        INT,
+  LoLatitude           INT,
+  LoLongitude          INT,
+  UsCodUsuario         INT,
+  UsNome               INT,
+  UsLogin              INT,
+  UsSenha              INT,
+  UsEmail              INT,
+  UsSexo               INT,
+  CoTelefonePrincipal  INT,
+  CoTelefoneSecundario INT,
+  CoFacebook           INT,
+  CoTwitter            INT,
+  CoSite               INT,
+  CoEmail              INT,
+  tgNome               INT,
+  tgCod                INT
 );
 
 -- -----------------------------------------------------
--- Placeholder table for view `guiapet`.`vw_tagEs`
+-- Placeholder table for view vw_tagEs
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`vw_tagEs` (
-  `codTagEs` INT,
-  `codTag`   INT,
-  `tagNome`  INT
+CREATE TABLE IF NOT EXISTS vw_tagEs (
+  codTagEs INT,
+  codTag   INT,
+  tagNome  INT
 );
 
 -- -----------------------------------------------------
--- Placeholder table for view `guiapet`.`vw_estabelecimentos`
+-- Placeholder table for view vw_estabelecimentos
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `guiapet`.`vw_estabelecimentos` (
-  `EsCodEstabelecimento` INT,
-  `EsNome`               INT,
-  `EsDescricao`          INT,
-  `EsFoto`               INT,
-  `EsCNPJ`               INT,
-  `EsContatoCod`         INT,
-  `CaCodCategoria`       INT,
-  `CaNome`               INT,
-  `CoCodLocalizacao`     INT,
-  `LoEstado`             INT,
-  `LoCidade`             INT,
-  `LoCep`                INT,
-  `LoRua`                INT,
-  `LoNumero`             INT,
-  `LoBairro`             INT,
-  `LoComplemento`        INT,
-  `LoLatitude`           INT,
-  `LoLongitude`          INT,
-  `UsCodUsuario`         INT,
-  `UsNome`               INT,
-  `UsLogin`              INT,
-  `UsSenha`              INT,
-  `UsEmail`              INT,
-  `UsSexo`               INT,
-  `CoTelefonePrincipal`  INT,
-  `CoTelefoneSecundario` INT,
-  `CoFacebook`           INT,
-  `CoTwitter`            INT,
-  `CoSite`               INT,
-  `CoEmail`              INT
+CREATE TABLE IF NOT EXISTS vw_estabelecimentos (
+  EsCodEstabelecimento INT,
+  EsNome               INT,
+  EsDescricao          INT,
+  EsFoto               INT,
+  EsCNPJ               INT,
+  EsContatoCod         INT,
+  CaCodCategoria       INT,
+  CaNome               INT,
+  CoCodLocalizacao     INT,
+  LoEstado             INT,
+  LoCidade             INT,
+  LoCep                INT,
+  LoRua                INT,
+  LoNumero             INT,
+  LoBairro             INT,
+  LoComplemento        INT,
+  LoLatitude           INT,
+  LoLongitude          INT,
+  UsCodUsuario         INT,
+  UsNome               INT,
+  UsLogin              INT,
+  UsSenha              INT,
+  UsEmail              INT,
+  UsSexo               INT,
+  CoTelefonePrincipal  INT,
+  CoTelefoneSecundario INT,
+  CoFacebook           INT,
+  CoTwitter            INT,
+  CoSite               INT,
+  CoEmail              INT
 );
 
 -- -----------------------------------------------------
--- View `guiapet`.`VW_Estabelecimentosavaliacao`
+-- View VW_Estabelecimentosavaliacao
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `guiapet`.`VW_Estabelecimentosavaliacao`;
-USE `guiapet`;
+DROP TABLE IF EXISTS VW_Estabelecimentosavaliacao;
+
 CREATE OR REPLACE VIEW VW_Estabelecimentosavaliacao AS
   SELECT
     es.CodEstabelecimento  AS EsCodEstabelecimento,
@@ -440,10 +440,9 @@ CREATE OR REPLACE VIEW VW_Estabelecimentosavaliacao AS
   GROUP BY es.CodEstabelecimento;
 
 -- -----------------------------------------------------
--- View `guiapet`.`vw_estabelecimentoTags`
+-- View vw_estabelecimentoTags
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `guiapet`.`vw_estabelecimentoTags`;
-USE `guiapet`;
+DROP TABLE IF EXISTS vw_estabelecimentoTags;
 CREATE OR REPLACE VIEW vw_estabelecimentoTags AS
   SELECT
     es.CodEstabelecimento AS EsCodEstabelecimento,
@@ -493,10 +492,9 @@ CREATE OR REPLACE VIEW vw_estabelecimentoTags AS
     tb_tag AS tg ON tges.TagCod = tg.CodTag;
 
 -- -----------------------------------------------------
--- View `guiapet`.`vw_tagEs`
+-- View vw_tagEs
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `guiapet`.`vw_tagEs`;
-USE `guiapet`;
+DROP TABLE IF EXISTS vw_tagEs;
 CREATE OR REPLACE VIEW vw_tagEs AS
   SELECT
     tgEs.CodTagEstabelecimento AS codTagEs,
@@ -508,11 +506,10 @@ CREATE OR REPLACE VIEW vw_tagEs AS
     tb_tag AS tag ON tgEs.TagCod = tag.CodTag;
 
 -- -----------------------------------------------------
--- View `guiapet`.`vw_estabelecimentos`
+-- View vw_estabelecimentos
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `guiapet`.`vw_estabelecimentos`;
-USE `guiapet`;
-CREATE OR REPLACE VIEW `vw_estabelecimentos` AS
+DROP TABLE IF EXISTS vw_estabelecimentos;
+CREATE OR REPLACE VIEW vw_estabelecimentos AS
   SELECT
     es.CodEstabelecimento AS EsCodEstabelecimento,
     es.Nome               AS EsNome,

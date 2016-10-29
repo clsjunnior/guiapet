@@ -36,7 +36,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
             d = d[parts[i]];
         }
         return d;
-    }
+    };
 
     /**
      * Counts the number of properties in an object
@@ -55,7 +55,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
             }
         }
         return count;
-    }
+    };
 
     /**
      * Returns a prefixed css class name
@@ -89,7 +89,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
             return PhpDebugBar.utils.csscls(cls, prefix);
         };
         return f;
-    }
+    };
 
     var csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-');
 

@@ -32,11 +32,8 @@ class UsuarioM extends CI_Model {
      */
     public function novoUsuario($usuario)
     {
-        /** Preenche o campo CriadoEm com a data e hora atual no formato do banco de dados*/
-        $usuario['CriadoEm'] = gmdate('Y-m-d H:i:s',time());
-        $usuario['AtualizadoEm'] = gmdate('Y-m-d H:i:s', time());
-
         /** Insere na tabela TB_Usuario o usuario passado com seus respectivos campos */
+        $usuario['PermissaoCod'] = 1;
         return $this->db->insert($this->table, $usuario);
     }
 
@@ -50,9 +47,6 @@ class UsuarioM extends CI_Model {
      */
     public function atualizaUsuario($usuario, $id)
     {
-        /** Preenche o campo ModificadoEm com a data e hora atual no formato do banco de dados*/
-        $usuario['AtualizadoEm'] = gmdate('Y-m-d H:i:s', time());
-
         /** Atualiza o usuario onde o ID foi passado no parametro */
         $this->db->where('CodUsuario', $id);
         return $this->db->update($this->table, $usuario);
