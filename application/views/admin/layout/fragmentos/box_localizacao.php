@@ -48,7 +48,8 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="state">Estado:</label>
                             <div class="col-sm-8">
-                                <input type="text" placeholder="Estado" id="state" name="state" value="<?=set_value('state',$location['Estado'])?>" class="form-control">
+                                <input type="text" placeholder="Estado" maxlength="2" id="state" name="state"
+                                       value="<?= set_value('state', $location['Estado']) ?>" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -111,27 +112,6 @@
                             <label class="col-sm-3 control-label" for="complement">Complemento:</label>
                             <div class="col-sm-9">
                                 <input type="text" placeholder="Complemento" id="complement" name="complement" value="<?=set_value('complement',$location['Complemento'])?>" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="CadastradoEm">Cadastrado em:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" disabled
-                                       value="<?= (isset($location["CriadoEm"]) ? date('d/m/Y', strtotime($location['CriadoEm'])) : '') ?>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="ModificadoEm">Ultima modificação:</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" disabled
-                                       value="<?= (isset($location["AtualizadoEm"]) ? date('d/m/Y', strtotime($location['AtualizadoEm'])) : '') ?>">
                             </div>
                         </div>
                     </div>

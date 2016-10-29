@@ -52,5 +52,11 @@ class UsuarioM extends CI_Model {
         return $this->db->update($this->table, $usuario);
     }
 
+    public function alteraPermissao($codUsuario, $codPermissao)
+    {
 
+        $usuario['PermissaoCod'] = $codPermissao;
+        $this->db->where('CodUsuario', $codUsuario);
+        return $this->db->update($this->table, $usuario);
+    }
 }

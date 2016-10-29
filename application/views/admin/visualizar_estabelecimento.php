@@ -125,14 +125,6 @@
                                     <td><b>CNPJ:</b></td>
                                     <td><?= mascara("##.###.###/####.##", $estabelecimento->EsCNPJ) ?></td>
                                 </tr>
-                                <tr>
-                                    <td><b>Data de criação:</b></td>
-                                    <td><?= date('d/m/Y', strtotime($estabelecimento->EsCriadoEm)) ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Data da ultima modificação:</b></td>
-                                    <td><?= date('d/m/Y', strtotime($estabelecimento->EsAtualizadoEm)) ?></td>
-                                </tr>
                             </table>
                             <p class="text-center"><b>Descrição:</b></p>
                             <div class="well"><?= $estabelecimento->EsDescricao ?></div>

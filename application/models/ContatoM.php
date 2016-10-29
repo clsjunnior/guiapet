@@ -46,4 +46,9 @@ class ContatoM extends CI_Model
 
     }
 
+    public function getIdLastInsert()
+    {
+        return $this->db->insert_id();
+    }
+
 }

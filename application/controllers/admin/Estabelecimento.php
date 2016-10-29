@@ -27,6 +27,7 @@ class Estabelecimento extends CI_Controller
         $this->load->model('LocalizacaoM', 'localizacao');
         $this->load->model('CategoriaM', 'categoria');
         $this->load->model('ContatoM', 'contato');
+        $this->load->model('UsuarioM', 'usuario');
         $this->load->model('AvaliacaoM', 'avaliacao');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
 
@@ -56,17 +57,18 @@ class Estabelecimento extends CI_Controller
             $contato['Twitter'] = $this->input->post("Twitter");
             $contato['Site'] = $this->input->post("Site");
             $contato['Email'] = $this->input->post("Email");
-            $contAtual = $this->contato->getAllBy(['EstabelecimentoCod' => $id])->result_array();
-            if (isset($contAtual[0])) {
-                if ($this->contato->atualizar($contato, 'EstabelecimentoCod', $id)) {
+
+            $contAtual = $this->contato->getAllBy(['CodContato' => $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result_array()[0]['EsContatoCod']])->result_array();
+
+            if ($contAtual) {
+                if ($this->contato->atualizar($contato, 'CodContato', $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result_array()[0]['EsContatoCod'])) {
                     // SUCESSO
                 } else {
                     // ERRO
                 }
             } else {
-                $contato['EstabelecimentoCod'] = $id;
                 if ($this->contato->novo($contato)) {
-                    // SUCESSO
+                    $this->estabelecimento->atualizar(['ContatoCod' => $this->contato->getIdLastInsert()], $id);
                 } else {
                     // ERRO
                 }
@@ -109,7 +111,8 @@ class Estabelecimento extends CI_Controller
                     $this->estabelecimentoP['LocalizacaoCod'] = $this->localizacao->getIdLastInsert();
 
                     $this->preencheEstabelecimento();
-                    $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
+                    $idUlt = $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
+                    $idUlt = $this->estabelecimento->getIdLastInsert();
 
                     $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
                                                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> 
@@ -125,7 +128,11 @@ class Estabelecimento extends CI_Controller
                 $dados['erros'][] = "Erro ao salvar imagem, tente novamente mais tarde";
             }
 
-            redirect(site_url('dashboard/estabelecimentos/visualizar/' . $this->estabelecimento->getIdLastInsert()));
+            if (getSesPermissao(['CodPermissao']) == 1) {
+                $this->usuario->alteraPermissao(getSesUser(['CodUsuario']), 2);
+            }
+
+            redirect(site_url('dashboard/estabelecimentos/visualizar/' . $idUlt));
         } else {
             $dados['erros'][] = validation_errors();
         }
@@ -134,6 +141,53 @@ class Estabelecimento extends CI_Controller
         $dados['categories'] = $this->categoria->getAll()->result();
 
         $this->load->view('admin/novo_estabelecimento', $dados);
+    }
+
+    private function rulesEstabelecimento()
+    {
+        $this->form_validation->set_rules('name', 'Nome', 'required|trim|max_length[120]');
+//        $this->form_validation->set_rules('cnpj',      'CNPJ',      'required|trim|max_length[18]|callback_validaCNPJ');
+        $this->form_validation->set_rules('category', 'Categoria', 'required|trim');
+        $this->form_validation->set_rules('description', 'Descrição', 'required|trim');
+    }
+
+    private function rulesLocation()
+    {
+        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[50]');
+        $this->form_validation->set_rules('city', 'Cidade', 'trim|max_length[120]');
+        $this->form_validation->set_rules('zip_code', 'Cep', 'trim|max_length[9]');
+        $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
+        $this->form_validation->set_rules('number', 'Número', 'integer|max_length[11]');
+        $this->form_validation->set_rules('neighborhood', 'Bairro', 'trim|max_length[255]');
+        $this->form_validation->set_rules('complement', 'Complemento', 'trim|max_length[255]');
+        $this->form_validation->set_rules('latitude', 'Latitude', 'required');
+        $this->form_validation->set_rules('longitude', 'Longitude', 'required');
+    }
+
+    private function preencheLocalizacao()
+    {
+        $this->localizacaoP['Estado'] = $this->input->post('state');
+        $this->localizacaoP['Cidade'] = $this->input->post('city');
+        $this->localizacaoP['Cep'] = $this->input->post('zip_code');
+        $this->localizacaoP['Rua'] = $this->input->post('street');
+        $this->localizacaoP['Numero'] = $this->input->post('number');
+        $this->localizacaoP['Bairro'] = $this->input->post('neighborhood');
+        $this->localizacaoP['Complemento'] = $this->input->post('complement');
+        $this->localizacaoP['Latitude'] = $this->input->post('latitude');
+        $this->localizacaoP['Longitude'] = $this->input->post('longitude');
+    }
+
+    private function preencheEstabelecimento()
+    {
+        $cnpj = $this->input->post('cnpj');
+        $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
+
+        $this->estabelecimentoP['CategoriaCod'] = $this->input->post('category');
+        $this->estabelecimentoP['UsuarioCod'] = getSesUser(['CodUsuario']);
+        $this->estabelecimentoP['Nome'] = $this->input->post('name');
+        $this->estabelecimentoP['Descricao'] = $this->input->post('description');
+        $this->estabelecimentoP['Foto'] = $this->upload->data()['file_name'];
+        $this->estabelecimentoP['CNPJ'] = $cnpj;
     }
 
     public function editar($id)
@@ -191,53 +245,6 @@ class Estabelecimento extends CI_Controller
         $dados['categories'] = $this->categoria->getAll()->result();
 
         $this->load->view('admin/novo_estabelecimento', $dados);
-    }
-
-    private function rulesEstabelecimento()
-    {
-        $this->form_validation->set_rules('name', 'Nome', 'required|trim|max_length[120]');
-//        $this->form_validation->set_rules('cnpj',      'CNPJ',      'required|trim|max_length[18]|callback_validaCNPJ');
-        $this->form_validation->set_rules('category', 'Categoria', 'required|trim');
-        $this->form_validation->set_rules('description', 'Descrição', 'required|trim');
-    }
-
-    private function rulesLocation()
-    {
-        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[50]');
-        $this->form_validation->set_rules('city', 'Cidade', 'trim|max_length[120]');
-        $this->form_validation->set_rules('zip_code', 'Cep', 'trim|max_length[9]');
-        $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
-        $this->form_validation->set_rules('number', 'Número', 'integer|max_length[11]');
-        $this->form_validation->set_rules('neighborhood', 'Bairro', 'trim|max_length[255]');
-        $this->form_validation->set_rules('complement', 'Complemento', 'trim|max_length[255]');
-        $this->form_validation->set_rules('latitude', 'Latitude', 'required');
-        $this->form_validation->set_rules('longitude', 'Longitude', 'required');
-    }
-
-    private function preencheLocalizacao()
-    {
-        $this->localizacaoP['Estado'] = $this->input->post('state');
-        $this->localizacaoP['Cidade'] = $this->input->post('city');
-        $this->localizacaoP['Cep'] = $this->input->post('zip_code');
-        $this->localizacaoP['Rua'] = $this->input->post('street');
-        $this->localizacaoP['Numero'] = $this->input->post('number');
-        $this->localizacaoP['Bairro'] = $this->input->post('neighborhood');
-        $this->localizacaoP['Complemento'] = $this->input->post('complement');
-        $this->localizacaoP['Latitude'] = $this->input->post('latitude');
-        $this->localizacaoP['Longitude'] = $this->input->post('longitude');
-    }
-
-    private function preencheEstabelecimento()
-    {
-        $cnpj = $this->input->post('cnpj');
-        $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
-
-        $this->estabelecimentoP['CategoriaCod'] = $this->input->post('category');
-        $this->estabelecimentoP['UsuarioCod'] = getSesUser(['CodUsuario']);
-        $this->estabelecimentoP['Nome'] = $this->input->post('name');
-        $this->estabelecimentoP['Descricao'] = $this->input->post('description');
-        $this->estabelecimentoP['Foto'] = $this->upload->data()['file_name'];
-        $this->estabelecimentoP['CNPJ'] = $cnpj;
     }
 
     public function validaCNPJ($cnpj)

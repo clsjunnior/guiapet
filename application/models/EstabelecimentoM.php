@@ -59,18 +59,14 @@ class EstabelecimentoM extends CI_Model {
         $this->db->reset_query();
         $tagsDB = $this->db->select("*")
             ->from($this->tableTag)
-            ->where_in("Nome", $tags)
+//            ->where_in("Nome", $tags)
             ->get()->result_array();
 
-        $tagsVr = [];
-        foreach ($tagsDB as $tag){
-            $tagsVr[] = $tag["Nome"];
-        }
         $tagsAdd = [];
         $tagAtual = null;
         foreach ($tags as $tag){
             foreach ($tagsDB as $tagDB){
-                if ($tag == $tagDB["Nome"]){
+                if (trim($tag) == trim($tagDB["Nome"])) {
                     $tagAtual["CodTag"] = $tagDB["CodTag"];
                     $tagAtual["Nome"] = $tagDB["Nome"];
                 }
@@ -78,11 +74,11 @@ class EstabelecimentoM extends CI_Model {
 
             if ($tagAtual != null){
                 $tagsAdd[] = $tagAtual["CodTag"];
-                $tagAtual = null;
             }else{
                 $this->db->insert($this->tableTag,["Nome" => $tag]);
                 $tagsAdd[] = $this->db->insert_id();
             }
+            $tagAtual = null;
         }
 
         $this->db->reset_query();
@@ -103,6 +99,13 @@ class EstabelecimentoM extends CI_Model {
     public function getIdLastInsert()
     {
         return $this->db->insert_id();
+    }
+
+    public function atualizar($estabelecimento, $id)
+    {
+        /** Atualiza a localização onde o ID foi passado no parametro */
+        $this->db->where('CodEstabelecimento', $id);
+        return $this->db->update($this->table, $estabelecimento);
     }
 
 }

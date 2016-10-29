@@ -47,9 +47,6 @@
                 <!-- /.col -->
             </div>
         </form>
-
-
-        <a href="#">Esqueceu a senha?</a><br>
         <a href="<?=site_url('registrar')?>" class="text-center">Registrar</a>
 
     </div>

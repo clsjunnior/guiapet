@@ -15,7 +15,9 @@
  * @property CategoriaM $categoria
  * @property ContatoM $contato
  * @property EstabelecimentoM $estabelecimento
+ * @property HistoricoM $historico
  * @property LocalizacaoM $localizacao
+ * @property PermissaoM $permissao
  * @property TagEstabelecimentoM $tagestabelecimento
  * @property TagM $tag
  * @property UsuarioM $usuario

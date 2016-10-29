@@ -30,14 +30,19 @@
                         <li class="user-header">
                             <p>
                                 <?= getSesUser(['Nome']) ?>
-                                <small>Membro desde <?= date('d/m/Y', strtotime(getSesUser(['CriadoEm']))) ?></small>
+                                <small>Tipo de usuario: <b><?= getSesPermissao(['Nome']) ?></b></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <a href="<?=site_url('dashboard/estabelecimentos')?>">Estabelecimentos</a>
+                                    <?php if (getSesPermissao(['CodPermissao']) == 1): ?>
+                                        <a href="<?= site_url('dashboard/estabelecimentos/novo') ?>">Vire um <b>Proprietário</b>
+                                            e divulgue seu estabelecimento!</a>
+                                    <?php else: ?>
+                                        <a href="<?= site_url('dashboard/estabelecimentos') ?>">Estabelecimentos</a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <!-- /.row -->

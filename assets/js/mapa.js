@@ -2,27 +2,27 @@
  * Created by Windows 10 on 07/09/2016.
  */
 // busca por categoria - icones
-var url_busca = "api/estabelecimentos/buscaTotal/";
+var url_busca = "index.php/api/estabelecimentos/buscaTotal/";
 $('.iconBusca').on('click', function () {
     var valor = $(this).attr("data-id");
 
     if (valor == "iconVeterinario") {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/1";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/1";
         initMap(url_busca);
     } else if (valor == "iconPet") {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/2";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/2";
         initMap(url_busca);
     } else if (valor == "iconHotel") {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/3";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/3";
         initMap(url_busca);
     } else if (valor == "iconAdestrador") {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/4";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/4";
         initMap(url_busca);
     } else if (valor == "iconTaxi") {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/5";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/5";
         initMap(url_busca);
     } else {
-        url_busca = "api/estabelecimento/buscaTotal/";
+        url_busca = "index.php/api/estabelecimento/buscaTotal/";
         initMap(url_busca);
     }
 
@@ -31,22 +31,22 @@ $('.iconBusca').on('click', function () {
 $('#categoriaEs').on('change', function () {
     var categoria = $(this).val();
     if (categoria == 1) {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/1";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/1";
         initMap(url_busca);
     } else if (categoria == 2) {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/2";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/2";
         initMap(url_busca);
     } else if (categoria == 3) {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/3";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/3";
         initMap(url_busca);
     } else if (categoria == 4) {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/4";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/4";
         initMap(url_busca);
     } else if (categoria == 5) {
-        url_busca = "api/estabelecimento/buscaEstabelecimentoCategoria/5";
+        url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoCategoria/5";
         initMap(url_busca);
     } else {
-        url_busca = "api/estabelecimento/buscaTotal/";
+        url_busca = "index.php/api/estabelecimento/buscaTotal/";
         initMap(url_busca);
     }
 });
@@ -54,14 +54,14 @@ $('#categoriaEs').on('change', function () {
 // busca por nome de estabelecimento mas usando o id
 $('#pesquisaEs').click(function () {
     var idEs = $('#estabelecimento-ajax').attr('data-id-es');
-    url_busca = "api/estabelecimento/buscaEstabelecimentoId/" + idEs;
+    url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoId/" + idEs;
     initMap(url_busca);
 });
 
 // pesquisa por avaliacao
 $('#avaliacao').change(function () {
     var nota = $(this).val();
-    url_busca = "api/avaliacao/buscaEsAvaliacao/" + nota;
+    url_busca = "index.php/api/avaliacao/buscaEsAvaliacao/" + nota;
     initMap(url_busca);
     console.log(nota);
 });
@@ -263,7 +263,7 @@ function displayMarkers(map, url_busca) {
                     confirmButtonColor: '#1c3e5e',
                     confirmButtonText: 'Tente outra vez!'
                 }).then(function () {
-                    url_busca = "api/estabelecimento/buscaTotal/";
+                    url_busca = "index.php/api/estabelecimento/buscaTotal/";
                     initMap(url_busca);
                 });
             } else {
@@ -385,7 +385,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
             '<div class="iw-subTitle">Avaliação</div>' +
             '<div id="avaliacaoInfowindow"></div>' +
             '<hr/>' +
-            '<a href="estabelecimento/' + idEs + '" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
+            '<a href="index.php/estabelecimento/' + idEs + '" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
         '<div class="iw-bottom-gradient"></div>' +
         '</div>';
 

@@ -97,25 +97,6 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="CadastradoEm">Cadastrado em:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime(getSesUser(['CriadoEm'])))?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="ModificadoEm">Ultima modificação:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" disabled value="<?=date('d/m/Y', strtotime(getSesUser(['AtualizadoEm'])))?>">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-xs-12 col-sm-6 col-sm-offset-6">
                                 <?= form_error('passwordAtual', '<div class="row"><div class="col-sm-offset-4 col-sm-8"><p class="text-red">', '</p></div></div>') ?>
                                 <div class="form-group">

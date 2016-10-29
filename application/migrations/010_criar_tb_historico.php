@@ -21,7 +21,7 @@ class Migration_Criar_Tb_Historico extends CI_Migration
             CREATE TABLE IF NOT EXISTS tb_historico (
                 CodHistorico       INT  NOT NULL AUTO_INCREMENT,
                 TagsCod            TEXT NULL,
-                UsuarioCod         INT  NOT NULL,
+                UsuarioCod         INT  NULL,
                 EstabelecimentoCod INT  NOT NULL,
                 CategoriaCod       INT  NOT NULL,
                 PRIMARY KEY (CodHistorico),

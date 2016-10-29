@@ -139,7 +139,7 @@ class Perfil extends CI_Controller
      */
     private function setRulesLocalizacao()
     {
-        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[50]');
+        $this->form_validation->set_rules('state', 'Estado', 'trim|max_length[2]');
         $this->form_validation->set_rules('city', 'Cidade', 'trim|max_length[120]');
         $this->form_validation->set_rules('zip_code', 'Cep', 'trim|max_length[9]');
         $this->form_validation->set_rules('street', 'Endereço', 'trim|max_length[255]');
