@@ -30,3 +30,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /bancoV3.mwb.bak
 /bancoV3.mwb.beforefix
 /application/config/database.php
+.idea/
