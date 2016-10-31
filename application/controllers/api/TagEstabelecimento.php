@@ -44,20 +44,18 @@ class TagEstabelecimento extends CI_Controller
 
     public function buscaTagEs()
     {
-
         $this->output->set_content_type('application/json');
 
-        $where = [
-            "tgCod" => $this->uri->segment(4)
-        ];
+//        $where = [
+//            "tgCod" => $this->uri->segment(4)
+//        ];
 
-        $valores = $this->tagEs->getAllBy($where)->result_array();
+        $valores = $this->tagEs->gtNmTagByEstabelecimento($this->uri->segment(4))->result_array();
 
         foreach ($valores as $valor) {
 
             $saida[] = [
-                "tagNome" => $valor['tgNome'],
-                "EsNome" => $valor['EsNome']
+                "tagNome" => $valor['Nome']
             ];
         }
 

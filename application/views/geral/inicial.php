@@ -8,6 +8,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="banner-inicio">
 			<img src="<?=base_url('assets/third_party/logo/logo-branco.png')?>">
 		</div>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="#"><span class="fa fa-map-marker" style="margin-right: 5px;"></span> Mapa</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
+						<li><a href="#"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
 		<div class="sub-menu">
 			<div class="container">
 				<section>
@@ -28,12 +53,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- owl carousel -->
 			<h3>Pessoas na sua região também pesquisaram...</h3>
 			<div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
-				<a class="label label-primary item">Recomendação 01</a>
-				<a class="label label-primary item">Recomendação 02</a>
-				<a class="label label-primary item">Recomendação 03</a>
-				<a class="label label-primary item">Recomendação 04</a>
-				<a class="label label-primary item">Recomendação 05</a>
-				<a class="label label-primary item">Recomendação 06</a>
+				<a class="label label-primary item label-recomendacao">Recomendação 01</a>
+				<a class="label label-primary item label-recomendacao">Recomendação 02</a>
+				<a class="label label-primary item label-recomendacao">Recomendação 03</a>
+				<a class="label label-primary item label-recomendacao">Recomendação 04</a>
+				<a class="label label-primary item label-recomendacao">Recomendação 05</a>
+				<a class="label label-primary item label-recomendacao">Recomendação 06</a>
 			</div>
 		</div>
 	</div>
