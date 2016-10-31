@@ -11,10 +11,12 @@
  * ---------------------- Models to Load ----------------------
  * <examples>
  *
+ * @property AvaliacaoM $avaliacao
  * @property CategoriaM $categoria
  * @property ContatoM $contato
  * @property EstabelecimentoM $estabelecimento
  * @property LocalizacaoM $localizacao
+ * @property TagEstabelecimentoM $tagestabelecimento
  * @property TagM $tag
  * @property UsuarioM $usuario
  *

@@ -27,6 +27,7 @@ class Estabelecimento extends CI_Controller
         $this->load->model('LocalizacaoM', 'localizacao');
         $this->load->model('CategoriaM', 'categoria');
         $this->load->model('ContatoM', 'contato');
+        $this->load->model('AvaliacaoM', 'avaliacao');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
 
         $this->estabelecimentoP = null;
@@ -77,6 +78,7 @@ class Estabelecimento extends CI_Controller
 
         $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result()[0];
         $dados['tags'] = $this->tagestabelecimento->gtNmTagByEstabelecimento($id)->result_array();
+        $dados['avaliacao'] = $this->avaliacao->getByIdEs($id)->result_array()[0];
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('admin/visualizar_estabelecimento', $dados);
     }

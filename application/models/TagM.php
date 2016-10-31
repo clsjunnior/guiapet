@@ -44,5 +44,16 @@ class TagM extends CI_Model
         return $this->db->get_where($this->table, $where);
     }
 
+    public function getAllCount()
+    {
+        $this->db->reset_query();
+        $this->db->select("tg.Nome, count(tge.CodTagEstabelecimento) as qtd")
+            ->from($this->table . " as tg")
+            ->join('TB_TagEstabelecimento as tge', 'tg.CodTag = tge.TagCod', 'left')
+            ->group_by('tg.Nome');
+
+        return $this->db->get();
+    }
+
 
 }

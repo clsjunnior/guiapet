@@ -58,18 +58,16 @@ $route['login'] = 'geral/Login';
 $route['registrar'] = 'geral/Registrar';
 $route['sair'] = 'geral/Login/sair';
 
-/** Página de administração */
+//ADM
 $route['dashboard'] = 'admin/inicial';
 $route['dashboard/inicio'] = 'admin/inicial';
 $route['dashboard/perfil'] = 'admin/Perfil';
 $route['dashboard/estabelecimentos'] = 'admin/Estabelecimento';
 $route['dashboard/estabelecimentos/novo'] = 'admin/Estabelecimento/novo';
-$route['dashboard/estabelecimentos/editar/(:num)'] = 'admin/Estabelecimento/editar/$1';
 $route['dashboard/estabelecimentos/visualizar/(:num)'] = 'admin/Estabelecimento/visualizar/$1';
-//$route['dashboard/estabelecimentos/editar/(:num)'] = 'admin/Estabelecimento/editar/$1';
+$route['dashboard/tags'] = 'admin/Tag/index';
 
 //API
-
 $route['api/estabelecimentos/buscaTotal'] = 'api/Estabelecimento/buscaTotal';
 $route['api/estabelecimentos/buscaEsOrdenada'] = 'api/Estabelecimento/buscaEsOrdenada';
 $route['api/estabelecimentos/buscaEstabelecimentoId/(:any)'] = 'api/Estabelecimento/buscaEstabelecimentoId/';
