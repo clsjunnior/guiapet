@@ -177,7 +177,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		});
 
 
-		$.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
+		$.getJSON("/api/tags/buscaTag/", function (resultados) {
             var tags = " ";
             $.each(resultados, function (index, resp) {
                 //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
@@ -199,7 +199,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		/*Easy autocomplete para busca de estabelecimentos*/
         var pesquisaEstabelecimento = {
-            url: "<?php echo site_url(); ?>" + "/api/estabelecimento/buscaEsOrdenada/",
+			url: "<?php echo site_url('/api/estabelecimento/buscaEsOrdenada/'); ?>",
 
             categories: [{
                 listLocation: "Clinica Veterinária",

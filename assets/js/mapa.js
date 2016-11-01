@@ -2,7 +2,7 @@
  * Created by Windows 10 on 07/09/2016.
  */
 // busca por categoria - icones
-var url_busca = "index.php/api/estabelecimentos/buscaTotal/";
+var url_busca = "api/estabelecimentos/buscaTotal/";
 $('.iconBusca').on('click', function () {
     var valor = $(this).attr("data-id");
 
@@ -333,7 +333,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
 
 
     google.maps.event.addListener(marker, 'click', function() {
-        var url_tag = "api/tagsEstabelecimento/buscaTagEs/" + idEs;
+        var url_tag = "index.php/api/tagsEstabelecimento/buscaTagEs/" + idEs;
 
         $.getJSON(url_tag, function (resultados) {
             var tags = " ";
@@ -348,7 +348,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
             $("#tagsInfowindow").html(tags);
         });
 
-        var url_avaliacao = "api/avaliacao/buscaAvaliacaoEs/" + idEs;
+        var url_avaliacao = "index.php/api/avaliacao/buscaAvaliacaoEs/" + idEs;
         $.getJSON(url_avaliacao, function (resultados) {
             var avaliacao = " ";
             $.each(resultados, function (index, resp) {
