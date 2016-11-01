@@ -53,7 +53,7 @@ $('#categoriaEs').on('change', function () {
 
 // busca por nome de estabelecimento mas usando o id
 $('#pesquisaEs').click(function () {
-    var idEs = $('#estabelecimento-ajax').attr('data-id-es');
+    var idEs = $('#estabelecimento-busca').attr('data-id-es');
     url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoId/" + idEs;
     initMap(url_busca);
 });
@@ -333,7 +333,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
 
 
     google.maps.event.addListener(marker, 'click', function() {
-        var url_tag = "api/tagsEstabelecimento/buscaTagEs/" + idEs;
+        var url_tag = "index.php/api/tagsEstabelecimento/buscaTagEs/" + idEs;
 
         $.getJSON(url_tag, function (resultados) {
             var tags = " ";
@@ -348,7 +348,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
             $("#tagsInfowindow").html(tags);
         });
 
-        var url_avaliacao = "api/avaliacao/buscaAvaliacaoEs/" + idEs;
+        var url_avaliacao = "index.php/api/avaliacao/buscaAvaliacaoEs/" + idEs;
         $.getJSON(url_avaliacao, function (resultados) {
             var avaliacao = " ";
             $.each(resultados, function (index, resp) {
