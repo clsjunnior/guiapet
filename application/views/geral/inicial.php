@@ -92,8 +92,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="form-group">
 							<label for="estabelecimentos">Estabelecimentos</label>
                             <div class="input-group">
-                                <input type="text" id="estabelecimento-ajax" data-id-es="" class="form-control"
-                                       placeholder="Informe o nome do estabelecimento">
+								<input type="text" id="estabelecimento-busca" data-id-es="" class="form-control"
+									   placeholder="Informe o nome do estabelecimento">
                                 <span class="input-group-btn">
 									<button id="pesquisaEs" disabled="disabled" class="btn btn-default my-btn"
                                             type="button" style="height: 34px; color:#fff;"><i
@@ -177,7 +177,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		});
 
 
-		$.getJSON("/api/tags/buscaTag/", function (resultados) {
+		$.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
             var tags = " ";
             $.each(resultados, function (index, resp) {
                 //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
@@ -199,7 +199,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		/*Easy autocomplete para busca de estabelecimentos*/
         var pesquisaEstabelecimento = {
-			url: "<?php echo site_url('/api/estabelecimento/buscaEsOrdenada/'); ?>",
+			url: "index.php/api/estabelecimento/buscaEsOrdenada/",
 
             categories: [{
                 listLocation: "Clinica Veterinária",
@@ -226,8 +226,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			getValue: function(element) {
                 var id = parseFloat(element.idEs);
-                $("#estabelecimento-ajax").attr("data-id-es", id);
+				$("#estabelecimento-busca").attr("data-id-es", id);
 				return element.nome;
+				console.log(element.nome);
 			},
             list: {
                 match: {
@@ -237,13 +238,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
 		};
 
-        $("#estabelecimento-ajax").easyAutocomplete(pesquisaEstabelecimento);
+		//		$(document).ready(function () {
+		//			$("#estabelecimento-busca").easyAutocomplete(pesquisaEstabelecimento);
+		//		});
+
+
+		$("#estabelecimento-busca").easyAutocomplete(pesquisaEstabelecimento);
+
+
 
         /** verifica se o campo de estabelecimento esta preenchido para poder acionar o botao
          *
          * @type {*|jQuery|HTMLElement}
          */
-        var input = $('#estabelecimento-ajax');
+		var input = $('#estabelecimento-busca');
         input.on('keyup', verificarInputs);
 
         function verificarInputs() {

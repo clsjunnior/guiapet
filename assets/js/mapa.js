@@ -53,7 +53,7 @@ $('#categoriaEs').on('change', function () {
 
 // busca por nome de estabelecimento mas usando o id
 $('#pesquisaEs').click(function () {
-    var idEs = $('#estabelecimento-ajax').attr('data-id-es');
+    var idEs = $('#estabelecimento-busca').attr('data-id-es');
     url_busca = "index.php/api/estabelecimento/buscaEstabelecimentoId/" + idEs;
     initMap(url_busca);
 });
