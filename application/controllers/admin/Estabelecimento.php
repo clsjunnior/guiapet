@@ -30,6 +30,7 @@ class Estabelecimento extends CI_Controller
         $this->load->model('UsuarioM', 'usuario');
         $this->load->model('AvaliacaoM', 'avaliacao');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
+        $this->load->model('PermissaoM', 'permissao');
 
         $this->estabelecimentoP = null;
         $this->localizacaoP = null;
@@ -62,7 +63,7 @@ class Estabelecimento extends CI_Controller
 
             if ($contAtual) {
                 if ($this->contato->atualizar($contato, 'CodContato', $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result_array()[0]['EsContatoCod'])) {
-                    // SUCESSO
+
                 } else {
                     // ERRO
                 }
@@ -130,6 +131,8 @@ class Estabelecimento extends CI_Controller
 
             if (getSesPermissao(['CodPermissao']) == 1) {
                 $this->usuario->alteraPermissao(getSesUser(['CodUsuario']), 2);
+                $session['permissao'] = $this->permissao->getWhere(['CodPermissao' => getSesUser(['CodUsuario'])])->result_array()[0];
+                $this->session->set_userdata($session);
             }
 
             redirect(site_url('dashboard/estabelecimentos/visualizar/' . $idUlt));
