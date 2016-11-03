@@ -5,10 +5,10 @@
 
 <div class="wrapper">
 
-<!--    Barra de cima-->
+    <!--    Barra de cima-->
     <?php $this->load->view('admin/layout/header_menu') ?>
 
-<!--    Menu da esquerda-->
+    <!--    Menu da esquerda-->
     <?php $this->load->view('admin/layout/left_menu') ?>
 
     <div class="content-wrapper">
@@ -39,7 +39,10 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    Seja bem vindo <b><?= getSesPermissao(['Nome']) ?></b> <?= getSesUser(['Nome']) ?>!
+                    <p>
+                        Seja bem vindo <?= getSesUser(['Nome']) ?>!
+                    </p>
+                    <p>Atualmente você é <b><?= getSesPermissao(['Nome']) ?></b>.</p>
                 </div>
 
             </div>
@@ -48,7 +51,7 @@
 
     </div>
 
-<!--    Créditos-->
+    <!--    Créditos-->
     <?php $this->load->view('admin/layout/credits') ?>
 
 </div>

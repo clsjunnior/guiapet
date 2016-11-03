@@ -15,16 +15,18 @@
 
         <section class="content-header">
             <h1>
-                Categorias
+                Usuarios
+                <small>Administração de usuarios</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="<?= site_url('dashboard') ?>"><i class="fa fa-home"></i> Inicio</a></li>
-                <li class="active">Categorias</li>
+                <li class="active">Usuarios</li>
             </ol>
         </section>
 
 
         <section class="content">
+
 
             <div class="box">
                 <div class="box-header with-border">
@@ -47,20 +49,31 @@
                                 <thead>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Quantidade de estabelecimentos</th>
+                                    <th>Login</th>
+                                    <th>Qtd. de estabelecimentos</th>
+                                    <th>Permissao</th>
+                                    <th>Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php if (isset($tags) && count($tags) > 0): ?>
-                                    <?php foreach ($tags as $tag): ?>
+                                <?php if (isset($usuarios) && count($usuarios) > 0): ?>
+                                    <?php foreach ($usuarios as $usuario): ?>
                                         <tr>
-                                            <td><?= $tag['Nome'] ?></td>
-                                            <td><?= $tag['qtd'] ?></td>
+                                            <td><?= $usuario['UrNome'] ?></td>
+                                            <td><?= $usuario['UrLogin'] ?></td>
+                                            <td><?= $usuario['qtdEst'] ?></td>
+                                            <td><?= $usuario['PeNome'] ?></td>
+                                            <td>
+                                                <button class="btn btn-block btn-primary"
+                                                        data-id="<?= $usuario['CodUsuario'] ?>" type="button">Alterar
+                                                    permissão
+                                                </button>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="5" class="text-center">Nenhuma tag cadastrada no momento</td>
+                                        <td colspan="5" class="text-center">Nenhum usuario cadastrado no momento</td>
                                     </tr>
                                 <?php endif; ?>
                                 </tbody>
@@ -85,7 +98,6 @@
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables/dataTables.bootstrap.css') ?>">
 <script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables/dataTables.bootstrap.min.js') ?>"></script>
-
 <script>
     $.fn.dataTable.ext.errMode = 'none';
     $(document).ready(function () {
@@ -96,6 +108,5 @@
         });
     });
 </script>
-
 </body>
 </html>

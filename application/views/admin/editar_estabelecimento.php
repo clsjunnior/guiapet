@@ -27,7 +27,7 @@
 
         <section class="content">
 
-            <form action="<?= site_url('dashboard/estabelecimentos/novo') ?>" enctype="multipart/form-data"
+            <form action="<?= site_url('dashboard/estabelecimentos/editar/' . $id) ?>" enctype="multipart/form-data"
                   method="post" class="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
@@ -146,7 +146,7 @@
 
                 </div>
 
-                <?php $this->load->view('admin/layout/fragmentos/box_localizacao')?>
+                <?php $this->load->view('admin/layout/fragmentos/box_localizacao') ?>
                 <button class="btn btn-block btn-success btn-lg" type="submit" value="cadastro">Cadastar</button>
             </form>
         </section>

@@ -51,11 +51,6 @@ class EstabelecimentoM extends CI_Model {
 
     public function adicionaTags($idEstabelecimento, $tags = [])
     {
-
-//        for ($i = 0; $i <= count($tags); $i++) {
-//            $tags[$i] = strtolower(str_replace(" ", "", $tags[$i]));
-//        }
-
         $this->db->reset_query();
         $tagsDB = $this->db->select("*")
             ->from($this->tableTag)
