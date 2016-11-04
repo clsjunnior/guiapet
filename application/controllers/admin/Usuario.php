@@ -13,6 +13,7 @@ class Usuario extends CI_Controller
         }
 
         $this->load->model('UsuarioM', 'usuario');
+        $this->load->model('PermissaoM', 'permissao');
     }
 
 
@@ -20,6 +21,7 @@ class Usuario extends CI_Controller
     {
         $dados['title'] = "Usuarios";
         $dados['usuarios'] = $this->usuario->listUsersPgAdm()->result_array();
+        $dados['permissoes'] = $this->permissao->getWhere()->result();
 
         $this->load->view('admin/usuarios', $dados);
     }
