@@ -2,6 +2,8 @@
 <?php $this->load->view('admin/layout/header') ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <link rel="stylesheet" href="<?= base_url('assets/plugins/bootstrap_tagsinput/bootstrap-tagsinput.css') ?>"/>
+
+<link rel="stylesheet" href="<?= base_url('assets/plugins/dropzone-4.3.0/dropzone.css') ?>"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.css">
 <style>
     .icon-github {
@@ -262,6 +264,7 @@
                         </div>
 
                     </div>
+
                 </div>
             </div>
 
@@ -278,15 +281,44 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            Start creating your amazing application!
-                        </div>
+                            <?php if (isset($galeria) && count($galeria) > 0): ?>
+                                <?php foreach ($galeria as $foto): ?>
+                                    <div class="col-xs-6 col-md-4">
+                                        <img src="<?= base_url(DIR_IMG) . '/' . $foto['Arquivo'] ?>"
+                                             class="img-responsive  img-thumbnail" style="max-height: 200px">
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>Nenhuma imagem cadastrada em sua galeria.</p>
+                            <?php endif; ?>
 
-                        <div class="box-footer">
-                            Footer
                         </div>
 
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Carregar Imagem</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"
+                                        data-toggle="tooltip"
+                                        title="Collapse">
+                                    <i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <form action="<?= site_url('api/Galeria/Cadastrar/') ?>" class="dropzone"
+                                  id="myAwesomeDropzone" enctype="multipart/form-data">
+                                <input hidden name="EstabelecimentoCod"
+                                       value="<?= $estabelecimento->EsCodEstabelecimento ?>">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </section>
@@ -406,6 +438,8 @@
 
 <script src="<?= base_url('assets/plugins/bootstrap_tagsinput/bootstrap-tagsinput.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/bootstrap_tagsinput/typeahead.bundle.js') ?>"></script>
+
+<script src="<?= base_url('assets/plugins/dropzone-4.3.0/dropzone.js') ?>"></script>
 
 <script>
 

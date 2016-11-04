@@ -31,6 +31,7 @@ class Estabelecimento extends CI_Controller
         $this->load->model('AvaliacaoM', 'avaliacao');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
         $this->load->model('PermissaoM', 'permissao');
+        $this->load->model('GaleriaM', 'galeria');
 
         $this->estabelecimentoP = null;
         $this->localizacaoP = null;
@@ -82,6 +83,7 @@ class Estabelecimento extends CI_Controller
         $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result()[0];
         $dados['tags'] = $this->tagestabelecimento->gtNmTagByEstabelecimento($id)->result_array();
         $dados['avaliacao'] = $this->avaliacao->getByIdEs($id)->result_array()[0];
+        $dados['galeria'] = $this->galeria->get(['EstabelecimentoCod' => $id])->result_array();
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('admin/visualizar_estabelecimento', $dados);
     }

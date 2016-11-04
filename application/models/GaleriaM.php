@@ -3,20 +3,22 @@
 
 class GaleriaM extends CI_Model
 {
-    private $table = 'tb_historico';
+    private $table = 'tb_galeria';
 
-    /**
-     * avaliacao constructor
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function cadastrar($historico = [])
+    public function cadastrar($galeria = [])
     {
 
-        $this->db->insert($this->table, $historico);
+        $this->db->insert($this->table, $galeria);
+    }
+
+    public function get($where = [])
+    {
+        return $this->db->get_where($this->table, $where);
     }
 
 }

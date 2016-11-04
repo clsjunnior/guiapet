@@ -84,5 +84,4 @@ $route['api/tagsEstabelecimento/buscaTagEs/(:any)'] = 'api/TagEstabelecimento/bu
 $route['api/avaliacao/buscaAvaliacaoEs/(:any)'] = 'api/Avaliacao/buscaAvaliacaoEs/';
 $route['api/avaliacao/buscaEsAvaliacao/(:any)'] = 'api/Avaliacao/buscaEsAvaliacao/';
 //$route['api/estabelecimentos/busca/(:any)'] = 'api/Estabelecimento/busca';
-
-
+$route['api/galeria/cadastrar'] = 'api/Galeria/Cadastrar/';
