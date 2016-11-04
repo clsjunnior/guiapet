@@ -19,7 +19,7 @@
  * @property HistoricoM $historico
  * @property LocalizacaoM $localizacao
  * @property PermissaoM $permissao
- * @property TagEstabelecimentoM $tagestabelecimento
+ * @property TagEstabelecimentoM $tagEs
  * @property TagM $tag
  * @property UsuarioM $usuario
  *
