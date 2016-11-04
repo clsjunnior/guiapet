@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TagEstabelecimentoM extends CI_Model
 {
 
-    private $table = 'TB_TagEstabelecimento';
+    private $table = 'tb_tagestabelecimento';
     private $tableTag = 'TB_Tag';
     //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
 
@@ -52,4 +52,17 @@ class TagEstabelecimentoM extends CI_Model
             ->get();
     }
 
+    /**
+     * Seleciona tag pela View do banco
+     *
+     * @param array $where
+     * @return CI_DB_result
+     */
+    public function getEsByTags($tagsId = [])
+    {
+        return $this->db->from('vw_estabelecimentoTags')
+            ->where_in('tgesTagCod', $tagsId)
+            ->group_by('EsCodEstabelecimento')
+            ->get();
+    }
 }

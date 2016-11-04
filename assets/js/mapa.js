@@ -63,9 +63,18 @@ $('#avaliacao').change(function () {
     var nota = $(this).val();
     url_busca = "index.php/api/avaliacao/buscaEsAvaliacao/" + nota;
     initMap(url_busca);
-    console.log(nota);
+    //console.log(nota);
 });
 
+// pesquisa por tags
+$('#pesquisaEsTag').click(function () {
+    var tags = $('#tag').attr('data-tag-id');
+    var tg = tags.replace(",", "-");
+    url_busca = "index.php/api/tagsEstabelecimento/buscatges/" + tg;
+    initMap(url_busca);
+    // melhorar para nao pesquisar tags em branco ou estabelecimentos sem tag
+    
+});
 
 //obter localizao atual usuario
 function initMapLocation() {

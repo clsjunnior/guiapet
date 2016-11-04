@@ -16,6 +16,7 @@ class Estabelecimento extends CI_Controller
         $this->load->model('EstabelecimentoM', 'estabelecimento');
     }
 
+
     public function buscaTotal()
     {
         $this->output->set_content_type('application/json');
@@ -144,6 +145,5 @@ class Estabelecimento extends CI_Controller
         echo json_encode($saida);
 
     }
-
 
 }

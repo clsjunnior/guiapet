@@ -107,8 +107,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <select class="form-control" id="tag" multiple="multiple" data-tag-id="">
                                 </select>
                                 <span class="input-group-btn">
-									<button id="pesquisaEsTag" disabled="disabled" class="btn btn-default my-btn"
-                                            type="button" style="height: 34px; color:#fff;"><i
+									<button id="pesquisaEsTag" class="btn btn-default my-btn"
+											type="button" style="height: 34px; color:#fff;"><i
                                             class="fa fa-search fa-lg"></i> </button>
 								</span>
                             </div>
@@ -194,7 +194,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 str.push($(selecionado).val());
             });
             $(this).attr('data-tag-id', str);
-            console.log(str);
         });
 
 		/*Easy autocomplete para busca de estabelecimentos*/
