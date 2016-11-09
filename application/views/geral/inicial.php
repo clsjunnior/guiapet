@@ -27,8 +27,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<li><a href="#"><span class="fa fa-map-marker" style="margin-right: 5px;"></span> Mapa</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#"><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
-						<li><a href="#"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a></li>
+						<li><a href=""><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
+						<li><a href="index.php/login"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a>
+						</li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
@@ -241,10 +242,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		//			$("#estabelecimento-busca").easyAutocomplete(pesquisaEstabelecimento);
 		//		});
 
-
 		$("#estabelecimento-busca").easyAutocomplete(pesquisaEstabelecimento);
-
-
 
         /** verifica se o campo de estabelecimento esta preenchido para poder acionar o botao
          *

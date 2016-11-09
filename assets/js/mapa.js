@@ -285,7 +285,6 @@ function displayMarkers(map, url_busca) {
                 //var tipoContato = ponto.tipoContato;
                 //var contato = ponto.contato;
                 createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoWindow);
-
                 bounds.extend(latlng);
             }
         });

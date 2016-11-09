@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="<?=base_url('assets/plugins/easyAutoComplete/easy-autocomplete.min.css')?>">
     <!-- owl -->
     <link rel="stylesheet" href="<?=base_url('assets/plugins/owlCarousel/owl.carousel.min.css')?>">
+    <!-- fancybox -->
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/fancybox/jquery.fancybox.css') ?>">
     <!-- Estilo -->
     <link rel="stylesheet" href="<?=base_url('assets/css/estilo_geral.css')?>">
 

@@ -256,7 +256,6 @@
                                 <div class="inner text-center">
                                     <p>Média</p>
                                     <h3><?= $avaliacao['media'] ?></h3>
-
                                 </div>
                             </div>
                         </div>

@@ -59,7 +59,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="row">
         <div class="col-md-4">
             <div class="thumbnail">
-                <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
+                <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>">
+                    <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
+                </a>
                 <div class="caption">
                     <h3> <?= $estabelecimento->EsNome ?></h3>
                     <hr style="margin-bottom: 10px;">
@@ -70,14 +72,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </p>
                 </div>
             </div>
-            <!--<div class="owl-galeria owl-theme">
-                <div class="item"> <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="..." class="img-galeria"> </div>
-                <div class="item"> <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="..." class="img-galeria"> </div>
-                <div class="item"> <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="..." class="img-galeria"> </div>
-                <div class="item"> <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="..." class="img-galeria"> </div>
-                <div class="item"> <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="..." class="img-galeria"> </div>
-                <div class="item"> <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="..." class="img-galeria"> </div>
-            </div>-->
         </div>
         <div class="col-md-8">
             <div class="panel panel-primary panel-mod">
@@ -124,6 +118,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div id="tagsEs" style="margin-top: 30px;"></div>
                     </p>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <h3 style="margin-top:0px">Galeria de Imagens</h3>
+            <hr style="margin-bottom: 10px;">
+            <div class="col-lg-12 owl-carousel owl-galeria owl-theme" style="margin-top: 20px;">
+                <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>">
+                    <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
+                </a>
+                <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>">
+                    <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
+                </a>
             </div>
         </div>
     </div>
@@ -314,7 +323,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $('#avaliacao').barrating({
         theme: 'fontawesome-stars'
     });
-    
+
     $('.owl-carousel').owlCarousel({
         loop: false,
         margin: 10,
@@ -331,9 +340,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         }
     });
-
+    //
     $('.owl-galeria').owlCarousel({
-        loop: true,
+        loop: false,
         margin: 10,
         nav: false,
         responsive: {
@@ -344,31 +353,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 items: 3
             },
             1000: {
-                items: 3
+                items: 4
             }
         }
     });
-
-    //    var owl = $('.owl-galeria');
-    //    owl.owlCarousel({
-    //        items:3,
-    //        loop:false,
-    //        margin:10,
-    //        autoplay:true,
-    //        autoplayTimeout:1000,
-    //        autoplayHoverPause:true,
-    //        responsive: {
-    //            0: {
-    //                items: 1
-    //            },
-    //            600: {
-    //                items: 3
-    //            },
-    //            1000: {
-    //                items: 2
-    //            }
-    //        }
-    //    });
 
     /*busca tags do estabelecimento*/
     var url_tag = "../api/tagsEstabelecimento/buscaTagEs/" + <?=$estabelecimento->EsCodEstabelecimento?>;
@@ -384,6 +372,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         });
         $("#tagsEs").html(tags);
+    });
+
+    $(".fancybox").fancybox({
+        openEffect: 'none',
+        closeEffect: 'none'
     });
 
 
