@@ -85,6 +85,35 @@ footer{
 .img-galeria {
     width: 100%;
 }
+
+.seperator {
+    color: #1c3e5e;
+    width: 100%;
+    margin: 30px auto;
+    overflow: hidden;
+    text-align: center;
+    line-height: 1.2em;
+}
+
+.seperator::before, .seperator::after, .separator::before, .separator::after {
+    border-bottom: 1px solid #eee;
+    content: "";
+    display: inline-block;
+    height: 0.65em;
+    margin: 0 -4px 0 -100%;
+    vertical-align: top;
+    width: 50%;
+}
+
+.seperator::after, .separator::after {
+    margin: 0 -100% 0 0;
+}
+
+.seperator i, .seperator span, .seperator a, .separator i, .separator span, .separator a {
+    margin: 0 20px 0 24px;
+    display: inline-block;
+
+}
 /**/
 
 /*menu*/
@@ -102,8 +131,9 @@ footer{
 }
 /*Menu lateral*/
 .menu-lateral{
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     padding: 0px;
+    margin-bottom: 30px;
 }
 
 .panel-inicial {

@@ -135,7 +135,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
 			<div id="mapa"></div>
 		</div>
-		<div id="result"></div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="seperator"><i class="fa fa-flag"></i></div>
+			<h1 style="text-align: center; margin-bottom: 30px;">3 motivos para ter seu negócio no Guia do Pet!</h1>
+			<div class="seperator"><i class="fa fa-flag"></i></div>
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<img src="http://placehold.it/350x250"" alt="...">
+					<div class="caption">
+						<h3>Vantagem 01</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aut consequatur fugiat illum,
+							incidunt laboriosam numquam porro quam quibusdam quo, quos rem, repellat reprehenderit
+							soluta sunt veritatis vero! Obcaecati, totam.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<img src="http://placehold.it/350x250"" alt="...">
+					<div class="caption">
+						<h3>Vantagem 01</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet atque cupiditate deserunt,
+							eaque eos est ex fuga harum labore laborum molestias nisi optio, reprehenderit sapiente
+							ullam veritatis vero voluptates.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<img src="http://placehold.it/350x250"" alt="...">
+					<div class="caption">
+						<h3>Vantagem 03</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam beatae blanditiis,
+							cumque doloribus dolorum est expedita, fuga ipsum itaque molestias non odit perferendis
+							placeat provident quos saepe sint vero. </p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-12">
+				<button class="btn btn-primary btn-lg my-btn btn-block" style="margin-top: 20px; margin-bottom: 30px">
+					Cadastre-se, é gratuito!!
+				</button>
+			</div>
+		</div>
 	</div>
 	<!-- FOOTER -->
 
