@@ -2,7 +2,7 @@
  * Created by Windows 10 on 07/09/2016.
  */
 // busca por categoria - icones
-var url_busca = "index.php/api/estabelecimentos/buscaTotal/";
+var url_busca = "api/estabelecimentos/buscaTotal/";
 $('.iconBusca').on('click', function () {
     var valor = $(this).attr("data-id");
 

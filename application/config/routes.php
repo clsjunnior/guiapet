@@ -65,8 +65,10 @@ $route['dashboard/perfil'] = 'admin/Perfil';
 $route['dashboard/estabelecimentos'] = 'admin/Estabelecimento';
 $route['dashboard/estabelecimentos/novo'] = 'admin/Estabelecimento/novo';
 $route['dashboard/estabelecimentos/visualizar/(:num)'] = 'admin/Estabelecimento/visualizar/$1';
+$route['dashboard/estabelecimentos/editar/(:num)'] = 'admin/Estabelecimento/editar/$1';
 $route['dashboard/tags'] = 'admin/Tag/index';
 $route['dashboard/categorias'] = 'admin/Categoria/index';
+$route['dashboard/usuarios'] = 'admin/Usuario/index';
 
 //API
 $route['api/estabelecimentos/buscaTotal'] = 'api/Estabelecimento/buscaTotal';
@@ -84,5 +86,7 @@ $route['api/tagsEstabelecimento/buscaTagEs/(:any)'] = 'api/TagEstabelecimento/bu
 $route['api/avaliacao/buscaAvaliacaoEs/(:any)'] = 'api/Avaliacao/buscaAvaliacaoEs/';
 $route['api/avaliacao/buscaEsAvaliacao/(:any)'] = 'api/Avaliacao/buscaEsAvaliacao/';
 //$route['api/estabelecimentos/busca/(:any)'] = 'api/Estabelecimento/busca';
+$route['api/galeria/cadastrar'] = 'api/Galeria/Cadastrar/';
 
 
+$route['api/usuario/altpermissao'] = 'api/Usuario/alterarPermissao/';

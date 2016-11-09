@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class LocalizacaoM extends CI_Model {
 
-    private $table = 'TB_Localizacao';
+    private $table = 'tb_localizacao';
 
     /**
      * Localização constructor.
@@ -47,9 +47,6 @@ class LocalizacaoM extends CI_Model {
      */
     public function atualizaLocalizacao($localizacao, $id)
     {
-        /** Preenche o campo EditadoEm com a data e hora atual no formato do banco de dados*/
-        $localizacao['AtualizadoEm'] = gmdate('Y-m-d H:i:s', time());
-
         /** Atualiza a localização onde o ID foi passado no parametro */
         $this->db->where('CodLocalizacao', $id);
         return $this->db->update($this->table, $localizacao);

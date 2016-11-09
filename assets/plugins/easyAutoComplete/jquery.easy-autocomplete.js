@@ -765,9 +765,9 @@ var EasyAutocomplete = (function (scope) {
             },
 
 
-        /*
-         * Converts method with {{text}} to function
-         */
+            /*
+             * Converts method with {{text}} to function
+             */
             convertTemplateToMethod = function (template) {
 
 

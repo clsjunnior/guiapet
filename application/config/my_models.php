@@ -15,6 +15,7 @@
  * @property CategoriaM $categoria
  * @property ContatoM $contato
  * @property EstabelecimentoM $estabelecimento
+ * @property GaleriaM $galeria
  * @property HistoricoM $historico
  * @property LocalizacaoM $localizacao
  * @property PermissaoM $permissao

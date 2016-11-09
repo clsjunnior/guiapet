@@ -30,6 +30,8 @@ class Estabelecimento extends CI_Controller
         $this->load->model('UsuarioM', 'usuario');
         $this->load->model('AvaliacaoM', 'avaliacao');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
+        $this->load->model('PermissaoM', 'permissao');
+        $this->load->model('GaleriaM', 'galeria');
 
         $this->estabelecimentoP = null;
         $this->localizacaoP = null;
@@ -62,7 +64,7 @@ class Estabelecimento extends CI_Controller
 
             if ($contAtual) {
                 if ($this->contato->atualizar($contato, 'CodContato', $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result_array()[0]['EsContatoCod'])) {
-                    // SUCESSO
+
                 } else {
                     // ERRO
                 }
@@ -81,6 +83,7 @@ class Estabelecimento extends CI_Controller
         $dados['estabelecimento'] = $this->estabelecimento->getAllBy(['EsCodEstabelecimento' => $id])->result()[0];
         $dados['tags'] = $this->tagestabelecimento->gtNmTagByEstabelecimento($id)->result_array();
         $dados['avaliacao'] = $this->avaliacao->getByIdEs($id)->result_array()[0];
+        $dados['galeria'] = $this->galeria->get(['EstabelecimentoCod' => $id])->result_array();
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('admin/visualizar_estabelecimento', $dados);
     }
@@ -111,7 +114,7 @@ class Estabelecimento extends CI_Controller
                     $this->estabelecimentoP['LocalizacaoCod'] = $this->localizacao->getIdLastInsert();
 
                     $this->preencheEstabelecimento();
-                    $idUlt = $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
+
                     $idUlt = $this->estabelecimento->getIdLastInsert();
 
                     $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
@@ -130,6 +133,8 @@ class Estabelecimento extends CI_Controller
 
             if (getSesPermissao(['CodPermissao']) == 1) {
                 $this->usuario->alteraPermissao(getSesUser(['CodUsuario']), 2);
+                $session['permissao'] = $this->permissao->getWhere(['CodPermissao' => getSesUser(['CodUsuario'])])->result_array()[0];
+                $this->session->set_userdata($session);
             }
 
             redirect(site_url('dashboard/estabelecimentos/visualizar/' . $idUlt));
@@ -185,8 +190,10 @@ class Estabelecimento extends CI_Controller
         $this->estabelecimentoP['CategoriaCod'] = $this->input->post('category');
         $this->estabelecimentoP['UsuarioCod'] = getSesUser(['CodUsuario']);
         $this->estabelecimentoP['Nome'] = $this->input->post('name');
+        if ($_FILES['photograp']['name'] != '') {
+            $this->estabelecimentoP['Foto'] = $this->upload->data()['file_name'];
+        }
         $this->estabelecimentoP['Descricao'] = $this->input->post('description');
-        $this->estabelecimentoP['Foto'] = $this->upload->data()['file_name'];
         $this->estabelecimentoP['CNPJ'] = $cnpj;
     }
 
@@ -203,48 +210,58 @@ class Estabelecimento extends CI_Controller
         $dados['establishment'] = $this->estabelecimento->getById($id)->result_array()[0];
         $dados['location'] = $this->localizacao->getById($dados['establishment']["LocalizacaoCod"])->result_array()[0];
 
-        $dados['title'] = 'Novo estabelecimento';
+        $dados['title'] = 'Editar estabelecimento';
         $dados['id'] = $id;
 
         if ($this->form_validation->run() == true) {
-            $this->load->library('upload', $config);
 
-            if ($this->upload->do_upload('photograp')) {
-                $this->preencheLocalizacao();
+            if ($_FILES['photograp']['name'] != '') {
+                echo 1;
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('photograp')) {
 
-                if ($this->localizacao->atualizaLocalizacao($this->localizacaoP, $dados['location']["CodLocalizacao"])) {
-                    $this->estabelecimentoP['LocalizacaoCod'] = $dados['establishment']["LocalizacaoCod"];
+                    $this->preencheLocalizacao();
+                    if ($this->localizacao->atualizaLocalizacao($this->localizacaoP, $dados['establishment']["LocalizacaoCod"])) {
+                        $this->estabelecimentoP['LocalizacaoCod'] = $dados['establishment']["LocalizacaoCod"];
 
-                    if ($this->upload->data()['file_name']) {
-                        unlink(DIR_IMG . "/" . $dados['establishment']['Foto']);
+                        if ($this->upload->data()['file_name']) {
+                            unlink(DIR_IMG . "/" . $dados['establishment']['Foto']);
+                        }
+
+                        $this->preencheEstabelecimento();
+
+                        $this->estabelecimento->atualizar($this->estabelecimentoP, $dados['establishment']["CodEstabelecimento"]);
+
+                    } else {
+                        $dados['erros'][] = 'Erro ao salvar localização';
                     }
 
-                    $this->preencheEstabelecimento();
-                    $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
+                } else {
+                    $dados['erros'][] = "Erro ao salvar imagem, tente novamente mais tarde";
+                }
+            } else {
 
-                    $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
-                                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button> 
-                                                    <h4><i class="icon fa fa-check-circle"></i> Estabelecimento cadastrado com sucesso!</h4>
-                                                    O estabelecimento <b>' . $this->estabelecimentoP['Nome'] . '</b> foi cadastrado com sucesso
-                                                    </div> ');
+                $this->preencheLocalizacao();
+                if ($this->localizacao->atualizaLocalizacao($this->localizacaoP, $dados['establishment']["LocalizacaoCod"])) {
+                    $this->estabelecimentoP['LocalizacaoCod'] = $dados['establishment']["LocalizacaoCod"];
+
+                    $this->preencheEstabelecimento();
+                    $this->estabelecimento->atualizar($this->estabelecimentoP, $dados['establishment']["CodEstabelecimento"]);
 
                 } else {
                     $dados['erros'][] = 'Erro ao salvar localização';
                 }
-
-            } else {
-                $dados['erros'][] = "Erro ao salvar imagem, tente novamente mais tarde";
             }
 
-//            redirect(site_url('dashboard/estabelecimentos/visualizar/'.$id));
+            redirect(site_url('dashboard/estabelecimentos/visualizar/' . $id));
         }else{
             $dados['erros'][] = validation_errors();
         }
 
+        var_dump($this->estabelecimentoP);
         /** Retorna todas as categorias no formato de objetos */
         $dados['categories'] = $this->categoria->getAll()->result();
-
-        $this->load->view('admin/novo_estabelecimento', $dados);
+        $this->load->view('admin/editar_estabelecimento', $dados);
     }
 
     public function validaCNPJ($cnpj)

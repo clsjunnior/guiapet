@@ -15,7 +15,7 @@
 
         <section class="content-header">
             <h1>
-                Tags
+                Categorias
             </h1>
             <ol class="breadcrumb">
                 <li><a href="<?= site_url('dashboard') ?>"><i class="fa fa-home"></i> Inicio</a></li>

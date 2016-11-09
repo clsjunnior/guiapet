@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class UsuarioM extends CI_Model {
 
-    private $table = 'TB_Usuario';
+    private $table = 'tb_usuario';
 
     /**
      * Usuario constructor.
@@ -58,5 +58,15 @@ class UsuarioM extends CI_Model {
         $usuario['PermissaoCod'] = $codPermissao;
         $this->db->where('CodUsuario', $codUsuario);
         return $this->db->update($this->table, $usuario);
+    }
+
+    public function listUsersPgAdm()
+    {
+        $this->db->select('ur.CodUsuario as UrCodUsuario, ur.Nome as UrNome, ur.Login as UrLogin, count(es.CodEstabelecimento) as qtdEst, pe.Nome as PeNome');
+        $this->db->from("$this->table as ur");
+        $this->db->join("tb_permissao as pe", "ur.PermissaoCod = pe.CodPermissao", 'inner');
+        $this->db->join("tb_estabelecimento as es", "ur.CodUsuario = es.UsuarioCod", 'left');
+        $this->db->group_by("UrCodUsuario");
+        return $this->db->get();
     }
 }
