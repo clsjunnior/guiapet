@@ -75,6 +75,7 @@ $route['api/estabelecimentos/buscaTotal'] = 'api/Estabelecimento/buscaTotal';
 $route['api/estabelecimentos/buscaEsOrdenada'] = 'api/Estabelecimento/buscaEsOrdenada';
 $route['api/estabelecimentos/buscaEstabelecimentoId/(:any)'] = 'api/Estabelecimento/buscaEstabelecimentoId/';
 $route['api/estabelecimentos/buscaEstabelecimentoCategoria/(:num)'] = 'api/Estabelecimento/buscaEstabelecimentoCategoria/$1';
+$route['api/estabelecimentos/recomendacao'] = 'api/Estabelecimento/recomendacao';
 //$route['api/tagsEstabelecimento/buscatges'] = 'api/TagEstabelecimento/buscaEsTg/';
 $route['api/tagsEstabelecimento/buscatges/(:any)'] = 'api/TagEstabelecimento/buscaEsTg/$1';
 
