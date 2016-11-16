@@ -190,9 +190,6 @@ class EstabelecimentoM extends CI_Model {
             $resultEnd[] = $result;
         }
 
-        var_dump($notIn);
-        var_dump($Sestabelecimento);
-
         $estabelecimentoResult3 = $this->db->select("*")
             ->from("tb_estabelecimento")
             ->where_in("CodEstabelecimento", $Sestabelecimento)
@@ -210,7 +207,6 @@ class EstabelecimentoM extends CI_Model {
         foreach ($estabelecimentoResult3->result_array() as $result) {
             $resultEnd[] = $result;
         }
-        var_dump($resultEnd);
 
         return $resultEnd;
     }

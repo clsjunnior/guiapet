@@ -148,7 +148,7 @@ class Estabelecimento extends CI_Controller
 
     public function recomendacao()
     {
-        $this->estabelecimento->gerarRecomendacao();
+        echo json_encode($this->estabelecimento->gerarRecomendacao());
     }
 
 }
