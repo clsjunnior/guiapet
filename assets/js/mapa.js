@@ -2,6 +2,7 @@
  * Created by Windows 10 on 07/09/2016.
  */
 // busca por categoria - icones
+
 var url_busca = site_url + "/api/estabelecimentos/buscaTotal/";
 $('.iconBusca').on('click', function () {
     var valor = $(this).attr("data-id");
@@ -83,21 +84,9 @@ function initMapLocation() {
         zoom: 17
     });
 
-    var cityCircle = new google.maps.Circle({
-        strokeColor: '#193653',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#1c3e5e',
-        fillOpacity: 0.35,
-        map: map,
-        center: {lat: -21.673253, lng: -49.747381},
-        // radius: Math.sqrt(100) * 100
-        radius: 1000 // 1 km em metros
-    });
-
     var infoWindow = new google.maps.InfoWindow({map: map});
 
-    //ModificaInfowindow(infoWindow);
+    ModificaInfowindow(infoWindow);
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -107,17 +96,17 @@ function initMapLocation() {
             };
 
             infoWindow.setPosition(pos);
-            // $('.gm-style-iw').css("width", "250px");
-            // var conteudoLocation = '<div id="iw-container" style="width:250px !important; overflow: hidden">' +
-            //     '<div class="iw-title"> Localização Atual</div>' +
-            //     '<div class="iw-content">' +
-            //     '<h3> Olá, você esta aqui!!</h3>' +
-            //     '</div>' +
-            //     '<div class="iw-bottom-gradient"></div>' +
-            //     '</div>';
+            $('.gm-style-iw').css("width", "250px");
+            var conteudoLocation = '<div id="iw-container" style="width:250px !important; overflow: hidden">' +
+                '<div class="iw-title"> Localização Atual</div>' +
+                '<div class="iw-content">' +
+                '<h3> Olá, você esta aqui!!</h3>' +
+                '</div>' +
+                '<div class="iw-bottom-gradient"></div>' +
+                '</div>';
 
             // O conteúdo da variável iwContent é inserido na Info Window.
-            infoWindow.setContent(infoWindow.setPosition(pos));
+            infoWindow.setContent(conteudoLocation);
             map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -134,50 +123,10 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
 }
+
 $('#btnLocalizacao').click(function () {
     initMapLocation();
 });
-
-// var geocoder;
-// var map2;
-// var marker2;
-//
-// function initMapLocation() {
-//     var latlng = new google.maps.LatLng(-21.673253,-49.747381);
-//     var options = {
-//         zoom: 18,
-//         center: latlng,
-//         mapTypeId: google.maps.MapTypeId.ROADMAP
-//     };
-//
-//     map2 = new google.maps.Map(document.getElementById("mapa"), options);
-//
-//     geocoder = new google.maps.Geocoder();
-//
-//     marker2 = new google.maps.Marker({
-//         map: map2,
-//         draggable: false
-//     });
-//
-//     marker2.setPosition(latlng);
-// }
-//
-// if(navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(function(position){ // callback de sucesso
-//             // ajusta a posição do marker para a localização do usuário
-//             marker2.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-//         },
-//         function(error){ // callback de erro
-//             alert('Erro ao obter localização!');
-//             console.log('Erro ao obter localização.', error);
-//         });
-// } else
-//     {
-//         alert('Navegador não suporta Geolocalização!');
-//     }
-//
-//
-//
 
 
 
