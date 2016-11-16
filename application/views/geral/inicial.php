@@ -222,7 +222,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		});
 
 
-		$.getJSON("api/tags/buscaTag/", function (resultados) {
+		$.getJSON("index.php/api/tags/buscaTag/", function (resultados) {
             var tags = " ";
             $.each(resultados, function (index, resp) {
                 //tags += '{id: '+resp.codTag+', text: '+resp.tag+'},';
