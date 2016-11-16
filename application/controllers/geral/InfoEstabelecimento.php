@@ -19,6 +19,7 @@ class InfoEstabelecimento extends CI_Controller
         $this->load->model('CategoriaM', 'categoria');
         $this->load->model('HistoricoM', 'historico');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
+        $this->load->model('GaleriaM', 'galeria');
     }
 
 
@@ -46,6 +47,8 @@ class InfoEstabelecimento extends CI_Controller
         $historico['CategoriaCod'] = $dados['estabelecimento']->CaCodCategoria;
 
         $this->historico->cadastrar($historico);
+
+        $dados['galeria'] = $this->galeria->get(['EstabelecimentoCod' => $id])->result_array();
 
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('geral/estabelecimentos', $dados);

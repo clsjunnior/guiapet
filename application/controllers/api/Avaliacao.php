@@ -70,7 +70,14 @@ class Avaliacao extends CI_Controller
 
         echo json_encode($saida);
 
+    }
 
+    public function avaliar()
+    {
+        $estabelecimentoID = $this->uri->segment(4);
+        $nota = $this->uri->segment(5);
+
+        $this->avaliacao->avaliar(getSesUser(['CodUsuario']), $estabelecimentoID, $nota);
     }
 
 

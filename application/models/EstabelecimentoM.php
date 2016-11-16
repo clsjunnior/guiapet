@@ -104,7 +104,7 @@ class EstabelecimentoM extends CI_Model {
     }
 
 
-    public function gerarRecomendacao($idUser = null, $totResult = 6)
+    public function gerarRecomendacao($idUser = null, $totResult = 10)
     {
         $this->db->select("*")
             ->from("tb_historico");
@@ -112,7 +112,7 @@ class EstabelecimentoM extends CI_Model {
             $this->db->where('UsuarioCod', $idUser);
         }
         $historicos = $this->db->order_by('CodHistorico', 'desc')
-            ->limit(20)->get()->result_array();
+            ->limit(50)->get()->result_array();
 
         $categorias = null;
         $tags = null;
@@ -176,19 +176,19 @@ class EstabelecimentoM extends CI_Model {
             $resultEnd[] = $result;
         }
 
-        $estabelecimentoResult2 = $this->db->select("*")
-            ->from("tb_estabelecimento")
-            ->join('tb_tagestabelecimento', 'tb_estabelecimento.CodEstabelecimento = tb_tagestabelecimento.EstabelecimentoCod', 'inner')
-            ->where_in("tb_tagestabelecimento.TagCod", $Stags)
-            ->or_where_not_in("tb_estabelecimento.CodEstabelecimento", $notIn)
-//            ->group_by("tb_estabelecimento.CodEstabelecimento")
-            ->limit($tot / 2)->get();
-        $tot = $totResult - ($estabelecimentoResult1->num_rows() + $estabelecimentoResult2->num_rows());
-
-        foreach ($estabelecimentoResult2->result_array() as $result) {
-            $notIn[] = (int)$result['CodEstabelecimento'];
-            $resultEnd[] = $result;
-        }
+//        $estabelecimentoResult2 = $this->db->select("*")
+//            ->from("tb_estabelecimento")
+//            ->join('tb_tagestabelecimento', 'tb_estabelecimento.CodEstabelecimento = tb_tagestabelecimento.EstabelecimentoCod', 'inner')
+//            ->where_in("tb_tagestabelecimento.TagCod", $Stags)
+//            ->where_not_in("tb_estabelecimento.CodEstabelecimento", $notIn)
+////            ->group_by("tb_estabelecimento.CodEstabelecimento")
+//            ->limit($tot / 2)->get();
+//        $tot = $totResult - ($estabelecimentoResult1->num_rows() + $estabelecimentoResult2->num_rows());
+//
+//        foreach ($estabelecimentoResult2->result_array() as $result) {
+//            $notIn[] = (int)$result['CodEstabelecimento'];
+//            $resultEnd[] = $result;
+//        }
 
         var_dump($notIn);
         var_dump($Sestabelecimento);

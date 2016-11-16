@@ -8,7 +8,7 @@
  */
 class AvaliacaoM extends CI_Model
 {
-    private $table = 'TB_Avaliacao';
+    private $table = 'tb_avaliacao';
     private $viewAvaliacao = 'vw_estabelecimentosavaliacao';
 
     /**
@@ -36,6 +36,28 @@ class AvaliacaoM extends CI_Model
     public function getAllBy($where = array())
     {
         return $this->db->get_where($this->viewAvaliacao, $where);
+    }
+
+    public function avaliar($userID, $estabID, $nota)
+    {
+        $av = $this->db->get_where($this->table, ['EstabelecimentoCod' => $estabID, 'UsuarioCod' => $userID])->num_rows();
+
+        if ($av == 0) {
+            $avaliacao = [
+                'EstabelecimentoCod' => $estabID,
+                'UsuarioCod' => $userID,
+                'Nota' => $nota
+            ];
+            return $this->db->insert($this->table, $avaliacao);
+        } else {
+            $avaliacao = [
+                'EstabelecimentoCod' => $estabID,
+                'UsuarioCod' => $userID,
+                'Nota' => $nota
+            ];
+            $this->db->where(['EstabelecimentoCod' => $estabID, 'UsuarioCod' => $userID]);
+            return $this->db->update($this->table, $avaliacao);
+        }
     }
 
 

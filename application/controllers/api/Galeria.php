@@ -25,6 +25,8 @@ class Galeria extends CI_Controller
         $config['upload_path'] = DIR_IMG;
         //define os tipos de arquivos suportados
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['encrypt_name'] = true;
+
 
 
         //Inicializa o método de upload

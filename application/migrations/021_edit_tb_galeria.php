@@ -18,8 +18,9 @@ class Migration_Edit_Tb_Galeria extends CI_Migration
     {
         $this->ci->db->query(
             "
-            ALTER TABLE tb_galeria DROP Nome;
-            ALTER TABLE tb_galeria DROP Descricao;
+            ALTER TABLE `tb_galeria`
+            DROP `Nome`,
+            DROP `Descricao`;
             "
         );
     }

@@ -126,14 +126,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <h3 style="margin-top:0px">Galeria de Imagens</h3>
             <hr style="margin-bottom: 10px;">
+            <?php if (count($galeria)): ?>
             <div class="col-lg-12 owl-carousel owl-galeria owl-theme" style="margin-top: 20px;">
-                <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>">
-                    <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
-                </a>
-                <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>">
-                    <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
-                </a>
+                <?php foreach ($galeria as $list): ?>
+                    <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $list['Arquivo']) ?>">
+                        <img src="<?= base_url(DIR_IMG . '/' . $list['Arquivo']) ?>" alt="...">
+                    </a>
+                <?php endforeach; ?>
             </div>
+            <?php else: ?>
+                <h3 style="margin-bottom: 30px;">Nenhuma imagem adicionada!</h3>
+                <hr/>
+            <?php endif; ?>
         </div>
     </div>
     <div class="row">
@@ -196,9 +200,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <option value="5">5</option>
                         </select>
                     </div>
+                    <?php if ($this->session->has_userdata('login')): ?>
                     <div class="form-group">
                         <button type="button" class="btn btn-primary">Salvar Avaliação</button>
                     </div>
+                    <?php else: ?>
+                        <h3 style="margin-bottom: 10px;">Necessário login para realizar avaliação!</h3>
+                    <?php endif; ?>
                 </form>
             </div>
             <div class="modal-footer">
