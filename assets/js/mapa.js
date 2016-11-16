@@ -393,7 +393,7 @@ function createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoW
             '<div class="iw-subTitle">Avaliação</div>' +
             '<div id="avaliacaoInfowindow"></div>' +
             '<hr/>' +
-            '<a href="estabelecimento/' + idEs + '" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
+            '<a href="' + site_url + '/estabelecimento/' + idEs + '" class="btn btn-primary my-btn btn-block">Conheça!!</a>' +
         '<div class="iw-bottom-gradient"></div>' +
         '</div>';
 

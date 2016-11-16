@@ -14,6 +14,7 @@ class Estabelecimento extends CI_Controller
 
         /** Carregamento de models */
         $this->load->model('EstabelecimentoM', 'estabelecimento');
+
     }
 
 
