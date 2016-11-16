@@ -115,6 +115,8 @@ class Estabelecimento extends CI_Controller
 
                     $this->preencheEstabelecimento();
 
+                    $this->estabelecimento->novoEstabelecimento($this->estabelecimentoP);
+
                     $idUlt = $this->estabelecimento->getIdLastInsert();
 
                     $this->session->set_flashdata('estabelecimentos', '<div class="alert alert-success alert-dismissible">
@@ -142,6 +144,7 @@ class Estabelecimento extends CI_Controller
             $dados['erros'][] = validation_errors();
         }
 
+        var_dump($dados);
         /** Retorna todas as categorias no formato de objetos */
         $dados['categories'] = $this->categoria->getAll()->result();
 

@@ -147,4 +147,9 @@ class Estabelecimento extends CI_Controller
 
     }
 
+    public function recomendacao()
+    {
+        $this->estabelecimento->gerarRecomendacao();
+    }
+
 }
