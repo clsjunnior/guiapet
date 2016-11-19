@@ -160,7 +160,7 @@ class Estabelecimento extends CI_Controller
             'listCategorias' => [], // Lista de ID de Categorias
         ];
 
-        echo json_encode($this->estabelecimento->gerarRecomendacao($config)->result_array());
+        echo json_encode($this->estabelecimento->gerarRecomendacao($config));
     }
 
 }

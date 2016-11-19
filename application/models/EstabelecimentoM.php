@@ -128,6 +128,7 @@ class EstabelecimentoM extends CI_Model
     {
         $categorias = [];
         $tags = [];
+        $resultado = [];
 
         // Reseta a Query
         $this->db->reset_query();
@@ -208,13 +209,24 @@ class EstabelecimentoM extends CI_Model
         }
 
         // Limita o resultado e remove repetidos
-        $this->db->limit($config['totalResult'])->group_by('e.CodEstabelecimento');
+//        $this->db->limit($config['totalResult'])->group_by('e.CodEstabelecimento');
+        $this->db->group_by('e.CodEstabelecimento');
 
         // Pega os resultados
-        $result = $this->db->get();
+        $result = $this->db->get()->result_array();
+
+        // Embaralha
+        shuffle($result);
+
+        // Atribui o retorno do resultado
+        for ($i = 0; $i < $config['totalResult']; $i++) {
+            if (isset($result[$i])) {
+                $resultado[] = $result[$i];
+            }
+        }
 
         // Retorna o resultado
-        return $result;
+        return $resultado;
     }
 
 
