@@ -19,6 +19,7 @@ class Usuario extends CI_Controller
 
     public function alterarPermissao()
     {
+        $this->output->set_content_type('application/json');
 
         $idUser = $this->input->post('id');
         $idPer = $this->input->post('permissao');

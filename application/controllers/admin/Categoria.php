@@ -15,13 +15,8 @@ class Categoria extends CI_Controller
             redirect(site_url('login'));
         }
 
-        /** Carregamento de bibliotecas */
-//        $this->load->library('form_validation');
-//        $this->load->library('encrypt');
-
         /** Carregamento de models */
         $this->load->model('CategoriaM', 'categoria');
-//        $this->load->model('LocalizacaoM', 'localizacao');
     }
 
 

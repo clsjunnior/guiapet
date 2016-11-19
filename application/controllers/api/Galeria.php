@@ -17,6 +17,7 @@ class Galeria extends CI_Controller
 
     public function cadastrar()
     {
+        $this->output->set_content_type('application/json');
         //carrega a biblioteca de upload do CI
         $this->load->library('upload');
 

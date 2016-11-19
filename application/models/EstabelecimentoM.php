@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class EstabelecimentoM extends CI_Model {
+
+class EstabelecimentoM extends CI_Model
+{
 
     private $table = 'tb_estabelecimento';
     private $tableTagEstabelecimento = 'TB_TagEstabelecimento';
@@ -10,7 +12,8 @@ class EstabelecimentoM extends CI_Model {
     /**
      * Estabelecimento constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -20,7 +23,8 @@ class EstabelecimentoM extends CI_Model {
      * @param $id int
      * @return CI_DB_result
      */
-    public function getById($id){
+    public function getById($id)
+    {
 
         return $this->db->get_where($this->table, array('CodEstabelecimento' => $id));
     }
@@ -45,7 +49,8 @@ class EstabelecimentoM extends CI_Model {
      * @param array $where
      * @return CI_DB_result
      */
-    public function getAllBy($where = array()){
+    public function getAllBy($where = array())
+    {
         return $this->db->get_where($this->viewEstabelecimentos, $where);
     }
 
@@ -59,18 +64,18 @@ class EstabelecimentoM extends CI_Model {
 
         $tagsAdd = [];
         $tagAtual = null;
-        foreach ($tags as $tag){
-            foreach ($tagsDB as $tagDB){
+        foreach ($tags as $tag) {
+            foreach ($tagsDB as $tagDB) {
                 if (trim($tag) == trim($tagDB["Nome"])) {
                     $tagAtual["CodTag"] = $tagDB["CodTag"];
                     $tagAtual["Nome"] = $tagDB["Nome"];
                 }
             }
 
-            if ($tagAtual != null){
+            if ($tagAtual != null) {
                 $tagsAdd[] = $tagAtual["CodTag"];
-            }else{
-                $this->db->insert($this->tableTag,["Nome" => $tag]);
+            } else {
+                $this->db->insert($this->tableTag, ["Nome" => $tag]);
                 $tagsAdd[] = $this->db->insert_id();
             }
             $tagAtual = null;
@@ -79,7 +84,7 @@ class EstabelecimentoM extends CI_Model {
         $this->db->reset_query();
         $this->db->delete($this->tableTagEstabelecimento, array("EstabelecimentoCod" => $idEstabelecimento));
 
-        foreach ($tagsAdd as $tag){
+        foreach ($tagsAdd as $tag) {
             $this->db->reset_query();
             $this->db->insert($this->tableTagEstabelecimento, ["EstabelecimentoCod" => $idEstabelecimento, "TagCod" => $tag]);
         }
@@ -104,111 +109,112 @@ class EstabelecimentoM extends CI_Model {
     }
 
 
-    public function gerarRecomendacao($idUser = null, $totResult = 10)
+    /** Gera recomendaçao
+     *
+     * Parametro passado
+     * $config = [
+     *              'idUser' => (int),                // ID do usuario para realizar recomendação pelo seu historico
+     *              'historicoCatQtde' => (int),      // Quantidade de registros que vai se basear para categoria
+     *              'historicoTagQtde' => (int),      // Quantidade de registros que vai se basear para tags
+     *              'totalResult' => (int),           // Total de resultados
+     *              'listTags' => array((int)),       // Lista de ID de TAGS
+     *              'listCategorias' => array((int)), // Lista de ID de Categorias
+     *           ]
+     *
+     * @param array $config
+     * @return CI_DB_result
+     */
+    public function gerarRecomendacao($config = array())
     {
-        $this->db->select("*")
-            ->from("tb_historico");
-        if ($idUser != null) {
-            $this->db->where('UsuarioCod', $idUser);
-        }
-        $historicos = $this->db->order_by('CodHistorico', 'desc')
-            ->limit(50)->get()->result_array();
+        $categorias = [];
+        $tags = [];
 
-        $categorias = null;
-        $tags = null;
-        $estabelecimento = null;
-        foreach ($historicos as $historico) {
+        // Reseta a Query
+        $this->db->reset_query();
 
-            if (isset($categorias[$historico["CategoriaCod"]])) {
-                $categorias[$historico["CategoriaCod"]] = $categorias[$historico["CategoriaCod"]] + 1;
-            } else {
-                $categorias[$historico["CategoriaCod"]] = 1;
+        // Se foi informado ID do usuario busca no historico dele as ultimas visitas
+        if (isset($config['idUser'])) {
+
+            // Busca categorias visitadas
+            $categoriasDb = $this->db->select('CategoriaCod')
+                ->from('tb_historico')
+                ->where('UsuarioCod', $config['idUser'])
+                ->order_by('CodHistorico', 'desc')
+                ->limit($config['historicoCatQtde'])
+                ->get()->result_array();
+
+            // Pega o código das categorias sem repetir
+            foreach ($categoriasDb as $categoriaDb) {
+                if (!in_array($categoriaDb['CategoriaCod'], $categorias)) {
+                    $categorias[] = (int)$categoriaDb['CategoriaCod'];
+                }
             }
 
-            if (isset($estabelecimento[$historico["EstabelecimentoCod"]])) {
-                $estabelecimento[$historico["EstabelecimentoCod"]] = $estabelecimento[$historico["EstabelecimentoCod"]] + 1;
-            } else {
-                $estabelecimento[$historico["EstabelecimentoCod"]] = 1;
-            }
+            // Reseta a Query
+            $this->db->reset_query();
 
-            $tgExplode = explode(",", $historico["TagsCod"]);
-            foreach ($tgExplode as $tg) {
-                if ($tg != '') {
-                    if (isset($tags[$tg])) {
-                        $tags[$tg] = $tags[$tg] + 1;
-                    } else {
-                        $tags[$tg] = 1;
+            // Busca tags visitadas
+            $tagsDb = $this->db->select('TagsCod')
+                ->from('tb_historico')
+                ->where('UsuarioCod', $config['idUser'])
+                ->order_by('CodHistorico', 'desc')
+                ->limit($config['historicoTagQtde'])
+                ->get()->result_array();
+
+            // Pega o codigo das tags sem repetir
+            foreach ($tagsDb as $tagdb) {
+                $tagList = explode(',', $tagdb['TagsCod']);
+                foreach ($tagList as $tag) {
+                    if (!in_array($tag, $tags) && $tag != '') {
+                        $tags[] = (int)$tag;
                     }
                 }
             }
         }
 
-        arsort($categorias);
-        arsort($tags);
-        arsort($estabelecimento);
-
-        $Scategorias = [];
-        $Stags = [];
-        $Sestabelecimento = [];
-
-        for ($i = 0; $i < ($totResult / 3); $i++) {
-            $Scategorias[] = key($categorias);
-            $Stags[] = key($tags);
-            $Sestabelecimento[] = key($estabelecimento);
-
-            next($categorias);
-            next($tags);
-            next($estabelecimento);
+        // Se for informado tags, pega seu código sem repetir
+        if (isset($config['listTags'])) {
+            foreach ($config['listTags'] as $tagConfig) {
+                if (!in_array($tagConfig, $tags)) {
+                    $tags[] = (int)$tagConfig;
+                }
+            }
         }
 
-        $estabelecimentoResult1 = $this->db->select("*")
-            ->from("tb_estabelecimento")
-            ->where_in("CategoriaCod", $Scategorias)
-            ->group_by("CodEstabelecimento")
-            ->limit($totResult / 3)->get();
-
-        $tot = $totResult - $estabelecimentoResult1->num_rows();
-
-        $notIn = [];
-        $resultEnd = [];
-        foreach ($estabelecimentoResult1->result_array() as $result) {
-            $notIn[] = (int)$result['CodEstabelecimento'];
-            $resultEnd[] = $result;
+        // Se for informado categorias, pega seu código sem repetir
+        if (isset($config['listCategorias'])) {
+            foreach ($config['listCategorias'] as $categoriaConfig) {
+                if (!in_array($categoriaConfig, $categorias)) {
+                    $categorias[] = (int)$categoriaConfig;
+                }
+            }
         }
 
-//        $estabelecimentoResult2 = $this->db->select("*")
-//            ->from("tb_estabelecimento")
-//            ->join('tb_tagestabelecimento', 'tb_estabelecimento.CodEstabelecimento = tb_tagestabelecimento.EstabelecimentoCod', 'inner')
-//            ->where_in("tb_tagestabelecimento.TagCod", $Stags)
-//            ->where_not_in("tb_estabelecimento.CodEstabelecimento", $notIn)
-////            ->group_by("tb_estabelecimento.CodEstabelecimento")
-//            ->limit($tot / 2)->get();
-//        $tot = $totResult - ($estabelecimentoResult1->num_rows() + $estabelecimentoResult2->num_rows());
-//
-//        foreach ($estabelecimentoResult2->result_array() as $result) {
-//            $notIn[] = (int)$result['CodEstabelecimento'];
-//            $resultEnd[] = $result;
-//        }
+        // Reseta a Query
+        $this->db->reset_query();
 
-        $estabelecimentoResult3 = $this->db->select("*")
-            ->from("tb_estabelecimento")
-            ->where_in("CodEstabelecimento", $Sestabelecimento)
-            ->or_where_not_in("CodEstabelecimento", $notIn)
-            ->group_by("CodEstabelecimento")
-            ->limit($tot)->get();
+        // Inicia a seleção
+        $this->db->select('e.*')->from($this->table . ' as e');
 
-//        var_dump($estabelecimentoResult1->result_array());
-//        echo "***************************************************";
-//        var_dump($estabelecimentoResult2->result_array());
-//        echo "***************************************************";
-//        var_dump($estabelecimentoResult3->result_array());
-
-
-        foreach ($estabelecimentoResult3->result_array() as $result) {
-            $resultEnd[] = $result;
+        // Se conter categorias, adiciona na seleção
+        if (count($categorias) != 0) {
+            $this->db->or_where_in('CategoriaCod', $categorias);
         }
 
-        return $resultEnd;
+        // Se conter tags, adiciona na seleção
+        if (count($tags) != 0) {
+            $this->db->join('tb_tagestabelecimento as te', 'te.EstabelecimentoCod = e.CodEstabelecimento', 'left');
+            $this->db->or_where_in('te.TagCod', $tags);
+        }
+
+        // Limita o resultado e remove repetidos
+        $this->db->limit($config['totalResult'])->group_by('e.CodEstabelecimento');
+
+        // Pega os resultados
+        $result = $this->db->get();
+
+        // Retorna o resultado
+        return $result;
     }
 
 
