@@ -152,10 +152,10 @@ class Estabelecimento extends CI_Controller
         $this->output->set_content_type('application/json');
 
         $config = [
-            'idUser' => 0,           // ID do usuario para realizar recomendação pelo seu historico
-            'historicoCatQtde' => 0, // Quantidade de registros que vai se basear para categoria
-            'historicoTagQtde' => 0, // Quantidade de registros que vai se basear para tags
-            'totalResult' => 0,      // Total de resultados
+            'idUser' => null,           // ID do usuario para realizar recomendação pelo seu historico
+            'historicoCatQtde' => 10, // Quantidade de registros que vai se basear para categoria
+            'historicoTagQtde' => 10, // Quantidade de registros que vai se basear para tags
+            'totalResult' => 10,      // Total de resultados
             'listTags' => [],        // Lista de ID de TAGS
             'listCategorias' => [],  // Lista de ID de Categorias
         ];

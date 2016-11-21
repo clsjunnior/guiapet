@@ -61,7 +61,7 @@ $('#pesquisaEs').click(function () {
 // pesquisa por avaliacao
 $('#avaliacao').change(function () {
     var nota = $(this).val();
-    console.log(nota);
+
     url_busca = site_url + "/api/avaliacao/buscaEsAvaliacao/" + nota;
     initMap(url_busca);
     //console.log(nota);
@@ -70,7 +70,7 @@ $('#avaliacao').change(function () {
 // pesquisa por tags
 $('#pesquisaEsTag').click(function () {
     var tags = $('#tag').attr('data-tag-id');
-    var tg = tags.replace(",", "-");
+    var tg = tags.replace(/,/g, "-");
     url_busca = site_url + "/api/tagsEstabelecimento/buscatges/" + tg;
     initMap(url_busca);
     // melhorar para nao pesquisar tags em branco ou estabelecimentos sem tag
