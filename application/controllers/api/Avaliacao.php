@@ -77,7 +77,16 @@ class Avaliacao extends CI_Controller
         $estabelecimentoID = $this->uri->segment(4);
         $nota = $this->uri->segment(5);
 
-        $this->avaliacao->avaliar(getSesUser(['CodUsuario']), $estabelecimentoID, $nota);
+        $resp = $this->avaliacao->avaliar(getSesUser(['CodUsuario']), $estabelecimentoID, $nota);
+
+        if ($resp == true) {
+            echo "ok";
+        } else {
+            echo "Erro ao realizar a avaliação!";
+        }
+
+
+
     }
 
 

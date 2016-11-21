@@ -28,7 +28,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
-                    <li><a href="#"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a></li>
+                    <?php if (getSesUser(['Login'])): ?>
+                        <li><a href="../dashboard"><span class="fa fa-user"
+                                                         style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
+                            </a></li>
+                    <?php else: ?>
+                        <li><a href="../login"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -63,7 +70,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <img src="<?= base_url(DIR_IMG . '/' . $estabelecimento->EsFoto) ?>" alt="...">
                 </a>
                 <div class="caption">
-                    <h3> <?= $estabelecimento->EsNome ?></h3>
+                    <h3 style="text-align: center;"> <?= $estabelecimento->EsNome ?></h3>
+                    <hr style="margin-bottom: 10px;">
+                    <div class="avaliacaoEs" style="text-align: center; margin-top: 20px;">
+                        <?php if (count($avaliacao['media'])): ?>
+                            <label>Nossa media de Avaliações</label><br>
+                            <?php if ($avaliacao['media'] == 1): ?>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                            <?php elseif ($avaliacao['media'] == 2): ?>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                            <?php elseif ($avaliacao['media'] == 3): ?>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                            <?php elseif ($avaliacao['media'] == 4): ?>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x avaliacaoNegativa'></span>
+                            <?php else: ?>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                                <span class='fa fa-star fa-2x'></span>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <label style="color: darkred;">Nenhuma avaliação realizada, aproveite e nos avalie clicando
+                                no botão abaixo!</label>
+                        <?php endif; ?>
+                    </div>
                     <hr style="margin-bottom: 10px;">
                     <p>
                         <a href="#" class="btn btn-default my-btn btn-block btn-large" data-toggle="modal"
@@ -202,7 +249,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <?php if ($this->session->has_userdata('login')): ?>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary">Salvar Avaliação</button>
+                        <button type="button" id="btnAvaliar" class="btn btn-primary">Salvar Avaliação</button>
                     </div>
                     <?php else: ?>
                         <h3 style="margin-bottom: 10px;">Necessário login para realizar avaliação!</h3>
@@ -331,6 +378,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $('#avaliacao').barrating({
         theme: 'fontawesome-stars'
     });
+
+    /*enviar avaliacao*/
+    $('#btnAvaliar').on('click', function () {
+        var av = $("#avaliacao").val();
+//        $.get(site_url + "/api/Avaliacao/avaliar/", <?//=$estabelecimento->EsCodEstabelecimento?>//+"/"+av+"", function( data ) {
+//            console.log(data);
+//        });
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url();?>/api/Avaliacao/avaliar/<?=$estabelecimento->EsCodEstabelecimento?>/" + av,
+            dataType: "html",
+            success: function (data) {
+                //alert(data);
+                if (data == "ok") {
+                    swal({
+                        title: 'Obrigado!!!',
+                        text: "Avaliação realizada com Sucesso!",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#1c3e5e',
+                        confirmButtonText: 'Voltar'
+                    }).then(function () {
+                        window.location.reload();
+                    });
+                } else {
+                    swal({
+                        title: 'Ops :(',
+                        text: "Erro ao realizar a avaliação!",
+                        type: 'error',
+                        showCancelButton: false,
+                        confirmButtonColor: '#1c3e5e',
+                        confirmButtonText: 'Tentar Novamente!'
+                    }).then(function () {
+                        window.location.reload();
+                    });
+                }
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    });
+
 
     $('.owl-carousel').owlCarousel({
         loop: false,

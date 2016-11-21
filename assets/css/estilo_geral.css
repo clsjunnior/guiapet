@@ -287,8 +287,12 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
     background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 }
 
-#avaliacaoInfowindow {
+#avaliacaoInfowindow, .avaliacaoEs {
     color: #6286b8;
+}
+
+.avaliacaoNegativa {
+    color: #d0d0d0;
 }
 
 /**/
