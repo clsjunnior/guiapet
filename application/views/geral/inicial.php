@@ -28,8 +28,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href=""><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
-						<li><a href="index.php/login"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a>
-						</li>
+						<?php if (getSesUser(['Login'])): ?>
+							<li><a href="index.php/dashboard"><span class="fa fa-user"
+																	style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
+								</a></li>
+						<?php else: ?>
+							<li><a href="index.php/login"><span class="fa fa-lock" style="margin-right: 5px;"></span>
+									Login</a></li>
+						<?php endif; ?>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->

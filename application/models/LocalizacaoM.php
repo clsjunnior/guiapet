@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LocalizacaoM extends CI_Model {
 
     private $table = 'tb_localizacao';
+    private $viewEstabelecimentos = 'VW_Estabelecimentos';
 
     /**
      * Localização constructor.
@@ -61,6 +62,22 @@ class LocalizacaoM extends CI_Model {
     public function getIdLastInsert()
     {
         return $this->db->insert_id();
+    }
+
+    public function getEsRaio($latitudeAtual, $longitudeAtual)
+    {
+
+        $sql = "SELECT *, (6371 *" .
+            "acos(" .
+            "cos(radians(?)) *" . // lat atual
+            "cos(radians(LoLatitude)) *" . // lat table
+            "cos(radians(?) - radians(LoLongitude)) +" . // long atual
+            "sin(radians(?)) *" . // lat atual
+            "sin(radians(LoLatitude))" .
+            ")) AS distancia" .
+            " FROM " . $this->viewEstabelecimentos . " HAVING distancia <= 1";
+
+        return $this->db->query($sql, array($latitudeAtual, $longitudeAtual, $latitudeAtual));
     }
 
 

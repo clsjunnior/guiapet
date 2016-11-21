@@ -76,57 +76,123 @@ $('#pesquisaEsTag').click(function () {
     
 });
 
-//obter localizao atual usuario
-function initMapLocation() {
-    var map = new google.maps.Map(document.getElementById('mapa'), {
-        center: {lat: -21.673253, lng: -49.747381},
-        zoom: 17
-    });
 
-    var infoWindow = new google.maps.InfoWindow({map: map});
-
-    ModificaInfowindow(infoWindow);
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            infoWindow.setPosition(pos);
-            $('.gm-style-iw').css("width", "250px");
-            var conteudoLocation = '<div id="iw-container" style="width:250px !important; overflow: hidden">' +
-                '<div class="iw-title"> Localização Atual</div>' +
-                '<div class="iw-content">' +
-                '<h3> Olá, você esta aqui!!</h3>' +
-                '</div>' +
-                '<div class="iw-bottom-gradient"></div>' +
-                '</div>';
-
-            // O conteúdo da variável iwContent é inserido na Info Window.
-            infoWindow.setContent(conteudoLocation);
-            map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
+function writeAddressName(latLng) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+            "location": latLng
+        },
+        function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK)
+                document.getElementById("address").innerHTML = results[0].formatted_address;
+            else
+                document.getElementById("error").innerHTML += "Unable to retrieve your address" + "<br />";
         });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
+function geolocationSuccess(position) {
+    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    // Write the formatted address
+    //writeAddressName(userLatLng);
+    var icone = base_url + "assets/third_party/iconMaps/IconUser.png";
+    var map = {
+        zoom: 16,
+        center: userLatLng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    // Draw the map
+    var mapObject = new google.maps.Map(document.getElementById("mapa"), map);
+    // Place the marker
+    new google.maps.Marker({
+        map: mapObject,
+        position: userLatLng,
+        icon: icone
+    });
+
+    var bounds = new google.maps.LatLngBounds();
+
+    var infoWindow;
+    infoWindow = new google.maps.InfoWindow({
+        maxWidth: 350
+    });
+    // evento que fecha a infoWindow com click no mapa
+    google.maps.event.addListener(map, 'click', function () {
+        infoWindow.close();
+    });
+
+    ModificaInfowindow(infoWindow);
+
+    $.getJSON(site_url + "/api/estabelecimento/EsRaio/" + position.coords.latitude + "/" + position.coords.longitude, function (pontos) {
+
+        $.each(pontos, function (index, ponto) {
+            var nenhumResultado = ponto.vazio;
+            if (typeof(nenhumResultado) != "undefined") {
+                swal({
+                    title: 'Ops :(',
+                    text: "Nenhum estabelecimento encontrado!",
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#1c3e5e',
+                    confirmButtonText: 'Tente outra vez!'
+                }).then(function () {
+                    url_busca = site_url + "/api/estabelecimento/buscaTotal/";
+                    initMap(url_busca);
+                });
+            } else {
+                var idEs = ponto.idEs;
+                var categoria = ponto.categoria;
+                var foto = ponto.foto;
+                var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
+                var nome = ponto.nome;
+                var descricao = ponto.descricao;
+                //var tipoContato = ponto.tipoContato;
+                //var contato = ponto.contato;
+                createMarker(idEs, categoria, foto, latlng, nome, descricao, mapObject, infoWindow);
+                bounds.extend(latlng);
+            }
+        });
+
+    });
+
+    //map.fitBounds(bounds);
+
+    // Draw a circle around the user position to have an idea of the current localization accuracy
+    var circle = new google.maps.Circle({
+        center: userLatLng,
+        radius: 1000,
+        map: mapObject,
+        fillColor: '#6286b8',
+        fillOpacity: 0.5,
+        strokeColor: '#1c3e5e',
+        strokeOpacity: 1.0
+    });
+    mapObject.fitBounds(circle.getBounds());
+
+}
+
+function geolocateUser() {
+    // If the browser supports the Geolocation API
+    if (navigator.geolocation) {
+        var positionOptions = {
+            enableHighAccuracy: true,
+            timeout: 10 * 1000 // 10 seconds
+        };
+        navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, positionOptions);
+    }
+    else
+        document.getElementById("error").innerHTML += "Your browser doesn't support the Geolocation API";
+}
+
+function geolocationError(positionError) {
+    document.getElementById("error").innerHTML += "Error: " + positionError.message + "<br />";
 }
 
 $('#btnLocalizacao').click(function () {
-    initMapLocation();
-});
+    //initMapLocation();
 
+    geolocateUser();
+
+});
 
 
 function initMap(url_busca) {
@@ -211,34 +277,6 @@ function initMap(url_busca) {
 
 initMap(url_busca);
 
-/*function carregarPontos() {
-
- $.getJSON("api/estabelecimento/buscaEstabelecimentoCategoria/2", function( data ) {
- dados = '';
- var data = data.EsCategoria;
- $.each(data, function(index, value){
- dados += "{lat:"+data.lat+","+
- " long:"+data.long+"," +
- " nome:"+data.nome+"," +
- " descricao:"+data.descricao+"," +
- "},";
- });
- //console.log(dados);
- })
- .always(function() {
- // $('.load, .spinner').fadeIn('fast');
- //$('html').addClass('bloquear');
- })
- .done(function() {
- // $('.load, .spinner').fadeOut('fast'); //wow!
- //  $('html').removeClass('bloquear');
- console.log(dados);
- })
- .fail(function() {
- alert("Ops, ocorreu um erro. Tente novamente!");
- });
- }*/
-
 
 function displayMarkers(map, url_busca) {
 
@@ -282,8 +320,6 @@ function displayMarkers(map, url_busca) {
                 var latlng = new google.maps.LatLng(ponto.lat, ponto.long);
                 var nome = ponto.nome;
                 var descricao = ponto.descricao;
-                //var tipoContato = ponto.tipoContato;
-                //var contato = ponto.contato;
                 createMarker(idEs, categoria, foto, latlng, nome, descricao, map, infoWindow);
                 bounds.extend(latlng);
             }

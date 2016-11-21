@@ -14,7 +14,7 @@ class Estabelecimento extends CI_Controller
 
         /** Carregamento de models */
         $this->load->model('EstabelecimentoM', 'estabelecimento');
-
+        $this->load->model('LocalizacaoM', 'localizacao');
     }
 
 
@@ -161,6 +161,39 @@ class Estabelecimento extends CI_Controller
         ];
 
         echo json_encode($this->estabelecimento->gerarRecomendacao($config));
+    }
+
+    public function EsRaio()
+    {
+        $this->output->set_content_type('application/json');
+
+        $getLat = $this->uri->segment(4);
+        $getLong = $this->uri->segment(5);
+
+        $result = $this->localizacao->getEsRaio($getLat, $getLong)->result_array();
+
+        foreach ($result as $valor) {
+
+            $saida[] = [
+                "idEs" => $valor['EsCodEstabelecimento'],
+                "categoria" => $valor['CaNome'],
+                "nome" => $valor['EsNome'],
+                "descricao" => $valor['EsDescricao'],
+                "foto" => $valor['EsFoto'],
+                "lat" => $valor['LoLatitude'],
+                "long" => $valor['LoLongitude'],
+                "telefonePricipal" => $valor['CoTelefonePrincipal'],
+                "facebook" => $valor['CoFacebook'],
+                "site" => $valor['CoSite'],
+                "email" => $valor['CoEmail']
+            ];
+        }
+
+        if (!isset($saida)) {
+            $saida[] = ["vazio" => "Nenhum resultado encontrado!"];
+        }
+
+        echo json_encode($saida);
     }
 
 }

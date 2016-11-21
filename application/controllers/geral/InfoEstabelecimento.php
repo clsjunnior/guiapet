@@ -20,6 +20,7 @@ class InfoEstabelecimento extends CI_Controller
         $this->load->model('HistoricoM', 'historico');
         $this->load->model('TagEstabelecimentoM', 'tagestabelecimento');
         $this->load->model('GaleriaM', 'galeria');
+        $this->load->model('AvaliacaoM', 'avaliacao');
     }
 
 
@@ -50,6 +51,9 @@ class InfoEstabelecimento extends CI_Controller
 
         $dados['galeria'] = $this->galeria->get(['EstabelecimentoCod' => $id])->result_array();
 
+//        $dados['avaliacao'] = $this->avaliacao->getAllBy(['EsCodEstabelecimento' => $id])->result_array();
+        $dados['avaliacao'] = $this->avaliacao->getByIdEs($id)->result_array()[0];
+        
         $dados['title'] = 'Visualizar Estabelecimento';
         $this->load->view('geral/estabelecimentos', $dados);
 
