@@ -46,6 +46,8 @@ class Avaliacao extends CI_Controller
 
         $valores = $this->avaliacao->getAllBy($where)->result_array();
 
+        //var_dump($valores)
+
         foreach ($valores as $valor) {
 
             $saida[] = [
