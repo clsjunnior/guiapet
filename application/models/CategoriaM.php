@@ -9,7 +9,7 @@
 class CategoriaM extends CI_Model
 {
 
-    private $table = 'TB_Categoria';
+    private $table = 'tb_categoria';
 
 
     /**
@@ -35,10 +35,10 @@ class CategoriaM extends CI_Model
 
     public function getCatCount()
     {
-        $this->db->select("TB_Categoria.Nome, count(TB_Estabelecimento.CodEstabelecimento)  as qtd")
-            ->from("TB_Categoria")
-            ->join("TB_Estabelecimento", "TB_Categoria.CodCategoria = TB_Estabelecimento.CategoriaCod", "inner")
-            ->group_by("TB_Categoria.Nome");
+        $this->db->select("tb_categoria.Nome, count(tb_estabelecimento.CodEstabelecimento)  as qtd")
+            ->from("tb_categoria")
+            ->join("tb_estabelecimento", "tb_categoria.CodCategoria = tb_estabelecimento.CategoriaCod", "inner")
+            ->group_by("tb_categoria.Nome");
 
         return $this->db->result_id();
 

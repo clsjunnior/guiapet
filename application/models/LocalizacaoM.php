@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LocalizacaoM extends CI_Model {
 
     private $table = 'tb_localizacao';
-    private $viewEstabelecimentos = 'VW_Estabelecimentos';
+    private $viewEstabelecimentos = 'vw_estabelecimentos';
 
     /**
      * Localização constructor.
