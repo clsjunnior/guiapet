@@ -61,6 +61,7 @@ $('#pesquisaEs').click(function () {
 // pesquisa por avaliacao
 $('#avaliacao').change(function () {
     var nota = $(this).val();
+    console.log(nota);
     url_busca = site_url + "/api/avaliacao/buscaEsAvaliacao/" + nota;
     initMap(url_busca);
     //console.log(nota);
