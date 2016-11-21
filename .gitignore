@@ -1,26 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
 
-application/cache/*
-
-application/logs/*
-
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
-
-
-# IDE Files
-#-------------------------
-/nbproject/
-.idea/*
-
-## Sublime Text cache files
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-*.sublime-workspace
-*.sublime-project
-/ci_sessions/
-/user_guide/
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+/application/config/config.php
 /application/config/database.php
-.idea/
+/user_guide/
+/DB/

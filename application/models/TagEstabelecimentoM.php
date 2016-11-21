@@ -11,7 +11,7 @@ class TagEstabelecimentoM extends CI_Model
 {
 
     private $table = 'tb_tagestabelecimento';
-    private $tableTag = 'TB_Tag';
+    private $tableTag = 'tb_tag';
     //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
 
     /**

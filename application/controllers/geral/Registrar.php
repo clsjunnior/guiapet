@@ -29,12 +29,12 @@ class Registrar extends CI_Controller {
         /** Regras de validação do formulario */
         $this->form_validation->set_rules('nome',  'Nome',   'required|trim|max_length[120]');
         $this->form_validation->set_rules('sexo',  'Sexo',   'required|trim|in_list[M,F]');
-        $this->form_validation->set_rules('email', 'E-mail', 'required|trim|is_unique[TB_Usuario.Email]|max_length[255]',
+        $this->form_validation->set_rules('email', 'E-mail', 'required|trim|is_unique[tb_usuario.Email]|max_length[255]',
             [
                 'is_unique' => 'O e-mail informado já está sendo utilizado.'
             ]);
         $this->form_validation->set_rules('emailc', 'Confirma e-mail', 'required|matches[email]');
-        $this->form_validation->set_rules('login',  'Login',           'required|trim|is_unique[TB_Usuario.Login]|max_length[30]',
+        $this->form_validation->set_rules('login', 'Login', 'required|trim|is_unique[tb_usuario.Login]|max_length[30]',
             [
                 'is_unique' => 'Login informado já está sendo utilizado.'
             ]);

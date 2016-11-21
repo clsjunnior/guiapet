@@ -51,15 +51,15 @@ class Migration_Criar_Vw_Estabelecimentos extends CI_Migration
                 co.Site               AS CoSite,
                 co.Email              AS CoEmail
             FROM
-                TB_Estabelecimento AS es
+                tb_estabelecimento AS es
                 INNER JOIN
-                TB_Categoria AS ca ON es.CategoriaCod = ca.CodCategoria
+                tb_categoria AS ca ON es.CategoriaCod = ca.CodCategoria
                 INNER JOIN
-                TB_Localizacao AS lo ON es.LocalizacaoCod = lo.CodLocalizacao
+                tb_localizacao AS lo ON es.LocalizacaoCod = lo.CodLocalizacao
                 INNER JOIN
-                TB_Usuario AS us ON es.UsuarioCod = us.CodUsuario
+                tb_usuario AS us ON es.UsuarioCod = us.CodUsuario
                 INNER JOIN
-                TB_Contato AS co ON es.ContatoCod = co.CodContato;
+                tb_contato AS co ON es.ContatoCod = co.CodContato;
             "
         );
     }

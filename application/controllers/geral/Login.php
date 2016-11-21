@@ -88,6 +88,8 @@ class Login extends CI_Controller {
 
     public function sair(){
         $this->session->unset_userdata('login');
+        $this->session->unset_userdata('usuario');
+        $this->session->unset_userdata('permissao');
 
         redirect(site_url('login'));
     }

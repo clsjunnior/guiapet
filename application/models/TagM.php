@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TagM extends CI_Model
 {
 
-    private $table = 'TB_Tag';
+    private $table = 'tb_tag';
     //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
 
     /**
@@ -49,7 +49,7 @@ class TagM extends CI_Model
         $this->db->reset_query();
         $this->db->select("tg.Nome, count(tge.CodTagEstabelecimento) as qtd")
             ->from($this->table . " as tg")
-            ->join('TB_TagEstabelecimento as tge', 'tg.CodTag = tge.TagCod', 'left')
+            ->join('tb_tagestabelecimento as tge', 'tg.CodTag = tge.TagCod', 'left')
             ->group_by('tg.Nome');
         return $this->db->get();
     }

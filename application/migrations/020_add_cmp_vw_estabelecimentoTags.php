@@ -53,15 +53,15 @@ class Migration_Add_Cmp_Vw_Estabelecimentotags extends CI_Migration
                 tg.CodTag             AS tgCod,
                 tges.TagCod           as tgesTagCod
             FROM
-                TB_Estabelecimento AS es
+                tb_estabelecimento AS es
                 INNER JOIN
-                TB_Categoria AS ca ON es.CategoriaCod = ca.CodCategoria
+                tb_categoria AS ca ON es.CategoriaCod = ca.CodCategoria
                 INNER JOIN
-                TB_Localizacao AS lo ON es.LocalizacaoCod = lo.CodLocalizacao
+                tb_localizacao AS lo ON es.LocalizacaoCod = lo.CodLocalizacao
                 INNER JOIN
-                TB_Usuario AS us ON es.UsuarioCod = us.CodUsuario
+                tb_usuario AS us ON es.UsuarioCod = us.CodUsuario
                 INNER JOIN
-                TB_Contato AS co ON es.ContatoCod = co.CodContato
+                tb_contato AS co ON es.ContatoCod = co.CodContato
                 LEFT JOIN
                 tb_tagestabelecimento AS tges ON es.CodEstabelecimento = tges.EstabelecimentoCod
                 LEFT JOIN
@@ -107,15 +107,15 @@ class Migration_Add_Cmp_Vw_Estabelecimentotags extends CI_Migration
                 tg.Nome               AS tgNome,
                 tg.CodTag             AS tgCod
             FROM
-                TB_Estabelecimento AS es
+                tb_estabelecimento AS es
                 INNER JOIN
-                TB_Categoria AS ca ON es.CategoriaCod = ca.CodCategoria
+                tb_categoria AS ca ON es.CategoriaCod = ca.CodCategoria
                 INNER JOIN
-                TB_Localizacao AS lo ON es.LocalizacaoCod = lo.CodLocalizacao
+                tb_localizacao AS lo ON es.LocalizacaoCod = lo.CodLocalizacao
                 INNER JOIN
-                TB_Usuario AS us ON es.UsuarioCod = us.CodUsuario
+                tb_usuario AS us ON es.UsuarioCod = us.CodUsuario
                 INNER JOIN
-                TB_Contato AS co ON es.ContatoCod = co.CodContato
+                tb_contato AS co ON es.ContatoCod = co.CodContato
                 LEFT JOIN
                 tb_tagestabelecimento AS tges ON es.CodEstabelecimento = tges.EstabelecimentoCod
                 LEFT JOIN
