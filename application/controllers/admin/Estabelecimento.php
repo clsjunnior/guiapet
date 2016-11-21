@@ -144,7 +144,6 @@ class Estabelecimento extends CI_Controller
             $dados['erros'][] = validation_errors();
         }
 
-        var_dump($dados);
         /** Retorna todas as categorias no formato de objetos */
         $dados['categories'] = $this->categoria->getAll()->result();
 
