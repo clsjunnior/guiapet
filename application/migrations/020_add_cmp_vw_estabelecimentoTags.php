@@ -53,7 +53,7 @@ class Migration_Add_Cmp_Vw_Estabelecimentotags extends CI_Migration
                 tg.CodTag             AS tgCod,
                 tges.TagCod           as tgesTagCod
             FROM
-                tb_Estabelecimento AS es
+                tb_estabelecimento AS es
                 INNER JOIN
                 tb_categoria AS ca ON es.CategoriaCod = ca.CodCategoria
                 INNER JOIN
