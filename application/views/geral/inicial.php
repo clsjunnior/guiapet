@@ -32,9 +32,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<li><a href="index.php/dashboard"><span class="fa fa-user"
 																	style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
 								</a></li>
+							<input type="hidden" value="<?= getSesUser(['CodUsuario']) ?>" id="verificaUser"/>
 						<?php else: ?>
 							<li><a href="index.php/login"><span class="fa fa-lock" style="margin-right: 5px;"></span>
 									Login</a></li>
+							<input type="hidden" value="null" id="verificaUser"/>
 						<?php endif; ?>
 					</ul>
 				</div><!-- /.navbar-collapse -->
@@ -58,18 +60,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="row">
 		<div class="container">
 			<!-- owl carousel -->
-			<h3>Pessoas na sua região também pesquisaram...</h3>
+			<h3>Você tambem pode estar interessado nos itens abaixo...</h3>
 			<div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
-				<a class="label label-primary item label-recomendacao">Recomendação 01</a>
-				<a class="label label-primary item label-recomendacao">Recomendação 02</a>
-				<a class="label label-primary item label-recomendacao">Recomendação 03</a>
-				<a class="label label-primary item label-recomendacao">Recomendação 04</a>
-				<a class="label label-primary item label-recomendacao">Recomendação 05</a>
-				<a class="label label-primary item label-recomendacao">Recomendação 06</a>
+				<div id="recomendacao"></div>
+				<!--				<a class="label label-primary item label-recomendacao">Recomendação 01</a>-->
+				<!--				<a class="label label-primary item label-recomendacao">Recomendação 02</a>-->
+				<!--				<a class="label label-primary item label-recomendacao">Recomendação 03</a>-->
+				<!--				<a class="label label-primary item label-recomendacao">Recomendação 04</a>-->
+				<!--				<a class="label label-primary item label-recomendacao">Recomendação 05</a>-->
+				<!--				<a class="label label-primary item label-recomendacao">Recomendação 06</a>-->
 			</div>
+			<h3 style="text-align: right;">Clique e conheça esses estabelecimentos!</h3>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" style="margin-top:20px">
 		<!--<div class="col-lg-12 col-md-12 col-xs-12">
 			<div class="navbar navbar-default">
 				<a href="#" id="testeOff">Teste</a>
@@ -288,10 +292,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
 		};
 
-		//		$(document).ready(function () {
-		//			$("#estabelecimento-busca").easyAutocomplete(pesquisaEstabelecimento);
-		//		});
-
 		$("#estabelecimento-busca").easyAutocomplete(pesquisaEstabelecimento);
 
         /** verifica se o campo de estabelecimento esta preenchido para poder acionar o botao
@@ -316,6 +316,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			theme: 'fontawesome-stars'
 		});
 
+		$.getJSON(site_url + "/api/Estabelecimento/recomendacao/" + $('#verificaUser').val(), function (resultados) {
+			var result = " ";
+
+			$.each(resultados, function (index, resp) {
+				var href = site_url + "/estabelecimento/" + resp.CodEstabelecimento;
+				result += '<a class="label label-primary item label-recomendacao" href="' + href + '">' + resp.Nome + '</a>';
+			});
+			// atribui no campo de tag
+			$("#recomendacao").html(result);
+		});
 
 	</script>
 </body>

@@ -151,16 +151,41 @@ class Estabelecimento extends CI_Controller
     {
         $this->output->set_content_type('application/json');
 
+        $user = $this->uri->segment(4);
+        $tags = explode('-', $this->uri->segment(5));
+        $categorias = $this->uri->segment(4);
+
         $config = [
-            'idUser' => 0,           // ID do usuario para realizar recomendação pelo seu historico
+            'idUser' => $user,           // ID do usuario para realizar recomendação pelo seu historico
             'historicoCatQtde' => 0, // Quantidade de registros que vai se basear para categoria
-            'historicoTagQtde' => 0, // Quantidade de registros que vai se basear para tags
-            'totalResult' => 0,      // Total de resultados
+            'historicoTagQtde' => 8, // Quantidade de registros que vai se basear para tags
+            'totalResult' => 8,      // Total de resultados
             'listTags' => [],        // Lista de ID de TAGS
             'listCategorias' => [],  // Lista de ID de Categorias
         ];
 
         echo json_encode($this->estabelecimento->gerarRecomendacao($config));
+
+    }
+
+    public function recomendacaoTags()
+    {
+        $this->output->set_content_type('application/json');
+
+        $tags = explode('-', $this->uri->segment(4));
+        $categorias = $this->uri->segment(4);
+
+        $config = [
+            'idUser' => '',           // ID do usuario para realizar recomendação pelo seu historico
+            'historicoCatQtde' => 0, // Quantidade de registros que vai se basear para categoria
+            'historicoTagQtde' => 8, // Quantidade de registros que vai se basear para tags
+            'totalResult' => 8,      // Total de resultados
+            'listTags' => $tags,        // Lista de ID de TAGS
+            'listCategorias' => [],  // Lista de ID de Categorias
+        ];
+
+        echo json_encode($this->estabelecimento->gerarRecomendacao($config));
+
     }
 
     public function EsRaio()

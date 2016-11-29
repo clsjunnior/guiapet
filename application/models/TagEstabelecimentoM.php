@@ -45,7 +45,7 @@ class TagEstabelecimentoM extends CI_Model
     }
 
     public function gtNmTagByEstabelecimento($estabelecimentoID){
-        return $this->db->select("Nome")
+        return $this->db->select("TagCod, Nome")
             ->from($this->tableTag. " as t")
             ->join($this->table." as te", "t.CodTag = te.TagCod", "inner")
             ->where("te.EstabelecimentoCod", $estabelecimentoID)

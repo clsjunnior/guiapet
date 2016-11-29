@@ -58,6 +58,15 @@ $('#pesquisaEs').click(function () {
     initMap(url_busca);
 });
 
+//busca pelo clique na recomendacao
+$('.item-recomendacao').click(function () {
+    var idEsRecomendacao = $(this).attr('data-id-recomendacao');
+
+    url_busca = site_url + "/api/estabelecimento/buscaEstabelecimentoId/" + idEsRecomendacao;
+    initMap(url_busca);
+    console.log(idEsRecomendacao);
+});
+
 // pesquisa por avaliacao
 $('#avaliacao').change(function () {
     var nota = $(this).val();
@@ -70,11 +79,9 @@ $('#avaliacao').change(function () {
 // pesquisa por tags
 $('#pesquisaEsTag').click(function () {
     var tags = $('#tag').attr('data-tag-id');
-    var tg = tags.replace(",", "-");
+    var tg = tags.replace(/,/g, "-");
     url_busca = site_url + "/api/tagsEstabelecimento/buscatges/" + tg;
     initMap(url_busca);
-    // melhorar para nao pesquisar tags em branco ou estabelecimentos sem tag
-    
 });
 
 
