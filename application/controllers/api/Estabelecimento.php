@@ -155,7 +155,9 @@ class Estabelecimento extends CI_Controller
             'idUser' => 0,           // ID do usuario para realizar recomendação pelo seu historico
             'historicoCatQtde' => 0, // Quantidade de registros que vai se basear para categoria
             'historicoTagQtde' => 0, // Quantidade de registros que vai se basear para tags
+
             'totalResult' => 0,      // Total de resultados
+
             'listTags' => [],        // Lista de ID de TAGS
             'listCategorias' => [],  // Lista de ID de Categorias
         ];
