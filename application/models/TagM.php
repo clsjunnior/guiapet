@@ -11,7 +11,8 @@ class TagM extends CI_Model
 {
 
     private $table = 'tb_tag';
-    //private $viewEstabelecimentos = 'VW_Estabelecimentos2';
+    private $tableEs = 'tb_tagestabelecimento';
+
 
     /**
      * Estabelecimento constructor.
@@ -39,9 +40,15 @@ class TagM extends CI_Model
      * @param array $where
      * @return CI_DB_result
      */
-    public function getAllBy($where = array())
+    public function getAllBy()
     {
-        return $this->db->get_where($this->table, $where);
+//        return $this->db->get_where($this->table, $where);
+        $this->db->reset_query();
+        $this->db->select("tg.Nome, tg.CodTag")
+            ->from($this->table . " as tg")
+            ->join('tb_tagestabelecimento as tge', 'tg.CodTag = tge.TagCod')
+            ->group_by('tg.Nome');
+        return $this->db->get();
     }
 
     public function getAllCount()

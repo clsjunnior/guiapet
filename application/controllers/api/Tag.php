@@ -25,7 +25,7 @@ class Tag extends CI_Controller
 //            "UsNome" => $this->uri->segment(5),
 //        ];
 
-        $valores = $this->tag->getAllBy($where)->result_array();
+        $valores = $this->tag->getAllBy()->result_array();
 
 
         foreach ($valores as $valor) {
