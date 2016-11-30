@@ -7,7 +7,7 @@ class EstabelecimentoM extends CI_Model
     private $table = 'tb_estabelecimento';
     private $tableTagEstabelecimento = 'tb_tagestabelecimento';
     private $tableTag = 'tb_tag';
-    private $viewEstabelecimentos = 'VW_Estabelecimentos';
+    private $viewEstabelecimentos = 'vw_estabelecimentos';
 
     /**
      * Estabelecimento constructor.

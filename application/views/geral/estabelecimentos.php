@@ -29,12 +29,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
                     <?php if (getSesUser(['Login'])): ?>
-                        <li><a href="../dashboard"><span class="fa fa-user"
-                                                         style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
+                        <li><a href="<?= site_url('dashboard') ?>"><span class="fa fa-user"
+                                                                         style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
                             </a></li>
                         <input type="hidden" value="<?= getSesUser(['CodUsuario']) ?>" id="verificaUser"/>
                     <?php else: ?>
-                        <li><a href="../login"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a>
+                        <li><a href="<?= site_url('dashboard') ?>"><span class="fa fa-lock"
+                                                                         style="margin-right: 5px;"></span> Login</a>
                         </li>
                         <input type="hidden" value="null" id="verificaUser"/>
                     <?php endif; ?>
