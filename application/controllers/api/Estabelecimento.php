@@ -152,8 +152,6 @@ class Estabelecimento extends CI_Controller
         $this->output->set_content_type('application/json');
 
         $user = $this->uri->segment(4);
-        $tags = explode('-', $this->uri->segment(5));
-        $categorias = $this->uri->segment(4);
 
         $config = [
             'idUser' => $user,           // ID do usuario para realizar recomendação pelo seu historico
@@ -173,7 +171,6 @@ class Estabelecimento extends CI_Controller
         $this->output->set_content_type('application/json');
 
         $tags = explode('-', $this->uri->segment(4));
-        $categorias = $this->uri->segment(4);
 
         $config = [
             'idUser' => '',           // ID do usuario para realizar recomendação pelo seu historico
