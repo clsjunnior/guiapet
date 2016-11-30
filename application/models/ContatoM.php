@@ -9,7 +9,7 @@
 class ContatoM extends CI_Model
 {
 
-    private $table = 'TB_Contato';
+    private $table = ' 	tb_contato';
 
 
     /**

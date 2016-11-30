@@ -25,8 +25,8 @@ class AvaliacaoM extends CI_Model
 
         $this->db->reset_query();
         $this->db->select("e.Nome, round(avg(a.Nota)) as media")
-            ->from("TB_Avaliacao as a")
-            ->join("TB_Estabelecimento as e", "a.EstabelecimentoCod = e.CodEstabelecimento", "inner")
+            ->from("tb_avaliacaoas a")
+            ->join("tb_estabelecimento as e", "a.EstabelecimentoCod = e.CodEstabelecimento", "inner")
             ->where("e.CodEstabelecimento", $id);
 
         return $this->db->get();
