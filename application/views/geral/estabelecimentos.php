@@ -32,9 +32,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <li><a href="../dashboard"><span class="fa fa-user"
                                                          style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
                             </a></li>
+                        <input type="hidden" value="<?= getSesUser(['CodUsuario']) ?>" id="verificaUser"/>
                     <?php else: ?>
                         <li><a href="../login"><span class="fa fa-lock" style="margin-right: 5px;"></span> Login</a>
                         </li>
+                        <input type="hidden" value="null" id="verificaUser"/>
                     <?php endif; ?>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -44,14 +46,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="container">
         <!-- owl carousel -->
-        <h3>Pessoas na sua região também pesquisaram...</h3>
+        <h3>Estabelecimentos com serviços semelhantes a esse!!</h3>
         <div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
-            <a class="label label-primary item label-recomendacao">Recomendação 01</a>
-            <a class="label label-primary item label-recomendacao">Recomendação 02</a>
-            <a class="label label-primary item label-recomendacao">Recomendação 03</a>
-            <a class="label label-primary item label-recomendacao">Recomendação 04</a>
-            <a class="label label-primary item label-recomendacao">Recomendação 05</a>
-            <a class="label label-primary item label-recomendacao">Recomendação 06</a>
+            <div id="recomendacaoEs" data-tags-id=""></div>
         </div>
     </div>
 </div>
@@ -458,8 +455,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     /*busca tags do estabelecimento*/
     var url_tag = "../api/tagsEstabelecimento/buscaTagEs/" + <?=$estabelecimento->EsCodEstabelecimento?>;
+    var id_tags = [];
 
     $.getJSON(url_tag, function (resultados) {
+
         var tags = " ";
         $.each(resultados, function (index, resp) {
             var nenhumResultado = resp.vazio;
@@ -467,10 +466,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 tags += "Nenhuma Tag adicionada!";
             } else {
                 tags += '<span class="label label-primary label-tag">' + resp.tagNome + '</span>';
+                id_tags.push(resp.TagCod);
             }
         });
         $("#tagsEs").html(tags);
+
+        $("#recomendacaoEs").attr('data-tags-id', id_tags);
+        var tagsSelecionadas = $('#recomendacaoEs').attr('data-tags-id');
+        var tagsFormat = tagsSelecionadas.replace(/,/g, "-");
+        var url_recomendacao = site_url + "/api/Estabelecimento/recomendacaoTags/" + tagsFormat + "";
+
+        $.getJSON(url_recomendacao, function (resultados) {
+            var result = " ";
+
+            $.each(resultados, function (index, resp) {
+                var href = site_url + "/estabelecimento/" + resp.CodEstabelecimento;
+                result += '<a class="label label-primary item label-recomendacao" href="' + href + '">' + resp.Nome + '</a>';
+            });
+            // atribui no campo de tag
+            $("#recomendacaoEs").html(result);
+        });
+
     });
+
 
     $(".fancybox").fancybox({
         openEffect: 'none',

@@ -55,6 +55,7 @@ class TagEstabelecimento extends CI_Controller
         foreach ($valores as $valor) {
 
             $saida[] = [
+                "TagCod" => $valor['TagCod'],
                 "tagNome" => $valor['Nome']
             ];
         }
