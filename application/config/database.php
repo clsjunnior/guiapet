@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-    'hostname' => 'mysql.hostinger.com.br',
-    'username' => 'u996085135_guia',
-    'password' => 'guiapet',
-    'database' => 'u996085135_guia',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'guiapet',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
