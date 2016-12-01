@@ -15,7 +15,7 @@
 
         <section class="content-header">
             <h1>
-                Estabelecimentos
+                Estabelecimentos Cadastrados
             </h1>
             <ol class="breadcrumb">
                 <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-home"></i> Inicio</a></li>
@@ -29,7 +29,7 @@
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Lista</h3>
+                    <h3 class="box-title">Lista de Estabelecimentos</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -41,8 +41,9 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-xs-12 text-right">
-                            <a role="button" class="btn btn-success" type="button"
-                               href="<?= site_url('dashboard/estabelecimentos/novo') ?>">Novo</a>
+                            <a role="button" class="btn btn-success " type="button"
+                               href="<?= site_url('dashboard/estabelecimentos/novo') ?>">Cadastrar Novo
+                                Estabelecimento</a>
                         </div>
                     </div>
                     <br>
