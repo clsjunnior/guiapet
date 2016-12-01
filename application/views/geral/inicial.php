@@ -34,7 +34,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</a></li>
 							<input type="hidden" value="<?= getSesUser(['CodUsuario']) ?>" id="verificaUser"/>
 						<?php else: ?>
-							<li><a href="index.php/login"><span class="fa fa-lock" style="margin-right: 5px;"></span>
+							<li><a href="<?= site_url('dashboard') ?>"><span class="fa fa-lock"
+																			 style="margin-right: 5px;"></span>
 									Login</a></li>
 							<input type="hidden" value="null" id="verificaUser"/>
 						<?php endif; ?>
@@ -63,22 +64,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<h3>Você tambem pode estar interessado nos itens abaixo...</h3>
 			<div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
 				<div id="recomendacao"></div>
-				<!--				<a class="label label-primary item label-recomendacao">Recomendação 01</a>-->
-				<!--				<a class="label label-primary item label-recomendacao">Recomendação 02</a>-->
-				<!--				<a class="label label-primary item label-recomendacao">Recomendação 03</a>-->
-				<!--				<a class="label label-primary item label-recomendacao">Recomendação 04</a>-->
-				<!--				<a class="label label-primary item label-recomendacao">Recomendação 05</a>-->
-				<!--				<a class="label label-primary item label-recomendacao">Recomendação 06</a>-->
 			</div>
 			<h3 style="text-align: right;">Clique e conheça esses estabelecimentos!</h3>
 		</div>
 	</div>
 	<div class="row" style="margin-top:20px">
-		<!--<div class="col-lg-12 col-md-12 col-xs-12">
-			<div class="navbar navbar-default">
-				<a href="#" id="testeOff">Teste</a>
-			</div>
-		</div>-->
+
 		<div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
             <div class="panel panel-default panel-inicial">
 				<div class="panel-heading">

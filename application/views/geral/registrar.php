@@ -19,18 +19,29 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .login-page, .register-page {
+            background: #0b2646;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="<?=site_url()?>"><b>Guia</b>Pet</a>
+        <!--        <a href="--><? //=site_url()?><!--"><b>Guia do </b>Pet</a>-->
+        <a href="<?= site_url() ?>">
+            <img src="<?= base_url('assets/third_party/logo/logo-branco.png') ?>"
+                 style="width: 90%; margin-bottom: 20px;">
+        </a>
     </div>
 
     <div class="register-box-body">
         <!--        <p class="login-box-msg">-->
         <h2 class="text-center" data-toggle="collapse" href="#bemVindoCll" aria-expanded="false" style="cursor: pointer">
-            Cadastro
+            Cadastre-se
         </h2>
+        <p style="text-align: center">Faça parte do Guia do Pet!</p>
+        <hr>
         <!--        </p>-->
         <p class="collapse" id="bemVindoCll">
             Bem vindo! <br>
@@ -104,7 +115,7 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Quero me Cadastrar</button>
                 </div>
             </div>
         </form>
