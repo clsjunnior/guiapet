@@ -34,8 +34,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</a></li>
 							<input type="hidden" value="<?= getSesUser(['CodUsuario']) ?>" id="verificaUser"/>
 						<?php else: ?>
-							<li><a href="<?= site_url('dashboard') ?>"><span class="fa fa-lock"
-																			 style="margin-right: 5px;"></span>
+                            <li><a href="<?= site_url('dashboard') ?>"><span class="fa fa-lock"
+                                                                             style="margin-right: 5px;"></span>
 									Login</a></li>
 							<input type="hidden" value="null" id="verificaUser"/>
 						<?php endif; ?>
@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 	<div class="row" style="margin-top:20px">
 
-		<div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
+        <div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
             <div class="panel panel-default panel-inicial">
 				<div class="panel-heading">
 					<h3>Opções de Pesquisa</h3>

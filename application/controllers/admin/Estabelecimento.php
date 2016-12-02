@@ -260,7 +260,6 @@ class Estabelecimento extends CI_Controller
             $dados['erros'][] = validation_errors();
         }
 
-        var_dump($this->estabelecimentoP);
         /** Retorna todas as categorias no formato de objetos */
         $dados['categories'] = $this->categoria->getAll()->result();
         $this->load->view('admin/editar_estabelecimento', $dados);

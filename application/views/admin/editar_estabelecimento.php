@@ -147,7 +147,7 @@
                 </div>
 
                 <?php $this->load->view('admin/layout/fragmentos/box_localizacao') ?>
-                <button class="btn btn-block btn-success btn-lg" type="submit" value="cadastro">Cadastar</button>
+                <button class="btn btn-block btn-success btn-lg" type="submit" value="cadastro">Editar</button>
             </form>
         </section>
 
