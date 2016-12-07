@@ -53,9 +53,9 @@ footer{
     background-color: #1c3e5e;
 }
 .menu-recomendacoes{
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 20px;
     text-align: center;
+    overflow: hidden;
 }
 
 .label-recomendacao {
@@ -63,6 +63,7 @@ footer{
     font-size: 1em;
     margin: 5px;
     background-color: #6286b8;
+    line-height: 4em;
 }
 
 .label-tag {
@@ -486,3 +487,62 @@ a:hover{
 }
 
 /*fim icones*/
+#owl-galeria .item {
+    margin: 5px;
+}
+
+#owl-galeria .item img {
+    display: block;
+    width: 90%;
+    height: auto;
+}
+
+/* Telefones em landscape e abaixo */
+@media (max-width: 480px) {
+    .banner-inicio {
+        height: 100px;
+    }
+
+    .banner-inicio > img {
+        width: 60%;
+        margin-left: 20%;
+        margin-top: 5px;
+    }
+
+    .sub-menu {
+        display: none;
+    }
+
+    #owl-submenu {
+        display: block;
+    }
+
+    .panel-inicial {
+        height: auto;
+    }
+
+    .menu-lateral {
+        margin-bottom: 0px;
+    }
+}
+
+/* Telefone em landscape a tablet em portrait */
+@media (max-width: 767px) {
+    #owl-submenu {
+        display: block;
+    }
+}
+
+/* tablet em portrait a landscape e desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    #owl-submenu {
+        display: block;
+    }
+}
+
+/* Desktop grande */
+@media (min-width: 1200px) {
+    #owl-submenu {
+        display: block;
+    }
+}

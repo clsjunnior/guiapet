@@ -28,7 +28,9 @@
     <!-- easy autocomplete -->
     <link rel="stylesheet" href="<?=base_url('assets/plugins/easyAutoComplete/easy-autocomplete.min.css')?>">
     <!-- owl -->
-    <link rel="stylesheet" href="<?=base_url('assets/plugins/owlCarousel/owl.carousel.min.css')?>">
+    <!--    <link rel="stylesheet" href="--><? //=base_url('assets/plugins/owlCarousel/owl.carousel.css')?><!--">-->
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/owlCarousel2/owl.carousel.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/owlCarousel2/owl.theme.css') ?>">
     <!-- fancybox -->
     <link rel="stylesheet" href="<?= base_url('assets/plugins/fancybox/jquery.fancybox.css') ?>">
     <!-- Estilo -->

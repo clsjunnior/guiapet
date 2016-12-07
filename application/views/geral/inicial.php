@@ -58,12 +58,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</div>
 	</div>
+	<!--	<div id="owl-submenu" class="owl-carousel owl-theme hi-icon-wrap hi-icon-effect-8" style="background-color: #1c3e5e;">-->
+	<!--		<a href="#" data-id="iconVeterinario" class="hi-icon icon-veterinario iconBusca item"></a>-->
+	<!--		<a href="#" data-id="iconPet" class="hi-icon icon-petshop iconBusca item"></a>-->
+	<!--		<a href="#" data-id="iconHotel" class="hi-icon icon-hotel iconBusca item"></a>-->
+	<!--		<a href="#" data-id="iconAdestrador" class="hi-icon icon-adestrador iconBusca item"></a>-->
+	<!--		<a href="#" data-id="iconTaxi" class="hi-icon icon-taxi iconBusca item"></a>-->
+	<!--		<a href="#" data-id="todos" class="hi-icon icon-localizacao iconBusca item"></a>-->
+	<!--	</div>-->
 	<div class="row">
 		<div class="container">
-			<!-- owl carousel -->
 			<h3>Você tambem pode estar interessado nos itens abaixo...</h3>
-			<div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
-				<div id="recomendacao"></div>
+			<!--			<div class="col-lg-12">-->
+			<!--				<div id="owl-demo" class="owl-carousel owl-theme menu-recomendacoes">-->
+			<!--					<div id="recomendacao"></div>-->
+			<!--				</div>-->
+			<div id="recomendacao" class="owl-carousel menu-recomendacoes">
 			</div>
 			<h3 style="text-align: right;">Clique e conheça esses estabelecimentos!</h3>
 		</div>
@@ -131,6 +141,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 					</form>
 				</div>
+
 			</div>
 		</div>
 		<div class="col-lg-9 col-md-8 col-xs-12" style="padding: 0px">
@@ -195,23 +206,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 	<script>
-		
-		$('.owl-carousel').owlCarousel({
-			loop:false,
-			margin:10,
-			nav:false,
-			responsive:{
-				0:{
-					items:1
-				},
-				600:{
-					items:3
-				},
-				1000:{
-					items:6
-				}
+
+		//		$('.owl-carousel').owlCarousel({
+		//			loop:true,
+		//			items:1,
+		//			margin:10,
+		//			nav:false,
+		//			responsive:{
+		//				0:{
+		//					items:1,
+		//					loop: false,
+		//					autoplay: true,
+		//					autoplayTimeout: 1000
+		//				},
+		//				600:{
+		//					items:2
+		//				},
+		//				1000:{
+		//					items:6
+		//				}
+		//			}
+		//        });
+
+		$("#recomendacao").owlCarousel({
+			jsonPath: site_url + "/api/Estabelecimento/recomendacao/" + $('#verificaUser').val(),
+			jsonSuccess: customDataSuccess,
+			items: 6, //10 items above 1000px browser width
+			itemsDesktop: [1000, 6], //5 items between 1000px and 901px
+			itemsDesktopSmall: [900, 4], // betweem 900px and 601px
+			itemsTablet: [600, 2], //2 items between 600 and 0;
+			autoHeight: true,
+			itemsMobile: true
+		});
+
+		function customDataSuccess(data) {
+			var content = "";
+			for (var i in data) {
+				var href = site_url + "/estabelecimento/" + data[i].CodEstabelecimento;
+				var nome = data[i].Nome;
+
+				content += '<a class="label label-primary label-recomendacao" href="' + href + '">' + nome + '</a>'
 			}
-        });
+			$("#recomendacao").html(content);
+		}
+
+		$("#owl-submenu").owlCarousel({
+			items: 6, //10 items above 1000px browser width
+			itemsDesktop: [1000, 5], //5 items between 1000px and 901px
+			itemsDesktopSmall: [900, 3], // betweem 900px and 601px
+			itemsTablet: [600, 3], //2 items between 600 and 0;
+			itemsMobile: true // itemsMobile disabled - inherit from itemsTablet option
+		});
+
 
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
@@ -307,16 +353,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			theme: 'fontawesome-stars'
 		});
 
-		$.getJSON(site_url + "/api/Estabelecimento/recomendacao/" + $('#verificaUser').val(), function (resultados) {
-			var result = " ";
+		//		$.getJSON(site_url + "/api/Estabelecimento/recomendacao/" + $('#verificaUser').val(), function (resultados) {
+		//			var result = " ";
+		//
+		//			$.each(resultados, function (index, resp) {
+		//				var href = site_url + "/estabelecimento/" + resp.CodEstabelecimento;
+		//				result += '<div class="item"><a class="label label-primary label-recomendacao" href="' + href + '">' + resp.Nome + '</a></div>';
+		//			});
+		//			// atribui no campo de tag
+		//			$("#recomendacao").html(result);
+		//		});
 
-			$.each(resultados, function (index, resp) {
-				var href = site_url + "/estabelecimento/" + resp.CodEstabelecimento;
-				result += '<a class="label label-primary item label-recomendacao" href="' + href + '">' + resp.Nome + '</a>';
-			});
-			// atribui no campo de tag
-			$("#recomendacao").html(result);
-		});
 
 	</script>
 </body>
