@@ -287,26 +287,18 @@ initMap(url_busca);
 
 
 function displayMarkers(map, url_busca) {
-
-    // esta variável vai definir a área de mapa a abranger e o nível do zoom
-    // de acordo com as posições dos marcadores
     var bounds = new google.maps.LatLngBounds();
-
     var infoWindow;
     infoWindow = new google.maps.InfoWindow({
         maxWidth: 350
     });
 
-
-    // evento que fecha a infoWindow com click no mapa
     google.maps.event.addListener(map, 'click', function() {
         infoWindow.close();
     });
-
     ModificaInfowindow(infoWindow);
 
     $.getJSON(url_busca, function (pontos) {
-
         $.each(pontos, function (index, ponto) {
             var nenhumResultado = ponto.vazio;
             if (typeof(nenhumResultado) != "undefined") {
@@ -332,15 +324,8 @@ function displayMarkers(map, url_busca) {
                 bounds.extend(latlng);
             }
         });
-
     });
-
-    // Depois de criados todos os marcadores
-    // a API através da sua função fitBounds vai redefinir o nível do zoom
-    // Add a marker clusterer to manage the markers.
     map.fitBounds(bounds);
-    // map.setCenter({lat: -21.673253, lng: -49.747381}); // centraliza depois q pesquisa
-    // map.setZoom(14);
 }
 
 // Função que cria os marcadores e define o conteúdo de cada Info Window.

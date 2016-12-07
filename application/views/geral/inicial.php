@@ -69,10 +69,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 	</div>
 	<div class="row" style="margin-top:20px">
-<<<<<<< HEAD
-=======
-
->>>>>>> 4a27e55a159ae41525e2bc266ffa5fee0f13c18d
 		<div class="col-lg-3 col-md-4 col-xs-12 menu-lateral">
             <div class="panel panel-default panel-inicial">
 				<div class="panel-heading">
