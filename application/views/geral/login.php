@@ -19,11 +19,19 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .login-page, .register-page {
+            background: #0b2646;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="<?=site_url()?>"><b>Guia</b>Pet</a>
+        <a href="<?= site_url() ?>">
+            <img src="<?= base_url('assets/third_party/logo/logo-branco.png') ?>"
+                 style="width: 90%; margin-bottom: 20px;">
+        </a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
