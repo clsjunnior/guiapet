@@ -3,7 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!--Header-->
 	<?php $this->load->view('geral/layout/header') ?>
+
 <body>
+<!-- loader -->
+<div class="loader">
+    <div class="loader-inner ball-triangle-path">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!-- fim loader -->
 	<div class="row">
 		<div class="banner-inicio">
 			<img src="<?=base_url('assets/third_party/logo/logo-branco.png')?>">
@@ -24,10 +34,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="#"><span class="fa fa-map-marker" style="margin-right: 5px;"></span> Mapa</a></li>
+						<li><a href="<?= site_url()?>"><span class="fa fa-map-marker" style="margin-right: 5px;"></span> Mapa</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href=""><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
+						<li><a href="<?= site_url('contato')?>"><span class="fa fa-phone" style="margin-right: 5px;"></span> Contato</a></li>
 						<?php if (getSesUser(['Login'])): ?>
 							<li><a href="<?= site_url('dashboard') ?>"><span class="fa fa-user"
 																			 style="margin-right: 5px;"></span> <?= getSesUser(['Login']) ?>
@@ -206,6 +216,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 	<script>
+
 
 		//		$('.owl-carousel').owlCarousel({
 		//			loop:true,

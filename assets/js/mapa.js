@@ -1,6 +1,24 @@
 /**
  * Created by Windows 10 on 07/09/2016.
  */
+/*Loading*/
+function loading(status) {
+    if ( status == 1 ){
+        $('.loader, .loader-inner').fadeIn('fast');
+        $("hmtl, body").css({
+            'height' : $(window).height() + 'px',
+            'width' : $(window).width() + 'px',
+            'overflow' : 'hidden'
+        });
+    }
+    else{
+        $('.loader, .loader-inner').fadeOut('fast'); //wow!
+    }
+}
+$(window).load(function() { // Quando a página estiver carregada
+    loading(0); // Esconder o loading
+});
+/**/
 // busca por categoria - icones
 var url_busca = site_url + "/api/estabelecimentos/buscaTotal/";
 $('.iconBusca').on('click', function () {

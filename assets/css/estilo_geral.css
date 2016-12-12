@@ -526,6 +526,162 @@ a:hover{
     }
 }
 
+
+/*loader*/
+/*loader*/
+.loader{
+    z-index: 1999;
+    /* text-align: center; */
+    display: block;
+    /* margin: 0 auto; */
+    height: 140%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    position: fixed;
+}
+.loader-inner{
+    margin-left: 50%;
+    margin-top: 40vh;
+    display: block;
+}
+@-webkit-keyframes ball-triangle-path-1 {
+    33% {
+        -webkit-transform: translate(25px, -50px);
+        transform: translate(25px, -50px); }
+
+    66% {
+        -webkit-transform: translate(50px, 0px);
+        transform: translate(50px, 0px); }
+
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px); } }
+
+@keyframes ball-triangle-path-1 {
+    33% {
+        -webkit-transform: translate(25px, -50px);
+        transform: translate(25px, -50px); }
+
+    66% {
+        -webkit-transform: translate(50px, 0px);
+        transform: translate(50px, 0px); }
+
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px); } }
+
+@-webkit-keyframes ball-triangle-path-2 {
+    33% {
+        -webkit-transform: translate(25px, 50px);
+        transform: translate(25px, 50px); }
+
+    66% {
+        -webkit-transform: translate(-25px, 50px);
+        transform: translate(-25px, 50px); }
+
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px); } }
+
+@keyframes ball-triangle-path-2 {
+    33% {
+        -webkit-transform: translate(25px, 50px);
+        transform: translate(25px, 50px); }
+
+    66% {
+        -webkit-transform: translate(-25px, 50px);
+        transform: translate(-25px, 50px); }
+
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px); } }
+
+@-webkit-keyframes ball-triangle-path-3 {
+    33% {
+        -webkit-transform: translate(-50px, 0px);
+        transform: translate(-50px, 0px); }
+
+    66% {
+        -webkit-transform: translate(-25px, -50px);
+        transform: translate(-25px, -50px); }
+
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px); } }
+
+@keyframes ball-triangle-path-3 {
+    33% {
+        -webkit-transform: translate(-50px, 0px);
+        transform: translate(-50px, 0px); }
+
+    66% {
+        -webkit-transform: translate(-25px, -50px);
+        transform: translate(-25px, -50px); }
+
+    100% {
+        -webkit-transform: translate(0px, 0px);
+        transform: translate(0px, 0px); } }
+
+.ball-triangle-path {
+    position: relative;
+    -webkit-transform: translate(-29.994px, -37.50938px);
+    -ms-transform: translate(-29.994px, -37.50938px);
+    transform: translate(-29.994px, -37.50938px); }
+.ball-triangle-path > div:nth-child(1) {
+    -webkit-animation-name: ball-triangle-path-1;
+    animation-name: ball-triangle-path-1;
+    -webkit-animation-delay: 0;
+    animation-delay: 0;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite; }
+.ball-triangle-path > div:nth-child(2) {
+    -webkit-animation-name: ball-triangle-path-2;
+    animation-name: ball-triangle-path-2;
+    -webkit-animation-delay: 0;
+    animation-delay: 0;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite; }
+.ball-triangle-path > div:nth-child(3) {
+    -webkit-animation-name: ball-triangle-path-3;
+    animation-name: ball-triangle-path-3;
+    -webkit-animation-delay: 0;
+    animation-delay: 0;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite; }
+.ball-triangle-path > div {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+}
+.ball-triangle-path > div:nth-of-type(1) {
+    top: 50px;
+    background-color: #6286b8;
+}
+.ball-triangle-path > div:nth-of-type(2) {
+    left: 25px;
+    background-color: #FFFFFF;
+}
+.ball-triangle-path > div:nth-of-type(3) {
+    top: 50px;
+    left: 50px;
+    background-color: #1C3E5E;
+}
+
 /* Telefone em landscape a tablet em portrait */
 @media (max-width: 767px) {
     #owl-submenu {
