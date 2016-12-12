@@ -26,7 +26,7 @@ class EstabelecimentoM extends CI_Model
     public function getById($id)
     {
 
-        return $this->db->get_where($this->table, array('CodEstabelecimento' => $id));
+        return $this->db->get_where($this->table, ['CodEstabelecimento' => $id]);
     }
 
     /**
@@ -122,7 +122,7 @@ class EstabelecimentoM extends CI_Model
      *           ]
      *
      * @param array $config
-     * @return CI_DB_result
+     * @return array
      */
     public function gerarRecomendacao($config = array())
     {

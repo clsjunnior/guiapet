@@ -6,7 +6,8 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_cPiH8zBAbz360dlO4I1wrrqVgKvN4z4"></script>
 <script src="<?=base_url('assets/js/mapa.js')?>"></script>
 <!-- owl -->
-<script src="<?=base_url('assets/plugins/owlCarousel/owl.carousel.js')?>"></script>
+<!--<script src="--><? //=base_url('assets/plugins/owlCarousel/owl.carousel.js')?><!--"></script>-->
+<script src="<?= base_url('assets/plugins/owlCarousel2/owl.carousel.min.js') ?>"></script>
 <!-- sweetalert -->
 <script src="<?= base_url('assets/plugins/sweetalert/sweetalert2.min.js') ?>"></script>
 <!-- select2 -->

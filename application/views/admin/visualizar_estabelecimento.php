@@ -457,7 +457,6 @@
     listaTags.initialize();
 
     $('#tagPut').tagsinput({
-        maxChars: 20,
         tagClass: 'label label-primary',
         trimValue: false,
         typeaheadjs: {

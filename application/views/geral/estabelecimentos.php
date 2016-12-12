@@ -48,8 +48,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="container">
         <!-- owl carousel -->
         <h3>Estabelecimentos com serviços semelhantes a esse!!</h3>
-        <div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">
-            <div id="recomendacaoEs" data-tags-id=""></div>
+        <!--        <div class="col-lg-12 menu-recomendacoes owl-carousel owl-theme">-->
+        <!--            <div id="recomendacaoEs" data-tags-id=""></div>-->
+        <!--        </div>-->
+        <div id="recomendacaoEs" class="owl-carousel menu-recomendacoes" data-tags-id="">
         </div>
     </div>
 </div>
@@ -172,11 +174,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h3 style="margin-top:0px">Galeria de Imagens</h3>
             <hr style="margin-bottom: 10px;">
             <?php if (count($galeria)): ?>
-            <div class="col-lg-12 owl-carousel owl-galeria owl-theme" style="margin-top: 20px;">
+                <div id="owl-galeria" class="owl-carousel owl-theme" style="margin-top: 20px;">
                 <?php foreach ($galeria as $list): ?>
-                    <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $list['Arquivo']) ?>">
-                        <img src="<?= base_url(DIR_IMG . '/' . $list['Arquivo']) ?>" alt="...">
-                    </a>
+                    <div class="item">
+                        <a class="fancybox" rel="gallery1" href="<?= base_url(DIR_IMG . '/' . $list['Arquivo']) ?>">
+                            <img src="<?= base_url(DIR_IMG . '/' . $list['Arquivo']) ?>" alt="...">
+                        </a>
+                    </div>
                 <?php endforeach; ?>
             </div>
             <?php else: ?>
@@ -420,38 +424,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     });
 
 
-    $('.owl-carousel').owlCarousel({
-        loop: false,
-        margin: 10,
-        nav: false,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 6
-            }
-        }
-    });
-    //
-    $('.owl-galeria').owlCarousel({
-        loop: false,
-        margin: 10,
-        nav: false,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 4
-            }
-        }
+    //    $('.owl-carousel').owlCarousel({
+    //        loop: false,
+    //        margin: 10,
+    //        nav: false,
+    //        responsive: {
+    //            0: {
+    //                items: 1
+    //            },
+    //            600: {
+    //                items: 3
+    //            },
+    //            1000: {
+    //                items: 6
+    //            }
+    //        }
+    //    });
+    //    //
+    //    $('.owl-galeria').owlCarousel({
+    //        loop: false,
+    //        margin: 10,
+    //        nav: false,
+    //        responsive: {
+    //            0: {
+    //                items: 1
+    //            },
+    //            600: {
+    //                items: 3
+    //            },
+    //            1000: {
+    //                items: 4
+    //            }
+    //        }
+    //    });
+
+    $("#owl-galeria").owlCarousel({
+        autoPlay: 3000, //Set AutoPlay to 3 seconds
+        items: 4,
+        itemsDesktop: [1199, 3],
+        itemsDesktopSmall: [979, 3]
     });
 
     /*busca tags do estabelecimento*/
@@ -461,13 +472,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $.getJSON(url_tag, function (resultados) {
 
         var tags = " ";
+        var cont = 0;
         $.each(resultados, function (index, resp) {
             var nenhumResultado = resp.vazio;
+
             if (typeof(nenhumResultado) != "undefined") {
                 tags += "Nenhuma Tag adicionada!";
             } else {
                 tags += '<span class="label label-primary label-tag">' + resp.tagNome + '</span>';
                 id_tags.push(resp.TagCod);
+                cont++;
             }
         });
         $("#tagsEs").html(tags);
@@ -487,6 +501,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             // atribui no campo de tag
             $("#recomendacaoEs").html(result);
         });
+
+        $("#recomendacaoEs").owlCarousel({
+            jsonPath: url_recomendacao,
+            jsonSuccess: customDataSuccess,
+            items: cont, //10 items above 1000px browser width
+            itemsDesktop: [1000, 6], //5 items between 1000px and 901px
+            itemsDesktopSmall: [900, 4], // betweem 900px and 601px
+            itemsTablet: [600, 2], //2 items between 600 and 0;
+            itemsMobile: true
+        });
+
+        function customDataSuccess(data) {
+            var content = "";
+            for (var i in data) {
+                var href = site_url + "/estabelecimento/" + data[i].CodEstabelecimento;
+                var nome = data[i].Nome;
+
+                content += '<a class="label label-primary label-recomendacao" href="' + href + '">' + nome + '</a>'
+            }
+            $("#recomendacaoEs").html(content);
+        }
 
     });
 
