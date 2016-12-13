@@ -60,9 +60,14 @@ class TagEstabelecimentoM extends CI_Model
      */
     public function getEsByTags($tagsId = [])
     {
-        return $this->db->from('vw_estabelecimentoTags')
-            ->where_in('tgesTagCod', $tagsId)
-            ->group_by('EsCodEstabelecimento')
-            ->get();
+        $this->db->from('vw_estabelecimentoTags');
+        if(count($tagsId) > 1){
+            $this->db->where_in('tgesTagCod', $tagsId);
+        }else{
+            $tg = $tagsId[0];
+            $this->db->where('tgesTagCod', $tg);
+        }
+        return $this->db->group_by('EsCodEstabelecimento')->get();
+        //echo $this->db->last_query();
     }
 }

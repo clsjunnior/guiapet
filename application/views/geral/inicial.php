@@ -165,41 +165,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="seperator"><i class="fa fa-flag"></i></div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<img src="http://placehold.it/350x250"" alt="...">
+					<img src="<?=base_url('assets/third_party/logo/v1.png')?>" alt="...">
 					<div class="caption">
-						<h3>Vantagem 01</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aut consequatur fugiat illum,
-							incidunt laboriosam numquam porro quam quibusdam quo, quos rem, repellat reprehenderit
-							soluta sunt veritatis vero! Obcaecati, totam.</p>
+						<h3>O seu negocio no MAPA</h3>
+						<p>Com o Guia do Pet, o seu negocio terá mais visibilidade por ser localizado no mapa!</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<img src="http://placehold.it/350x250"" alt="...">
+					<img src="<?=base_url('assets/third_party/logo/v2.png')?>" alt="...">
 					<div class="caption">
-						<h3>Vantagem 01</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet atque cupiditate deserunt,
-							eaque eos est ex fuga harum labore laborum molestias nisi optio, reprehenderit sapiente
-							ullam veritatis vero voluptates.</p>
+						<h3>Divulgação</h3>
+						<p>Você pode ter mais de uma plataforma para divulgar o seus serviços e sim, totalmente de graça! </p>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<img src="http://placehold.it/350x250"" alt="...">
+					<img src="<?=base_url('assets/third_party/logo/v3.png')?>" alt="...">
 					<div class="caption">
-						<h3>Vantagem 03</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam beatae blanditiis,
-							cumque doloribus dolorum est expedita, fuga ipsum itaque molestias non odit perferendis
-							placeat provident quos saepe sint vero. </p>
+						<h3>Escalabilidade</h3>
+						<p>Faça seu negocio alcancar outros públicos, não só em uma cidade!</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-12">
-				<button class="btn btn-primary btn-lg my-btn btn-block" style="margin-top: 20px; margin-bottom: 30px">
+				<a href="<?= site_url('registrar') ?>">
+                    <button class="btn btn-primary btn-lg my-btn btn-block" style="text-transform: uppercase; margin-top: 20px; margin-bottom: 30px">
 					Cadastre-se, é gratuito!!
 				</button>
+                </a>
 			</div>
 		</div>
 	</div>
